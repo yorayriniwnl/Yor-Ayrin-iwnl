@@ -307,6 +307,7 @@ function SnakeCanvas({
   const rowsRef     = useRef(rows)
   const wrapRef     = useRef(wrapMode)
   const cellSizeRef = useRef<number>(20)
+  const drawFrameRef = useRef<(ctx: CanvasRenderingContext2D, cw: number, ch: number) => void>(() => {})
 
   useEffect(() => { colsRef.current = cols    }, [cols])
   useEffect(() => { rowsRef.current = rows    }, [rows])
@@ -479,14 +480,14 @@ function SnakeCanvas({
       }
 
       // Draw every frame for smooth rendering
-      drawFrame(ctx, canvas.width, canvas.height)
+      drawFrameRef.current(ctx, canvas.width, canvas.height)
     },
     { paused: isPaused },
   )
 
   // ── Drawing ───────────────────────────────────────────────────────────────
 
-  function drawFrame(ctx: CanvasRenderingContext2D, cw: number, ch: number) {
+  const drawFrame = useCallback((ctx: CanvasRenderingContext2D, cw: number, ch: number) => {
     const cs     = cellSizeRef.current
     const snake  = snakeRef.current
     const food   = foodRef.current
@@ -537,10 +538,6 @@ function SnakeCanvas({
       const by = b.y * cs
 
       if (dx === 1) {
-        // horizontal connector
-        const lx = Math.min(ax, bx) + cs - inset
-        ctx.fillRect(lx, ay + inset, cs * 0 + inset * 2 + Math.abs(ax - bx) - cs + inset, cs - inset * 2)
-        // simpler: bridge the gap between cells
         const bridgeX = (a.x < b.x ? ax : bx) + cs - 1
         ctx.fillRect(bridgeX, Math.min(ay, by) + inset, 2, cs - inset * 2)
       } else {
@@ -647,7 +644,11 @@ function SnakeCanvas({
       ctx.fillStyle   = 'rgba(201,168,76,0.3)'
       ctx.fillText('∞', indFont * 0.25, indFont * 0.3)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    drawFrameRef.current = drawFrame
+  }, [drawFrame])
 
   return (
     <div

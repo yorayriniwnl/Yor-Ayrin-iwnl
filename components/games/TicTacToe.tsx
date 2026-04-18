@@ -335,7 +335,6 @@ function RoundOverlay({
   onSettings: () => void
 }) {
   const playerWon = winner?.winner === PLAYER
-  const aiWon     = winner?.winner === AI
 
   const heading = isDraw ? 'Draw!' : playerWon ? 'You win!' : 'AI wins!'
   const subtext  = isDraw
@@ -442,7 +441,9 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
   const pausedR     = useRef(false)
 
   // Keep pausedR in sync — isPaused comes from the parent render prop
-  pausedR.current = isPaused
+  useEffect(() => {
+    pausedR.current = isPaused
+  }, [isPaused])
 
   // ── Sync player wins → GameShell score (for "Best" tracking) ──────────────
   useEffect(() => {
@@ -460,7 +461,7 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
   }, [])
 
   // ── End a round ─────────────────────────────────────────────────────────────
-  const endRound = useCallback((w: WinResult | null, draw: boolean) => {
+  const endRound = useCallback((w: WinResult | null, _draw: boolean) => {
     if (w) {
       setWinner(w)
       setSession(prev => ({
@@ -498,13 +499,13 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
     if (w)                        { endRound(w, false); return }
     if (nb.every(c => c !== null)){ endRound(null, true); return }
 
+    setThinking(true)
     setAITurn(true)
   }, [aiTurn, endRound])
 
   // ── AI move effect ──────────────────────────────────────────────────────────
   useEffect(() => {
     if (!aiTurn) return
-    setThinking(true)
 
     const t = setTimeout(() => {
       // Re-check phase in case round ended while timer was ticking
