@@ -1,0 +1,86 @@
+{
+  "profile": {
+    "name": "Ayush Roy",
+    "alias": "Yor Ayrin Iwnl",
+    "role": "Full Stack Developer Intern Candidate - Product Builder",
+    "summary": "Full-stack focused B.Tech Computer Science and Communication Engineering student at KIIT building Next.js product surfaces, Python backend systems, realtime dashboards, computer-vision tools, and interactive web experiences.",
+    "github": "https://github.com/yorayriniwnl",
+    "linkedin": "https://linkedin.com/in/yorayriniwnl",
+    "email": "yorayriniwnl@gmail.com",
+    "phone": "+91 8918940799",
+    "location": "India",
+    "availability": "Open to internships, entry-level software roles, and remote collaboration"
+  },
+  "projects": [
+    {
+      "id": "zenith",
+      "title": "Yor Zenith - Solar Energy Planning & Decision Support System",
+      "shortDescription": "Full-stack solar decision platform combining rooftop feasibility, subsidy intelligence, long-term return analysis, and 3D visualization.",
+      "fullDescription": "Developed a solar planning platform to analyze rooftop feasibility and estimate solar energy generation. Built interactive 3D visualization dashboards using React and Three.js to simulate solar installation scenarios, implemented logic around rooftop parameters, solar irradiance, and subsidy estimates, and designed modular UI dashboards for solar potential analysis and energy generation forecasting.",
+      "tech": ["Next.js", "React", "TypeScript", "Three.js", "Python"],
+      "github": "https://github.com/yorayriniwnl/Yor-Zenith",
+      "featured": true,
+      "badge": "Resume Project",
+      "category": "Systems"
+    },
+    {
+      "id": "ai-detector",
+      "title": "Yor Ai vs Real Image",
+      "shortDescription": "ML pipeline to classify AI-generated vs real images using texture-based features (LBP, GLCM) and an SVM classifier.",
+      "fullDescription": "Uses OpenCV to extract image features, Scikit-Learn to train an SVM classifier, Local Binary Pattern and GLCM for image texture analysis, and Streamlit for uploading images and viewing prediction results.",
+      "tech": ["Python", "OpenCV", "Scikit-Learn", "Streamlit"],
+      "github": "https://github.com/yorayriniwnl/Yor-Ai-vs-real-image",
+      "featured": true,
+      "badge": "Resume Project",
+      "category": "AI / ML"
+    },
+    {
+      "id": "mentor-mentee",
+      "title": "Yor Mentor Mentee System",
+      "shortDescription": "Python system for managing mentor-mentee relationships with matching logic, Flask API support, and Tkinter desktop UI.",
+      "tech": ["Python", "Flask", "Tkinter", "SQLite"],
+      "github": "https://github.com/yorayriniwnl/mentor-mentee-system",
+      "category": "Python"
+    },
+    {
+      "id": "yor-helios",
+      "title": "Yor-Helios",
+      "shortDescription": "Energy-monitoring platform for anomaly detection, realtime alerts, geospatial views, and operator dashboards.",
+      "tech": ["Python", "FastAPI", "TypeScript", "Docker"],
+      "github": "https://github.com/yorayriniwnl/Yor-Helios",
+      "category": "Systems"
+    }
+  ],
+  "skills": [
+    { "category": "Frontend", "name": "React", "value": 82 },
+    { "category": "Frontend", "name": "HTML / CSS / TailwindCSS", "value": 82 },
+    { "category": "Frontend", "name": "TypeScript", "value": 65 },
+    { "category": "Frontend", "name": "Three.js", "value": 72 },
+    { "category": "ML / CV", "name": "Python", "value": 84 },
+    { "category": "ML / CV", "name": "OpenCV", "value": 76 },
+    { "category": "ML / CV", "name": "Scikit-Learn", "value": 74 },
+    { "category": "ML / CV", "name": "Streamlit", "value": 70 },
+    { "category": "Tools", "name": "Git / GitHub", "value": 90 },
+    { "category": "Tools", "name": "VS Code", "value": 88 },
+    { "category": "Tools", "name": "SQL", "value": 58 },
+    { "category": "Languages", "name": "Java", "value": 52 },
+    { "category": "Languages", "name": "C", "value": 50 }
+  ],
+  "education": [
+    {
+      "title": "B.Tech - Computer Science & Communication Engineering",
+      "institution": "KIIT Deemed to be University",
+      "period": "Expected Graduation: 2027"
+    },
+    {
+      "title": "CBSE - Class XII & X",
+      "institution": "Kendriya Vidyalaya, Burdwan",
+      "period": "Completed 2023"
+    }
+  ],
+  "achievements": [
+    "Completed Pratham, Dwitiya, and Tritiya Sopan levels in Bharat Scouts & Guides",
+    "Top 3% global rank in Counter-Strike 2 Premier competitive ladder"
+  ],
+  "interests": ["Chess", "Piano and guitar", "Rubik's Cube / puzzle solving", "Competitive gaming (CS2)"]
+}

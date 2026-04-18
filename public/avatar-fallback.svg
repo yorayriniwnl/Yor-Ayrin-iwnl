@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="628" viewBox="0 0 1200 628" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0%" stop-color="#0b1220" />
+      <stop offset="100%" stop-color="#071026" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="628" fill="url(#g)" />
+
+  <!-- simple monitor + head silhouette -->
+  <g transform="translate(300,140) scale(1.4)">
+    <rect x="120" y="120" width="560" height="320" rx="14" fill="#03060a" />
+    <rect x="144" y="152" width="512" height="244" rx="8" fill="#062b34" />
+    <rect x="360" y="460" width="192" height="18" rx="6" fill="#071026" />
+
+    <g transform="translate(320,220)">
+      <ellipse cx="120" cy="80" rx="70" ry="82" fill="#f1d1c1" />
+      <rect x="40" y="160" width="160" height="92" rx="18" fill="#0f1724" />
+    </g>
+  </g>
+
+  <!-- subtle vignette -->
+  <rect width="1200" height="628" fill="black" opacity="0.06" />
+</svg>

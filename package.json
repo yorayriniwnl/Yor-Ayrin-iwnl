@@ -1,0 +1,47 @@
+{
+  "name": "yor-website",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "chess.js": "^0.12.0",
+    "critters": "^0.0.23",
+    "framer-motion": "^12.38.0",
+    "gray-matter": "^4.0.3",
+    "next": "^16.2.3",
+    "next-mdx-remote": "^6.0.0",
+    "nodemailer": "^8.0.5",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "three": "^0.183.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^20.19.0",
+    "@types/nodemailer": "^8.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.58.0",
+    "@typescript-eslint/parser": "^8.58.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.2",
+    "jsdom": "^29.0.2",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.4.0",
+    "vitest": "^4.1.2"
+  }
+}

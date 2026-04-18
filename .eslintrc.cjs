@@ -1,0 +1,17 @@
+module.exports = {
+  root: true,
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    ecmaFeatures: { jsx: true },
+  },
+  extends: ['next', 'next/core-web-vitals', 'plugin:@typescript-eslint/recommended'],
+  plugins: ['@typescript-eslint'],
+  rules: {
+    semi: ['error', 'always'],
+    quotes: ['error', 'single'],
+    'react/react-in-jsx-scope': 'off',
+  },
+  ignorePatterns: ['.next/', 'node_modules/'],
+}

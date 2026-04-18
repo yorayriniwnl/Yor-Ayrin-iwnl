@@ -1,0 +1,46 @@
+{
+  "nodes": [
+    { "id": "project:zenith", "type": "project", "projectId": "zenith", "title": "Yor Zenith", "summary": "Solar planning platform with React and Three.js dashboards" },
+    { "id": "project:ai-detector", "type": "project", "projectId": "ai-detector", "title": "AI vs Real Image Detector", "summary": "OpenCV and Scikit-Learn image classification pipeline" },
+    { "id": "project:mentor", "type": "project", "projectId": "mentor-mentee", "title": "Mentor-Mentee System", "summary": "Python mentorship coordination system" },
+    { "id": "project:portfolio", "type": "project", "projectId": "yor-ayrin-iwnl", "title": "Yor-Ayrin-iwnl", "summary": "This portfolio site" },
+
+    { "id": "skill:react", "type": "skill", "name": "React" },
+    { "id": "skill:typescript", "type": "skill", "name": "TypeScript" },
+    { "id": "skill:threejs", "type": "skill", "name": "Three.js" },
+    { "id": "skill:python", "type": "skill", "name": "Python" },
+    { "id": "skill:opencv", "type": "skill", "name": "OpenCV" },
+    { "id": "skill:scikit-learn", "type": "skill", "name": "Scikit-Learn" },
+    { "id": "skill:streamlit", "type": "skill", "name": "Streamlit" },
+
+    { "id": "tech:tailwind", "type": "technology", "name": "TailwindCSS" },
+    { "id": "tech:sql", "type": "technology", "name": "SQL" },
+
+    { "id": "category:frontend", "type": "category", "name": "Frontend" },
+    { "id": "category:ml-cv", "type": "category", "name": "ML / CV" },
+    { "id": "category:systems", "type": "category", "name": "Systems" }
+  ],
+  "edges": [
+    { "source": "project:zenith", "target": "skill:react", "rel": "uses" },
+    { "source": "project:zenith", "target": "skill:threejs", "rel": "uses" },
+    { "source": "project:zenith", "target": "skill:typescript", "rel": "uses" },
+
+    { "source": "project:ai-detector", "target": "skill:python", "rel": "uses" },
+    { "source": "project:ai-detector", "target": "skill:opencv", "rel": "uses" },
+    { "source": "project:ai-detector", "target": "skill:scikit-learn", "rel": "uses" },
+    { "source": "project:ai-detector", "target": "skill:streamlit", "rel": "uses" },
+
+    { "source": "project:mentor", "target": "skill:python", "rel": "uses" },
+    { "source": "project:mentor", "target": "tech:sql", "rel": "uses" },
+
+    { "source": "project:portfolio", "target": "skill:react", "rel": "uses" },
+    { "source": "project:portfolio", "target": "skill:typescript", "rel": "uses" },
+    { "source": "project:portfolio", "target": "tech:tailwind", "rel": "uses" },
+
+    { "source": "skill:react", "target": "category:frontend", "rel": "belongs_to" },
+    { "source": "skill:typescript", "target": "category:frontend", "rel": "belongs_to" },
+    { "source": "skill:python", "target": "category:ml-cv", "rel": "belongs_to" },
+    { "source": "skill:opencv", "target": "category:ml-cv", "rel": "belongs_to" },
+    { "source": "project:mentor", "target": "category:systems", "rel": "belongs_to" }
+  ]
+}

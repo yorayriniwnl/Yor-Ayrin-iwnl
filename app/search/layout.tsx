@@ -1,0 +1,11 @@
+import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
+
+export const metadata: Metadata = {
+  title: 'Search | Yor Ayrin',
+  description: 'Search pages, projects, skills, and actions.',
+}
+
+export default function SearchLayout({ children }: { children: ReactNode }) {
+  return children
+}
