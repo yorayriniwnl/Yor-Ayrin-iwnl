@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react'
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import TechCloud3D, { FlatCloud } from '../../components/TechCloud3D'
 import { SITE_PROFILE } from '../../lib/data'
@@ -210,10 +211,20 @@ const PAGE_CSS = `
   .about-avatar-circle {
     width: 180px; height: 180px; border-radius: 50%;
     background: radial-gradient(circle at 35% 35%, #1a1710, #0a0906);
-    display: flex; align-items: center; justify-content: center;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 44px; font-weight: 900; font-style: italic; color: var(--gold);
+    position: relative; overflow: hidden;
     box-shadow: 0 0 48px rgba(201,168,76,0.12), inset 0 0 24px rgba(201,168,76,0.05);
+  }
+  .about-avatar-circle::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10,9,6,0.02) 0%, rgba(10,9,6,0.3) 100%),
+      radial-gradient(circle at 70% 15%, rgba(255,255,255,0.16) 0%, transparent 34%);
+    pointer-events: none;
+  }
+  .about-avatar-image {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 24%;
   }
 
   /* Stats */
@@ -307,7 +318,13 @@ const PAGE_CSS = `
   @media (max-width: 900px) {
     .about-hero { padding: 0 1.5rem clamp(3rem, 6vw, 5rem); }
     .about-hero-inner { grid-template-columns: 1fr; }
-    .about-avatar-wrap { display: none; }
+    .about-avatar-wrap {
+      width: 160px; height: 160px;
+      justify-self: start; margin-top: 1rem;
+    }
+    .about-avatar-circle {
+      width: 160px; height: 160px;
+    }
     .about-section-wrap { padding: 0 1.5rem; }
     .about-stats-grid { grid-template-columns: 1fr 1fr; }
     .about-philosophy-grid { grid-template-columns: 1fr; }
@@ -353,10 +370,19 @@ export default function AboutPage(): React.ReactElement {
             </div>
           </div>
 
-          <div className="about-avatar-wrap" aria-hidden="true">
-            <div className="about-avatar-ring-spin" />
-            <div className="about-avatar-ring-static" />
-            <div className="about-avatar-circle">AR</div>
+          <div className="about-avatar-wrap">
+            <div className="about-avatar-ring-spin" aria-hidden="true" />
+            <div className="about-avatar-ring-static" aria-hidden="true" />
+            <div className="about-avatar-circle">
+              <Image
+                src="/images/ayush-about.png"
+                alt="Portrait of Ayush Roy"
+                fill
+                priority
+                sizes="(max-width: 900px) 160px, 180px"
+                className="about-avatar-image"
+              />
+            </div>
           </div>
         </div>
       </section>
