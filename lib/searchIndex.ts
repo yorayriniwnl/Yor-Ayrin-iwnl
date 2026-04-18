@@ -25,7 +25,7 @@ export type SearchResult = SearchItem & {
 // Index data
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-const SEARCH_ITEMS: SearchItem[] = [
+export const SEARCH_ITEMS: SearchItem[] = [
   // â”€â”€ Pages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   {
     type:  'page',
@@ -146,6 +146,15 @@ const SEARCH_ITEMS: SearchItem[] = [
   },
   {
     type:  'page',
+    id:    'avatar',
+    title: 'Avatar',
+    body:  'Interactive avatar route with character presentation, motion, and identity cues.',
+    url:   '/avatar',
+    tags:  ['avatar', '3d', 'identity'],
+    icon:  'V',
+  },
+  {
+    type:  'page',
     id:    'devlog',
     title: 'DevLog',
     body:  'Build diary and dev notes',
@@ -182,6 +191,24 @@ const SEARCH_ITEMS: SearchItem[] = [
   },
   {
     type:  'page',
+    id:    'onboarding',
+    title: 'Onboarding',
+    body:  'Guided entry route for visitors who want a quick tour of the portfolio.',
+    url:   '/onboarding',
+    tags:  ['onboarding', 'guide', 'tour'],
+    icon:  'N',
+  },
+  {
+    type:  'page',
+    id:    'search-page',
+    title: 'Search',
+    body:  'Standalone search route for navigating pages, projects, skills, and actions.',
+    url:   '/search',
+    tags:  ['search', 'navigation', 'command'],
+    icon:  'Q',
+  },
+  {
+    type:  'page',
     id:    'steam',
     title: 'Steam',
     body:  'Steam profile, game library context, and gaming identity',
@@ -206,6 +233,15 @@ const SEARCH_ITEMS: SearchItem[] = [
     url:   '/value-education',
     tags:  ['value education', 'course', 'reflection'],
     icon:  'ðŸ“š',
+  },
+  {
+    type:  'page',
+    id:    'three-demo',
+    title: '3D Demo',
+    body:  'Three.js experiment route for scene testing, interaction, and rendering demos.',
+    url:   '/three-demo',
+    tags:  ['3d', 'threejs', 'demo'],
+    icon:  '3',
   },
   {
     type:  'page',

@@ -167,6 +167,8 @@ export const NAV_MENU_GROUPS: NavMenuGroup[] = [
       { label: 'Timeline', href: '/timeline' },
       { label: 'Dashboard', href: '/dashboard' },
       { label: 'Profile', href: '/profile' },
+      { label: 'Search', href: '/search' },
+      { label: 'Onboarding', href: '/onboarding' },
     ],
   },
   {
@@ -182,6 +184,13 @@ export const NAV_MENU_GROUPS: NavMenuGroup[] = [
       { label: 'Hobbies', href: '/hobbies' },
       { label: 'Value Education', href: '/value-education' },
       { label: 'Settings', href: '/settings' },
+    ],
+  },
+  {
+    title: 'Labs',
+    links: [
+      { label: 'Avatar', href: '/avatar' },
+      { label: '3D Demo', href: '/three-demo' },
     ],
   },
 ]
@@ -201,6 +210,8 @@ export const FOOTER_LINK_GROUPS: Record<'primary' | 'product' | 'resources', Nav
     { label: 'Timeline', href: '/timeline' },
     { label: 'Dashboard', href: '/dashboard' },
     { label: 'Profile', href: '/profile' },
+    { label: 'Search', href: '/search' },
+    { label: 'Onboarding', href: '/onboarding' },
   ],
   resources: [
     { label: 'Resume', href: '/resume' },
@@ -212,6 +223,8 @@ export const FOOTER_LINK_GROUPS: Record<'primary' | 'product' | 'resources', Nav
     { label: 'Steam', href: '/steam' },
     { label: 'Hobbies', href: '/hobbies' },
     { label: 'Value Education', href: '/value-education' },
+    { label: 'Avatar', href: '/avatar' },
+    { label: '3D Demo', href: '/three-demo' },
     { label: 'Settings', href: '/settings' },
     { label: 'GitHub', href: SITE_PROFILE.githubHref, external: true },
   ],
