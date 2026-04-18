@@ -81,7 +81,7 @@ function MemoryMatchInner({
 }: GameRenderProps) {
   // ── Game state ──────────────────────────────────────────────────────────────
   const [difficulty,    setDifficulty]   = useState<Difficulty>('easy')
-  const [cards,         setCards]        = useState<CardInstance[]>(() => buildCardGrid('easy'))
+  const [cards,         setCards]        = useState<CardInstance[]>([])
   const [pending,       setPending]      = useState<string[]>([])  // ≤ 2 instanceIds awaiting eval
   const [locked,        setLocked]       = useState(false)         // block input during eval
   const [started,       setStarted]      = useState(false)         // first flip → start timer
@@ -104,6 +104,10 @@ function MemoryMatchInner({
     elapsedRef.current = 0
     setScore(0)
   }, [setScore])
+
+  useEffect(() => {
+    initGame('easy')
+  }, [initGame])
 
   // Detect GameShell "Play Again" (isGameOver: true → false)
   useEffect(() => {

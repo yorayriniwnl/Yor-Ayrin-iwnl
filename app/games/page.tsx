@@ -512,7 +512,7 @@ export default function GamesPage(): JSX.Element {
                             height="340"
                             src={`https://www.youtube.com/embed/${CS2_VIDEOS[0].id}?rel=0`}
                             title={CS2_VIDEOS[0].title}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allow="accelerometer; autoplay; clipboard-write; compute-pressure; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                             style={{ border: 'none', display: 'block' }}
                           />

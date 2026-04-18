@@ -19,6 +19,8 @@ interface FeaturedProject {
   github: string
 }
 
+type DashboardSkill = (typeof SKILL_CATEGORIES)[keyof typeof SKILL_CATEGORIES][number]
+
 const FEATURED: FeaturedProject[] = [
   {
     id: 'zenith',
@@ -49,10 +51,18 @@ const FEATURED: FeaturedProject[] = [
   },
 ]
 
-const TOP_SKILLS = Object.values(SKILL_CATEGORIES)
-  .flat()
-  .sort((a, b) => b.value - a.value)
-  .slice(0, 8)
+const TOP_SKILLS = Array.from(
+  Object.values(SKILL_CATEGORIES)
+    .flat()
+    .sort((a, b) => b.value - a.value)
+    .reduce((map, skill) => {
+      if (!map.has(skill.name)) {
+        map.set(skill.name, skill)
+      }
+      return map
+    }, new Map<string, DashboardSkill>()),
+  ([, skill]) => skill,
+).slice(0, 8)
 
 // ─── Micro components ─────────────────────────────────────────────────────────
 

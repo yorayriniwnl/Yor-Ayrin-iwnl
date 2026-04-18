@@ -119,7 +119,7 @@ export default function MediaSection(): JSX.Element {
                     height="340"
                     src={`https://www.youtube.com/embed/${YT_PLAYLIST[ytActive].id}?autoplay=0&rel=0`}
                     title={YT_PLAYLIST[ytActive].title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allow="accelerometer; autoplay; clipboard-write; compute-pressure; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     style={{ border: 'none', display: 'block' }}
                   />
