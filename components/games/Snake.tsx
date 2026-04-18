@@ -38,6 +38,8 @@ const RGB_HEAD:        [number, number, number] = [74,  222, 128]
 const RGB_TAIL:        [number, number, number] = [20,  110,  58]
 const RGB_BORDER_HEAD: [number, number, number] = [134, 239, 172]
 const RGB_BORDER_TAIL: [number, number, number] = [22,   90,  50]
+const FIELD_BORDER      = 'rgba(201, 168, 76, 0.35)'
+const FIELD_BORDER_WRAP = 'rgba(122, 112, 96, 0.55)'
 
 const SNAKE_CONTROLS = [
   { key: '↑ / W',     action: 'Move up'          },
@@ -507,6 +509,13 @@ function SnakeCanvas({
       ctx.beginPath(); ctx.moveTo(0, y * cs); ctx.lineTo(cw, y * cs); ctx.stroke()
     }
 
+    // Playfield boundary so the walls stay visible against the dark shell.
+    ctx.save()
+    ctx.strokeStyle = wrapRef.current ? FIELD_BORDER_WRAP : FIELD_BORDER
+    ctx.lineWidth = Math.max(2, cs * 0.12)
+    ctx.strokeRect(ctx.lineWidth / 2, ctx.lineWidth / 2, cw - ctx.lineWidth, ch - ctx.lineWidth)
+    ctx.restore()
+
     if (snake.length === 0) return
 
     const n = snake.length
@@ -653,11 +662,25 @@ function SnakeCanvas({
         background:      '#0a0906',
       }}
     >
-      <canvas
-        ref={canvasRef}
-        style={{ imageRendering: 'pixelated', display: 'block' }}
-        aria-label="Snake game canvas"
-      />
+      <div
+        style={{
+          padding: '0.45rem',
+          borderRadius: '1rem',
+          border: '1px solid rgba(201, 168, 76, 0.22)',
+          background: 'linear-gradient(180deg, rgba(18,16,11,0.95), rgba(10,9,6,0.98))',
+          boxShadow: '0 0 0 1px rgba(201,168,76,0.08), 0 18px 48px rgba(0,0,0,0.45)',
+        }}
+      >
+        <canvas
+          ref={canvasRef}
+          style={{
+            imageRendering: 'pixelated',
+            display: 'block',
+            borderRadius: '0.7rem',
+          }}
+          aria-label="Snake game canvas"
+        />
+      </div>
     </div>
   )
 }
