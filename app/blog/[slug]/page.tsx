@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getAllPosts, getPostBySlug } from '@/lib/blog'
 import styles from '@/components/blog/blog-page.module.css'
@@ -10,8 +11,13 @@ export async function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }))
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug)
+type BlogPostPageProps = {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: BlogPostPageProps) {
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
   if (!post) return {}
   return {
     title: post.meta.title,
@@ -21,8 +27,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug)
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
   if (!post) notFound()
 
   const { meta, content } = post
@@ -51,12 +58,12 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         <div className={styles.heroSub}>
           <p className={styles.heroDescription}>{meta.excerpt}</p>
 
-          <a
+          <Link
             href="/blog"
             className={`${styles.heroCta} ${buttonClassName('secondary', 'lg')}`}
           >
             ← All Notes
-          </a>
+          </Link>
         </div>
       </section>
 

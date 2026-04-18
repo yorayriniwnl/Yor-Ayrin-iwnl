@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import Image from 'next/image'
 import { CS2_VIDEOS, YOUTUBE_CHANNEL } from '../../data/media'
 import type { YouTubeVideo } from '../../data/media'
 import { getLiveGames, getComingSoonGames } from '../../data/games'
@@ -184,9 +185,11 @@ function VideoCard({ video }: { video: YouTubeVideo }) {
   return (
     <Card as="article" interactive>
       <div className="ds-stack ds-stack--tight">
-        <img
+        <Image
           src={video.thumbnail}
           alt={video.title}
+          width={640}
+          height={360}
           className="h-40 w-full rounded-[1rem] object-cover border border-[var(--ds-border)]"
         />
         <span className="ds-badge ds-tag--accent">CS2</span>

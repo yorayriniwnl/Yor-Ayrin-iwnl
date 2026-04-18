@@ -13,6 +13,7 @@ export interface ControlItem {
 export interface GameRenderProps {
   isPaused: boolean
   isGameOver: boolean
+  roundId: number
   score: number
   setScore: (n: number) => void
   setGameOver: (over: boolean, finalScore?: number) => void
@@ -153,6 +154,7 @@ export default function GameShell({
   // ── State ──────────────────────────────────────────────────────────────────
   const [isPaused, setIsPaused] = useState(false)
   const [isGameOver, setIsGameOver] = useState(false)
+  const [roundId, setRoundId] = useState(0)
   const [score, setScore] = useState(0)
   const [finalScore, setFinalScore] = useState(0)
   const [highScore, setHighScore] = useState(0)
@@ -252,6 +254,7 @@ export default function GameShell({
   // ── Play again ─────────────────────────────────────────────────────────────
   const handlePlayAgain = useCallback(() => {
     setIsGameOver(false)
+    setRoundId((prev) => prev + 1)
     setIsNewBest(false)
     setNeedsTopScorerName(false)
     setPendingTopScorerName('')
@@ -300,6 +303,7 @@ export default function GameShell({
   const renderProps: GameRenderProps = {
     isPaused,
     isGameOver,
+    roundId,
     score,
     setScore,
     setGameOver: handleSetGameOver,
@@ -588,7 +592,9 @@ export default function GameShell({
           overflow: 'hidden',
         }}
       >
-        {children(renderProps)}
+        <div key={roundId} style={{ height: '100%' }}>
+          {children(renderProps)}
+        </div>
 
         {/* ── Pause Overlay ─────────────────────────────────────────────────── */}
         {isPaused && !isGameOver && (

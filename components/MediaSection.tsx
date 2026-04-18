@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import Card from './ui/Card'
 import Grid from './ui/Grid'
 import { buttonClassName } from './ui/Button'
@@ -141,9 +142,11 @@ export default function MediaSection(): JSX.Element {
                   >
                     <Card interactive className="h-full">
                       <div className="flex gap-4">
-                        <img
+                        <Image
                           src={video.thumbnail}
                           alt={video.title}
+                          width={160}
+                          height={90}
                           className="h-16 w-24 rounded-[0.75rem] object-cover"
                         />
                         <div className="ds-stack ds-stack--tight">
@@ -170,9 +173,11 @@ export default function MediaSection(): JSX.Element {
               {FAV_VIDEOS.map((video) => (
                 <Card key={video.id} as="article" interactive>
                   <div className="ds-stack ds-stack--tight">
-                    <img
+                    <Image
                       src={video.thumbnail}
                       alt={video.title}
+                      width={640}
+                      height={360}
                       className="h-40 w-full rounded-[1rem] object-cover"
                     />
                     <span className="ds-badge">{video.duration}</span>

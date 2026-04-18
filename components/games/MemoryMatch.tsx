@@ -51,6 +51,13 @@ function formatTime(seconds: number): string {
 }
 
 function buildCardGrid(difficulty: Difficulty): CardInstance[] {
+  return buildCardGridWithRandom(difficulty, Math.random)
+}
+
+function buildCardGridWithRandom(
+  difficulty: Difficulty,
+  random: () => number,
+): CardInstance[] {
   const count    = difficulty === 'easy' ? EASY_PAIRS : HARD_PAIRS
   const selected = MEMORY_CARDS.slice(0, count)
 
@@ -62,11 +69,26 @@ function buildCardGrid(difficulty: Difficulty): CardInstance[] {
 
   // Fisher-Yates shuffle
   for (let i = instances.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
+    const j = Math.floor(random() * (i + 1))
     ;[instances[i], instances[j]] = [instances[j], instances[i]]
   }
 
   return instances
+}
+
+function createSeededRandom(seed: string): () => number {
+  let hash = 2166136261
+  for (let i = 0; i < seed.length; i += 1) {
+    hash ^= seed.charCodeAt(i)
+    hash = Math.imul(hash, 16777619)
+  }
+
+  return () => {
+    hash = Math.imul(hash ^ (hash >>> 15), 2246822507)
+    hash = Math.imul(hash ^ (hash >>> 13), 3266489909)
+    hash ^= hash >>> 16
+    return (hash >>> 0) / 4294967296
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -76,12 +98,15 @@ function buildCardGrid(difficulty: Difficulty): CardInstance[] {
 function MemoryMatchInner({
   isPaused,
   isGameOver,
+  roundId,
   setScore,
   setGameOver,
 }: GameRenderProps) {
   // ── Game state ──────────────────────────────────────────────────────────────
   const [difficulty,    setDifficulty]   = useState<Difficulty>('easy')
-  const [cards,         setCards]        = useState<CardInstance[]>([])
+  const [cards,         setCards]        = useState<CardInstance[]>(() =>
+    buildCardGridWithRandom('easy', createSeededRandom(`easy:${roundId}`)),
+  )
   const [pending,       setPending]      = useState<string[]>([])  // ≤ 2 instanceIds awaiting eval
   const [locked,        setLocked]       = useState(false)         // block input during eval
   const [started,       setStarted]      = useState(false)         // first flip → start timer
@@ -90,7 +115,6 @@ function MemoryMatchInner({
 
   // Refs that must be readable inside setTimeout callbacks without stale closures
   const elapsedRef     = useRef(0)
-  const prevGameOver   = useRef(false)
 
   // ── Init / reset ────────────────────────────────────────────────────────────
 
@@ -105,17 +129,8 @@ function MemoryMatchInner({
     setScore(0)
   }, [setScore])
 
-  useEffect(() => {
-    initGame('easy')
-  }, [initGame])
 
   // Detect GameShell "Play Again" (isGameOver: true → false)
-  useEffect(() => {
-    if (prevGameOver.current && !isGameOver) {
-      initGame(difficulty)
-    }
-    prevGameOver.current = isGameOver
-  }, [isGameOver, difficulty, initGame])
 
   // ── Timer ───────────────────────────────────────────────────────────────────
   // Starts on first flip, pauses when isPaused or isGameOver.
@@ -160,8 +175,17 @@ function MemoryMatchInner({
       const [id1, id2] = newPending
 
       // defId never changes — safe to read from pre-flip state
-      const def1 = cards.find(c => c.instanceId === id1)!.defId
-      const def2 = cards.find(c => c.instanceId === id2)!.defId
+      const firstCard = cards.find(c => c.instanceId === id1)
+      const secondCard = cards.find(c => c.instanceId === id2)
+
+      if (!firstCard || !secondCard) {
+        setPending([])
+        setLocked(false)
+        return
+      }
+
+      const def1 = firstCard.defId
+      const def2 = secondCard.defId
 
       if (def1 === def2) {
         // ── Match ─────────────────────────────────────────────────────────────
