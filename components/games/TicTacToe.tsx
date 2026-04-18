@@ -574,6 +574,9 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
         height: '100%', display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
         gap: '0.85rem', padding: '1rem',
+        width: '100%',
+        boxSizing: 'border-box',
+        overflowY: 'auto',
         background: 'var(--ds-bg, #0a0906)',
       }}
     >
@@ -593,13 +596,23 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
 
       {/* ── Game area ──────────────────────────────────────────────────────── */}
       {phase !== 'setup' && (
-        <>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '0.85rem',
+            width: '100%',
+            flexShrink: 0,
+          }}
+        >
           {/* Session score */}
           <div
             style={{
               display: 'flex', alignItems: 'center', gap: '0.45rem',
               fontFamily: 'var(--ds-font-mono, monospace)', fontSize: '0.78rem', color: '#7a7060',
               letterSpacing: '0.04em',
+              flexShrink: 0,
             }}
           >
             <span>You</span>
@@ -625,6 +638,7 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
               width: 'min(90vw, 480px)',
               maxWidth: '100%',
               aspectRatio: '1 / 1',
+              flexShrink: 0,
               display: 'grid',
               gridTemplateColumns: `repeat(${boardSize}, 1fr)`,
               gap: '2px',
@@ -687,6 +701,7 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
               fontSize: '0.75rem',
               minHeight: '1.1em',
               letterSpacing: '0.04em',
+              flexShrink: 0,
             }}
           >
             {phase === 'playing' && (
@@ -700,17 +715,28 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
           </div>
 
           {/* Hard-mode motivational hint */}
-          {showHardModeHint && (
-            <p
-              style={{
-              margin: 0, fontSize: '0.7rem', color: '#7a7060',
-              fontFamily: 'var(--ds-font-mono, monospace)',
-              letterSpacing: '0.03em', textAlign: 'center',
-            }}>
-              Unbeatable mode — try for a draw!
-            </p>
-          )}
-        </>
+          <div
+            style={{
+              minHeight: '1.05rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+            }}
+          >
+            {showHardModeHint && (
+              <p
+                style={{
+                  margin: 0, fontSize: '0.7rem', color: '#7a7060',
+                  fontFamily: 'var(--ds-font-mono, monospace)',
+                  letterSpacing: '0.03em', textAlign: 'center',
+                }}
+              >
+                Unbeatable mode — try for a draw!
+              </p>
+            )}
+          </div>
+        </div>
       )}
 
       {/* 4×4 Unlock Toast */}

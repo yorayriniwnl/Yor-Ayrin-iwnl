@@ -9,10 +9,12 @@ export default function TicTacToePage() {
   return (
     <main
       style={{
-        // Fill the viewport below the site Navbar.
-        // Using dvh so the address bar on mobile doesn't cause overflow.
-        height:   'calc(100dvh - var(--ds-header-height, 5rem))',
-        overflow: 'hidden',
+        // Use a stable viewport height so mobile browser chrome does not resize the game mid-play.
+        minHeight: 'calc(100vh - var(--ds-header-height, 5rem))',
+        height: 'calc(100svh - var(--ds-header-height, 5rem))',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'auto',
       }}
     >
       <TicTacToe />
