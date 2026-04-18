@@ -2,10 +2,12 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 import { SITE_PROFILE } from '../lib/data'
+import { usesMinimalChrome } from '../lib/chromeVisibility'
 import QuickContactModal from './QuickContactModal'
 
-export default function RecruiterStrip(): JSX.Element {
+function RecruiterStripBody(): JSX.Element {
   const [visible, setVisible] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
   const ticking = useRef(false)
@@ -136,6 +138,7 @@ export default function RecruiterStrip(): JSX.Element {
                   href="/resume.pdf"
                   download
                   aria-label="Download resume PDF"
+                  data-disable-custom-cursor="true"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -163,6 +166,7 @@ export default function RecruiterStrip(): JSX.Element {
                 <a
                   href="/resume"
                   aria-label="View resume"
+                  data-disable-custom-cursor="true"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -187,6 +191,7 @@ export default function RecruiterStrip(): JSX.Element {
                 <button
                   onClick={() => setContactOpen(true)}
                   aria-label="Open contact modal"
+                  data-disable-custom-cursor="true"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -235,4 +240,12 @@ export default function RecruiterStrip(): JSX.Element {
       <QuickContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </>
   )
+}
+
+export default function RecruiterStrip(): JSX.Element {
+  const pathname = usePathname()
+
+  if (usesMinimalChrome(pathname)) return <></>
+
+  return <RecruiterStripBody />
 }

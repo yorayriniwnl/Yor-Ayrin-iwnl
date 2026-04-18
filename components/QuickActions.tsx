@@ -2,7 +2,9 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 import { SITE_PROFILE } from '../lib/data'
+import { usesMinimalChrome } from '../lib/chromeVisibility'
 import QuickContactModal from './QuickContactModal'
 
 // ─── Icons (inline SVG, no external deps) ────────────────────────────────────
@@ -82,10 +84,9 @@ interface ActionButtonProps {
   index: number
   totalActions: number
   expanded: boolean
-  onAction: (item: ActionItem) => void
 }
 
-function ActionButton({ item, index, totalActions, expanded, onAction }: ActionButtonProps) {
+function ActionButton({ item, index, totalActions, expanded }: ActionButtonProps) {
   const delay = (totalActions - 1 - index) * 0.045
 
   return (
@@ -126,6 +127,7 @@ function ActionButton({ item, index, totalActions, expanded, onAction }: ActionB
           rel={item.external ? 'noopener noreferrer' : undefined}
           download={item.download ? true : undefined}
           aria-label={item.label}
+          data-disable-custom-cursor="true"
           tabIndex={expanded ? 0 : -1}
           style={{
             width: '40px',
@@ -150,6 +152,7 @@ function ActionButton({ item, index, totalActions, expanded, onAction }: ActionB
           type="button"
           onClick={() => item.onClick?.()}
           aria-label={item.label}
+          data-disable-custom-cursor="true"
           tabIndex={expanded ? 0 : -1}
           style={{
             width: '40px',
@@ -175,7 +178,7 @@ function ActionButton({ item, index, totalActions, expanded, onAction }: ActionB
 
 // ─── Main export ──────────────────────────────────────────────────────────────
 
-export default function QuickActions(): JSX.Element {
+function QuickActionsBody(): JSX.Element {
   const [expanded, setExpanded] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -273,7 +276,6 @@ export default function QuickActions(): JSX.Element {
                   index={i}
                   totalActions={actions.length}
                   expanded={expanded}
-                  onAction={() => {}}
                 />
               ))}
             </motion.div>
@@ -286,6 +288,7 @@ export default function QuickActions(): JSX.Element {
           onClick={() => setExpanded(v => !v)}
           aria-expanded={expanded}
           aria-label={expanded ? 'Close quick actions' : 'Open quick actions'}
+          data-disable-custom-cursor="true"
           animate={{ rotate: expanded ? 45 : 0 }}
           transition={{ type: 'spring', stiffness: 400, damping: 28 }}
           style={{
@@ -310,4 +313,12 @@ export default function QuickActions(): JSX.Element {
       <QuickContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </>
   )
+}
+
+export default function QuickActions(): JSX.Element {
+  const pathname = usePathname()
+
+  if (usesMinimalChrome(pathname)) return <></>
+
+  return <QuickActionsBody />
 }

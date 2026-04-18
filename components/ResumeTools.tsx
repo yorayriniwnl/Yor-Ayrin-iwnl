@@ -3,7 +3,7 @@
 import React from 'react'
 import generateResumeJSON from '../lib/resumeGenerator'
 
-export default function ResumeTools(): JSX.Element {
+export default function ResumeTools({ showPrint = true }: { showPrint?: boolean }): JSX.Element {
   const downloadJSON = () => {
     try {
       const data = generateResumeJSON()
@@ -16,15 +16,29 @@ export default function ResumeTools(): JSX.Element {
       a.click()
       a.remove()
       setTimeout(() => URL.revokeObjectURL(url), 1500)
-    } catch (e) {
+    } catch (_error) {
       // silent
     }
   }
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <button className="btn btn-outline w-full sm:w-auto" onClick={downloadJSON}>Download JSON</button>
-      <button className="btn btn-primary w-full sm:w-auto" onClick={() => window.print()}>Print / Save PDF</button>
+      <button
+        className="btn btn-outline w-full sm:w-auto"
+        onClick={downloadJSON}
+        data-disable-custom-cursor="true"
+      >
+        Download JSON
+      </button>
+      {showPrint ? (
+        <button
+          className="btn btn-primary w-full sm:w-auto"
+          onClick={() => window.print()}
+          data-disable-custom-cursor="true"
+        >
+          Print / Save PDF
+        </button>
+      ) : null}
     </div>
   )
 }

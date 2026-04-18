@@ -7,6 +7,7 @@ import { setLoadTime } from '../lib/perfStore'
 
 const INTERACTIVE_SELECTOR =
   'a[href], button, [role="button"], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+const CUSTOM_CURSOR_OPT_OUT_SELECTOR = '[data-disable-custom-cursor="true"]'
 
 const LERP_FACTOR = 0.12
 
@@ -26,6 +27,7 @@ function useCursor(
   const ringPos   = useRef<CursorState>({ x: -200, y: -200 })
   const rafHandle = useRef<number>(0)
   const hovering  = useRef(false)
+  const suppressed = useRef(false)
   const enabledRef = useRef(enabled)
   const prevHtmlCursor = useRef<string>('')
   const prevBodyCursor = useRef<string>('')
@@ -54,6 +56,12 @@ function useCursor(
   }, [enabled])
 
   useEffect(() => {
+    const setCursorMode = (useNativeCursor: boolean) => {
+      document.documentElement.classList.toggle('custom-cursor-enabled', !useNativeCursor)
+      document.documentElement.style.cursor = useNativeCursor ? 'auto' : 'none'
+      document.body.style.cursor = useNativeCursor ? 'auto' : 'none'
+    }
+
     const applyHoverState = (hovered: boolean, x: number, y: number) => {
       const dot = dotRef.current
       const ring = ringRef.current
@@ -68,11 +76,32 @@ function useCursor(
     const onMove = (e: MouseEvent) => {
       if (!enabledRef.current) return
       const dot = dotRef.current
-      if (!dot) return
+      const ring = ringRef.current
+      if (!dot || !ring) return
 
       mouse.current = { x: e.clientX, y: e.clientY }
 
       const hoveredElement = document.elementFromPoint(e.clientX, e.clientY)
+      const disableCustomCursor = Boolean(hoveredElement?.closest(CUSTOM_CURSOR_OPT_OUT_SELECTOR))
+
+      if (disableCustomCursor) {
+        if (!suppressed.current) {
+          suppressed.current = true
+          dot.style.opacity = '0'
+          ring.style.opacity = '0'
+          setCursorMode(true)
+        }
+        return
+      }
+
+      if (suppressed.current) {
+        suppressed.current = false
+        ringPos.current = { x: e.clientX, y: e.clientY }
+        dot.style.opacity = '1'
+        ring.style.opacity = '1'
+        setCursorMode(false)
+      }
+
       const isInteractive = Boolean(hoveredElement?.closest(INTERACTIVE_SELECTOR))
 
       if (isInteractive !== hovering.current) {
@@ -106,6 +135,7 @@ function useCursor(
     return () => {
       document.removeEventListener('mousemove', onMove)
       cancelAnimationFrame(rafHandle.current)
+      suppressed.current = false
     }
   }, [dotRef, ringRef])
 }

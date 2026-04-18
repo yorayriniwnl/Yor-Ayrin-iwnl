@@ -124,7 +124,7 @@ export default function ResumePage(): JSX.Element {
               <p className="text-xs" style={{ color: '#7a7060' }}>
                 Recruiter mode: concise scan, evidence-forward projects, and export-ready resume tools.
               </p>
-              <ResumeTools />
+              <ResumeTools showPrint={false} />
             </div>
           </div>
 
