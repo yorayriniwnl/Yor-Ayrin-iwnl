@@ -196,35 +196,45 @@ const PAGE_CSS = `
 
   /* Avatar */
   .about-avatar-wrap {
-    position: relative; width: 180px; height: 180px;
+    position: relative;
+    width: clamp(220px, 23vw, 280px);
+    aspect-ratio: 4 / 5;
     flex-shrink: 0; align-self: flex-end; margin-bottom: 0.5rem;
   }
   .about-avatar-ring-spin {
-    position: absolute; inset: -8px; border-radius: 50%;
+    position: absolute; inset: 1rem -0.9rem -0.9rem 1rem;
+    border-radius: 2rem;
     border: 1.5px dashed rgba(201,168,76,0.3);
-    animation: _spinRing 18s linear infinite;
+    animation: none;
   }
   .about-avatar-ring-static {
-    position: absolute; inset: -2px; border-radius: 50%;
+    position: absolute; inset: -0.6rem 0.9rem 0.9rem -0.6rem;
+    border-radius: 2rem;
     border: 1px solid rgba(201,168,76,0.15);
   }
   .about-avatar-circle {
-    width: 180px; height: 180px; border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #1a1710, #0a0906);
+    width: 100%; height: 100%;
+    border-radius: 1.7rem;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(255,255,255,0.08) 0%, transparent 30%),
+      linear-gradient(160deg, #1a1710 0%, #0a0906 100%);
     position: relative; overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.18);
     box-shadow: 0 0 48px rgba(201,168,76,0.12), inset 0 0 24px rgba(201,168,76,0.05);
   }
   .about-avatar-circle::after {
     content: '';
     position: absolute; inset: 0;
     background:
-      linear-gradient(180deg, rgba(10,9,6,0.02) 0%, rgba(10,9,6,0.3) 100%),
-      radial-gradient(circle at 70% 15%, rgba(255,255,255,0.16) 0%, transparent 34%);
+      linear-gradient(180deg, rgba(10,9,6,0.01) 0%, rgba(10,9,6,0.26) 100%),
+      radial-gradient(circle at 70% 12%, rgba(255,255,255,0.12) 0%, transparent 30%);
     pointer-events: none;
   }
   .about-avatar-image {
     width: 100%; height: 100%;
-    object-fit: cover; object-position: center 24%;
+    object-fit: cover;
+    object-position: center 18%;
+    transform: scale(1.03);
   }
 
   /* Stats */
@@ -319,11 +329,8 @@ const PAGE_CSS = `
     .about-hero { padding: 0 1.5rem clamp(3rem, 6vw, 5rem); }
     .about-hero-inner { grid-template-columns: 1fr; }
     .about-avatar-wrap {
-      width: 160px; height: 160px;
+      width: min(62vw, 220px);
       justify-self: start; margin-top: 1rem;
-    }
-    .about-avatar-circle {
-      width: 160px; height: 160px;
     }
     .about-section-wrap { padding: 0 1.5rem; }
     .about-stats-grid { grid-template-columns: 1fr 1fr; }
