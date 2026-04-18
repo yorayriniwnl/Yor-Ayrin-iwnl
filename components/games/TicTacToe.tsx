@@ -77,7 +77,7 @@ function XMark({ dim }: { dim: boolean }) {
       viewBox="0 0 60 60"
       width="100%"
       height="100%"
-      style={{ display: 'block', padding: '17%', opacity: dim ? 0.27 : 1, transition: 'opacity 0.35s ease' }}
+      style={{ display: 'block', width: '68%', height: '68%', opacity: dim ? 0.27 : 1, transition: 'opacity 0.35s ease' }}
       aria-hidden
     >
       <line
@@ -112,7 +112,7 @@ function OMark({ dim }: { dim: boolean }) {
       viewBox="0 0 60 60"
       width="100%"
       height="100%"
-      style={{ display: 'block', padding: '17%', opacity: dim ? 0.27 : 1, transition: 'opacity 0.35s ease' }}
+      style={{ display: 'block', width: '68%', height: '68%', opacity: dim ? 0.27 : 1, transition: 'opacity 0.35s ease' }}
       aria-hidden
     >
       <circle
@@ -431,8 +431,13 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
   const [unlocked4x4, setUnlocked4x4] = useState(false)
   const [use4x4, setUse4x4]         = useState(false)
   const [showToast, setShowToast]   = useState(false)
+  const [boardPixelSize, setBoardPixelSize] = useState<number | null>(null)
 
   // ── Stable refs (avoid stale closures in effects & timers) ─────────────────
+  const layoutRef     = useRef<HTMLDivElement>(null)
+  const scoreRowRef   = useRef<HTMLDivElement>(null)
+  const statusRowRef  = useRef<HTMLDivElement>(null)
+  const hintRowRef    = useRef<HTMLParagraphElement>(null)
   const boardR      = useRef<Board>(board)
   const phaseR      = useRef<Phase>('setup')
   const totalR      = useRef(0)
@@ -565,10 +570,51 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
   // ── Computed ────────────────────────────────────────────────────────────────
   const winSet = winner ? new Set(winner.indices) : null
   const isLosing = winner !== null   // there's a winner → non-winners dim
+  const showHardModeHint = difficulty === 'hard' && boardSize === 3 && phase === 'playing'
+
+  // Fit the board to the real available height inside the game shell instead of viewport vmin.
+  useEffect(() => {
+    if (phase === 'setup') {
+      setBoardPixelSize(null)
+      return
+    }
+
+    const layout = layoutRef.current
+    if (!layout) return
+
+    const computeBoardSize = () => {
+      const computedStyle = window.getComputedStyle(layout)
+      const paddingX = parseFloat(computedStyle.paddingLeft || '0') + parseFloat(computedStyle.paddingRight || '0')
+      const paddingY = parseFloat(computedStyle.paddingTop || '0') + parseFloat(computedStyle.paddingBottom || '0')
+      const gap = parseFloat(computedStyle.rowGap || computedStyle.gap || '0')
+
+      const scoreHeight = scoreRowRef.current?.offsetHeight ?? 0
+      const statusHeight = statusRowRef.current?.offsetHeight ?? 0
+      const hintHeight = showHardModeHint ? hintRowRef.current?.offsetHeight ?? 0 : 0
+      const gapCount = showHardModeHint ? 3 : 2
+
+      const availableWidth = layout.clientWidth - paddingX
+      const availableHeight = layout.clientHeight - paddingY - scoreHeight - statusHeight - hintHeight - gap * gapCount
+      const nextSize = Math.floor(Math.min(480, availableWidth, availableHeight))
+
+      setBoardPixelSize((previous) => (previous === nextSize ? previous : nextSize))
+    }
+
+    computeBoardSize()
+
+    const resizeObserver = new ResizeObserver(computeBoardSize)
+    resizeObserver.observe(layout)
+    if (scoreRowRef.current) resizeObserver.observe(scoreRowRef.current)
+    if (statusRowRef.current) resizeObserver.observe(statusRowRef.current)
+    if (hintRowRef.current) resizeObserver.observe(hintRowRef.current)
+
+    return () => resizeObserver.disconnect()
+  }, [phase, showHardModeHint])
 
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <div
+      ref={layoutRef}
       style={{
         height: '100%', display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
@@ -595,6 +641,7 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
         <>
           {/* Session score */}
           <div
+            ref={scoreRowRef}
             style={{
               display: 'flex', alignItems: 'center', gap: '0.45rem',
               fontFamily: 'var(--ds-font-mono, monospace)', fontSize: '0.78rem', color: '#7a7060',
@@ -621,7 +668,8 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
             aria-label="Tic-Tac-Toe board"
             style={{
               position: 'relative',
-              width: `min(90vmin, 480px)`,
+              width: boardPixelSize !== null ? `${Math.max(0, boardPixelSize)}px` : 'min(90vw, 480px)',
+              maxWidth: '100%',
               aspectRatio: '1 / 1',
               display: 'grid',
               gridTemplateColumns: `repeat(${boardSize}, 1fr)`,
@@ -679,6 +727,7 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
 
           {/* Turn / thinking indicator */}
           <div
+            ref={statusRowRef}
             aria-live="polite"
             style={{
               fontFamily: 'var(--ds-font-mono, monospace)',
@@ -698,8 +747,10 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
           </div>
 
           {/* Hard-mode motivational hint */}
-          {difficulty === 'hard' && boardSize === 3 && phase === 'playing' && (
-            <p style={{
+          {showHardModeHint && (
+            <p
+              ref={hintRowRef}
+              style={{
               margin: 0, fontSize: '0.7rem', color: '#7a7060',
               fontFamily: 'var(--ds-font-mono, monospace)',
               letterSpacing: '0.03em', textAlign: 'center',
