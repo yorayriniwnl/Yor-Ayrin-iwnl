@@ -288,15 +288,16 @@ function drawEnvironment(ctx: CanvasRenderingContext2D, st: GameState): void {
           const y1 = perspY(t1)
           const x2 = VP_X + (f - 0.5) * 2 * ROAD_HALF_W * t2
           const y2 = perspY(t2)
-          ctx.strokeStyle = pal.dashColor.replace(')', `, ${alpha})`).replace('rgba(', 'rgba(')
-            // Just apply alpha directly by reconstructing:
-            .replace(/[\d.]+\)$/, `${(0.28 * alpha).toFixed(2)})`)
+          ctx.save()
+          ctx.globalAlpha = alpha
+          ctx.strokeStyle = pal.dashColor
           ctx.lineWidth = 1.5 + t1 * 2
           ctx.lineCap = 'round'
           ctx.beginPath()
           ctx.moveTo(x1, y1)
           ctx.lineTo(x2, y2)
           ctx.stroke()
+          ctx.restore()
         }
         t += dashT + gapT
       }
@@ -698,10 +699,14 @@ function CarGameCanvas(props: GameRenderProps): React.ReactElement {
     if (!canvas) return
 
     function onTouchStart(e: TouchEvent) {
-      stRef.current.touchStartX = e.touches[0].clientX
+      const touch = e.touches.item(0)
+      if (!touch) return
+      stRef.current.touchStartX = touch.clientX
     }
     function onTouchEnd(e: TouchEvent) {
-      const dx = e.changedTouches[0].clientX - stRef.current.touchStartX
+      const touch = e.changedTouches.item(0)
+      if (!touch) return
+      const dx = touch.clientX - stRef.current.touchStartX
       const now = Date.now()
       const st = stRef.current
       if (now - st.lastSwitchMs < 150) return
@@ -709,7 +714,7 @@ function CarGameCanvas(props: GameRenderProps): React.ReactElement {
         st.playerLane--
         st.playerTargetX = perspX(PLAYER_T, st.playerLane)
         st.lastSwitchMs = now
-      } else if (dx > 30 && st.playerLane < 2) {
+      } else if (dx > 30 && st.playerLane < NUM_LANES - 1) {
         st.playerLane++
         st.playerTargetX = perspX(PLAYER_T, st.playerLane)
         st.lastSwitchMs = now
