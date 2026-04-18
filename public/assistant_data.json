@@ -66,6 +66,18 @@
     { "category": "Languages", "name": "Java", "value": 52 },
     { "category": "Languages", "name": "C", "value": 50 }
   ],
+  "experience": [
+    {
+      "title": "Independent Project Work",
+      "meta": "Self-directed - Resume and GitHub verified",
+      "summary": "Built internship-ready full-stack projects across realtime systems, decision-support products, and computer vision, supported by public GitHub repositories."
+    },
+    {
+      "title": "Portfolio Platform",
+      "meta": "Personal site - yorayriniwnl.vercel.app",
+      "summary": "Maintains this portfolio as a recruiter-facing product surface with Next.js routing, resume workflows, GitHub-backed data, AI/chat helpers, and interactive sections."
+    }
+  ],
   "education": [
     {
       "title": "B.Tech - Computer Science & Communication Engineering",

@@ -1,7 +1,13 @@
 "use client"
 import React, { useEffect, useRef, useState } from 'react'
 import { speak } from '../../lib/tts'
-import { findProjectByIdOrName, explainProjectText, generateAnswerFromKnowledge, simpleGenerateAnswer } from './chatHelpers'
+import {
+  findProjectByIdOrName,
+  explainProjectText,
+  generateAnswerFromKnowledge,
+  type AssistantKnowledgeData,
+  type AssistantProject,
+} from './chatHelpers'
 
 type Message = { id: number; role: 'user' | 'assistant' | 'system'; text: string; loading?: boolean }
 type Suggestion = {
@@ -18,9 +24,9 @@ export default function ChatWidget(): JSX.Element {
     { id: idRef.current++, role: 'assistant', text: 'Hi — ask me about my projects, skills, or experience. Try "Tell me about Yor Zenith".' },
   ])
 
-  const dataRef = useRef<any>(null)
+  const dataRef = useRef<AssistantKnowledgeData | null>(null)
   const mounted = useRef(true)
-  const pendingGitHubRef = useRef<any[] | null>(null)
+  const pendingGitHubRef = useRef<AssistantProject[] | null>(null)
 
   const [srSupported, setSrSupported] = useState(false)
   const recognitionRef = useRef<any>(null)
@@ -54,7 +60,13 @@ export default function ChatWidget(): JSX.Element {
         fetch('/api/knowledge-graph')
           .then((r) => r.json())
           .then((g) => {
-            try { dataRef.current.graph = g } catch (e) { /* ignore */ }
+            try {
+              if (dataRef.current) {
+                dataRef.current.graph = g
+              }
+            } catch (e) {
+              /* ignore */
+            }
           })
           .catch(() => {})
       })
@@ -132,16 +144,17 @@ export default function ChatWidget(): JSX.Element {
     }
   }, [])
 
-  function mergeGitHubProjects(mapped: any[]) {
+  function mergeGitHubProjects(mapped: AssistantProject[]) {
     if (!dataRef.current) return
     const existing = Array.isArray(dataRef.current.projects) ? [...dataRef.current.projects] : []
-    const byId = new Map(existing.map((p: any) => [String(p.id).toLowerCase(), p]))
+    const byId = new Map(existing.map((project) => [String(project.id).toLowerCase(), project]))
 
     for (const mp of mapped) {
       if (!mp || !mp.id) continue
       const id = String(mp.id).toLowerCase()
       if (byId.has(id)) {
         const e = byId.get(id)
+        if (!e) continue
         // update select fields
         if (mp.github) e.github = mp.github
         if (!e.shortDescription && mp.shortDescription) e.shortDescription = mp.shortDescription
@@ -229,13 +242,19 @@ export default function ChatWidget(): JSX.Element {
     setMessages((s) => s.map((m) => (m.id === id ? { ...m, text, loading } : m)))
   }
 
-  function computeSuggestions(data: any, sec: string | null, focused: string | null, in3dFlag: boolean) {
+  function computeSuggestions(
+    data: AssistantKnowledgeData | null,
+    sec: string | null,
+    focused: string | null,
+    in3dFlag: boolean,
+  ) {
     if (!data) return setSuggestions([])
+    const projects = Array.isArray(data.projects) ? data.projects : []
     const s: Suggestion[] = []
 
     if (sec === 'projects') {
       s.push({ id: 'list-projects', label: 'List projects', action: { type: 'send', query: 'List projects' } })
-      const featured = data.projects.find((p: any) => p.featured)
+      const featured = projects.find((project) => project.featured)
       if (featured) s.push({ id: 'about-featured', label: `Tell me about ${featured.title}`, action: { type: 'send', query: `Tell me about ${featured.title}` } })
       s.push({ id: 'center-zenith', label: 'Center Yor Zenith', action: { type: 'focus', id: 'zenith' } })
     } else if (sec === 'skills' || sec === 'resume') {
@@ -350,7 +369,7 @@ export default function ChatWidget(): JSX.Element {
       // acknowledgment in chat
       const botId = idRef.current++
       pushMessage({ id: botId, role: 'assistant', text: '', loading: true })
-      const proj = dataRef.current?.projects?.find((p: any) => p.id === action.id)
+      const proj = dataRef.current?.projects?.find((project) => project.id === action.id)
       const title = proj ? proj.title : action.id
       await typeWrite(botId, `Centered ${title}. Ask me for details about this project.`)
       if (ttsEnabled) speakText(`Centered ${title}. Ask me for details about this project.`)
