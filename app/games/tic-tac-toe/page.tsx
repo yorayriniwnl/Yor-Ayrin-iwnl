@@ -14,7 +14,7 @@ export default function TicTacToePage() {
         height: 'calc(100svh - var(--ds-header-height, 5rem))',
         display: 'flex',
         flexDirection: 'column',
-        overflow: 'auto',
+        overflow: 'hidden',
       }}
     >
       <TicTacToe />

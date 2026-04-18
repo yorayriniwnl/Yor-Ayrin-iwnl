@@ -566,6 +566,7 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
   const winSet = winner ? new Set(winner.indices) : null
   const isLosing = winner !== null   // there's a winner → non-winners dim
   const showHardModeHint = difficulty === 'hard' && boardSize === 3 && phase === 'playing'
+  const boardDimension = 'min(90cqw, max(10rem, calc(100cqh - 9rem)), 30rem)'
 
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
@@ -576,7 +577,8 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
         gap: '0.85rem', padding: '1rem',
         width: '100%',
         boxSizing: 'border-box',
-        overflowY: 'auto',
+        overflow: 'hidden',
+        containerType: 'size',
         background: 'var(--ds-bg, #0a0906)',
       }}
     >
@@ -635,7 +637,7 @@ function TicTacToeInner({ isPaused, setScore }: Pick<GameRenderProps, 'isPaused'
             aria-label="Tic-Tac-Toe board"
             style={{
               position: 'relative',
-              width: 'min(90vw, 480px)',
+              width: boardDimension,
               maxWidth: '100%',
               aspectRatio: '1 / 1',
               flexShrink: 0,
