@@ -345,7 +345,7 @@ function drawCar(
   t: number,         // perspective scale factor (0–1)
   color: string,
   isPlayer: boolean,
-  frame: number,
+  _frame: number,
 ): void {
   const W = CAR_BASE_W * t
   const H = CAR_BASE_H * t
@@ -737,8 +737,15 @@ function CarGameCanvas(props: GameRenderProps): React.ReactElement {
     }
     prevGORef.current = isGORef.current
 
-    const st = stRef.current
-    if (isGORef.current || st.over) return
+    const prev = stRef.current
+    if (isGORef.current || prev.over) return
+
+    const st: GameState = {
+      ...prev,
+      obstacles: prev.obstacles.map((obs) => ({ ...obs })),
+      powerups: prev.powerups.map((powerup) => ({ ...powerup })),
+      lampPosts: prev.lampPosts.map((lampPost) => ({ ...lampPost })),
+    }
 
     // ── Input ─────────────────────────────────────────────────────────────────
     const left  = keysRef.current['ArrowLeft']  ?? false
@@ -769,6 +776,7 @@ function CarGameCanvas(props: GameRenderProps): React.ReactElement {
     st.fuel = Math.max(0, st.fuel - dt)
     if (st.fuel === 0) {
       st.over = true
+      stRef.current = st
       setGameOverRef.current(true, st.score)
       return
     }
@@ -852,6 +860,7 @@ function CarGameCanvas(props: GameRenderProps): React.ReactElement {
         st.shakeTimer = 18
         if (st.lives <= 0) {
           st.over = true
+          stRef.current = st
           setGameOverRef.current(true, st.score)
           return
         }
@@ -953,6 +962,7 @@ function CarGameCanvas(props: GameRenderProps): React.ReactElement {
     }
 
     ctx.restore()
+    stRef.current = st
   }, []) // stable — all values read through refs
 
   useGameLoop(gameTick, { paused: isPaused })
