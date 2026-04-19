@@ -6,7 +6,7 @@ import { STATIC_ACTIVITY } from '../../lib/activity'
 import type { AchievementItem } from '../../data/site'
 import Container from '../../components/ui/Container'
 import Divider from '../../components/ui/Divider'
-import { DisplayTitle, Eyebrow, Heading, Subheading } from '../../components/ui/Typography'
+import { Heading } from '../../components/ui/Typography'
 import { ButtonLink } from '../../components/ui/Button'
 import PageHero from '../../components/sections/PageHero'
 

@@ -118,10 +118,6 @@ export default function OnboardingPage(): React.JSX.Element {
 
   // ── Variants ──────────────────────────────────────────────────────────────
 
-  const pageVariants = prefersReduced
-    ? {}
-    : { hidden: { opacity: 0, x: 40 }, visible: { opacity: 1, x: 0 } }
-
   const cardVariants: Variants | undefined = prefersReduced
     ? undefined
     : {
@@ -371,7 +367,7 @@ export default function OnboardingPage(): React.JSX.Element {
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           >
             <h1 className="ob-heading">Welcome. Who are you?</h1>
-            <p className="ob-subtext">I'll personalize your experience.</p>
+            <p className="ob-subtext">I&apos;ll personalize your experience.</p>
 
             <div className="ob-roles">
               {ROLE_CARDS.map((card, i) => (

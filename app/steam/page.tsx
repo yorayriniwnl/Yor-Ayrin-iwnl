@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { GAME_LIBRARY, SITE_PROFILE } from '../../data/site'
 import type { GameEntry } from '../../data/site'
 import { ButtonLink } from '../../components/ui/Button'
@@ -36,6 +37,19 @@ type SteamBadge = {
   name: string
   icon?: string
   level?: string
+}
+
+function SteamThumb({ alt, src }: { alt: string; src: string }): JSX.Element {
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={48}
+      height={48}
+      sizes="48px"
+      style={{ borderRadius: '0.5rem', objectFit: 'cover' }}
+    />
+  )
 }
 
 function getTagValue(xml: string, tag: string): string | null {
@@ -280,11 +294,7 @@ function SteamShowcase({ steam }: { steam: SteamProfileData | null }) {
         <Card key={game.gameName} as="article" interactive={Boolean(game.gameLink)}>
           <div className="ds-stack ds-stack--tight h-full">
             {game.gameIcon ? (
-              <img
-                src={game.gameIcon}
-                alt={game.gameName}
-                style={{ width: '48px', height: '48px', borderRadius: '0.5rem', objectFit: 'cover' }}
-              />
+              <SteamThumb src={game.gameIcon} alt={game.gameName} />
             ) : null}
             <Badge accent>Steam</Badge>
             <Subheading>{game.gameName}</Subheading>
@@ -342,11 +352,7 @@ function AchievementShowcaseSlots({ steam }: { steam: SteamProfileData | null })
           <div className="ds-stack ds-stack--tight h-full">
             <Badge accent={Boolean(badge)}>Achievement slot {index + 1}</Badge>
             {badge?.icon ? (
-              <img
-                src={badge.icon}
-                alt={badge.name}
-                style={{ width: '48px', height: '48px', borderRadius: '0.5rem', objectFit: 'cover' }}
-              />
+              <SteamThumb src={badge.icon} alt={badge.name} />
             ) : null}
             <Subheading style={{ color: badge ? 'var(--ds-text-soft)' : 'var(--ds-text-muted)' }}>
               {badge?.name ?? 'Unavailable'}

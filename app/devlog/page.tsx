@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState } from 'react'
-import type { Metadata } from 'next'
 import { getDevLogEntries, getAllTags } from '../../lib/devlog'
 import DevLog from '../../components/DevLog'
 import { usePageView } from '../../lib/analytics'

@@ -394,19 +394,14 @@ export default function SkillsPage(): JSX.Element {
       <FlatSkillsGrid />
 
       {/* Responsive styles injected into the document head via a style tag */}
-      <style
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{
-          __html: `
-            .graph-3d-wrapper   { display: block; }
-            .graph-mobile-notice{ display: none;  }
-            @media (max-width: 767px) {
-              .graph-3d-wrapper    { display: none;  }
-              .graph-mobile-notice { display: block; }
-            }
-          `,
-        }}
-      />
+      <style>{`
+        .graph-3d-wrapper { display: block; }
+        .graph-mobile-notice { display: none; }
+        @media (max-width: 767px) {
+          .graph-3d-wrapper { display: none; }
+          .graph-mobile-notice { display: block; }
+        }
+      `}</style>
     </main>
   )
 }

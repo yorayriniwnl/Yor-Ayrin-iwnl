@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useId } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { TIMELINE, timelineStats, type TimelineEntry, type TimelineKind } from '../../lib/timeline'
@@ -304,8 +304,6 @@ function SpineDot({ entry, index }: SpineDotProps): JSX.Element {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function TimelinePage(): JSX.Element {
-  const lineId = useId()
-
   return (
     <div className="min-h-screen">
       {/* ── Hero ── */}

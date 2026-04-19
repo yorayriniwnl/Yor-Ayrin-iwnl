@@ -2,12 +2,11 @@
 
 import React, { useState, useId } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import type { Metadata } from 'next'
 import { EDUCATION_ITEMS, EXPERIENCE_ITEMS, PROJECTS } from '../../lib/data'
 import type { ExperienceItem } from '../../data/site'
 import Container from '../../components/ui/Container'
 import Divider from '../../components/ui/Divider'
-import { DisplayTitle, Eyebrow, Heading } from '../../components/ui/Typography'
+import { Heading } from '../../components/ui/Typography'
 import { ButtonLink } from '../../components/ui/Button'
 import PageHero from '../../components/sections/PageHero'
 
