@@ -1,7 +1,7 @@
 export type { GameEntry } from './site'
 export { GAME_LIBRARY, STEAM_PROFILE_PLACEHOLDERS } from './site'
 
-export type GameCategory = 'arcade' | 'puzzle' | 'strategy' | 'word' | 'typing'
+export type GameCategory = 'arcade' | 'fps' | 'puzzle' | 'strategy' | 'word' | 'typing'
 export type GameStatus = 'live' | 'coming-soon'
 
 export type GameControl = {
@@ -21,6 +21,22 @@ export type GameMeta = {
 }
 
 export const GAMES: GameMeta[] = [
+  {
+    id: 'strike-arena',
+    slug: 'strike-arena',
+    title: 'Yor Strike Arena',
+    description:
+      'Counter-Strike 1.6 inspired browser shooter with pointer-lock aim, strafing bots, manual reloads, and a low-poly arena.',
+    category: 'fps',
+    status: 'live',
+    featured: true,
+    controls: [
+      { key: 'WASD', action: 'Move and strafe' },
+      { key: 'Mouse', action: 'Aim the camera' },
+      { key: 'Click', action: 'Fire the sidearm' },
+      { key: 'R', action: 'Reload the magazine' },
+    ],
+  },
   {
     id: 'road-racing',
     slug: 'road-racing',

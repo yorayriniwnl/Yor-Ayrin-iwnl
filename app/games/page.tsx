@@ -24,6 +24,7 @@ type FilterOption = 'all' | GameCategory
 const FILTER_OPTIONS: { id: FilterOption; label: string }[] = [
   { id: 'all',      label: 'All'      },
   { id: 'arcade',   label: 'Arcade'   },
+  { id: 'fps',      label: 'FPS'      },
   { id: 'puzzle',   label: 'Puzzle'   },
   { id: 'strategy', label: 'Strategy' },
   { id: 'word',     label: 'Word'     },

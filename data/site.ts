@@ -684,6 +684,17 @@ export const ACHIEVEMENT_ITEMS: AchievementItem[] = [
 
 export const GAME_LIBRARY: GameEntry[] = [
   {
+    id: 'strike-arena',
+    title: 'Yor Strike Arena',
+    subtitle: '3D FPS - Classic tactical feel',
+    status: 'Playable now',
+    mode: 'playable',
+    metric: '1.6-inspired arena',
+    detail:
+      'A first-person browser shooter with strafing bots, cover-aware skirmishes, manual reloads, and pointer-lock aiming built directly into the site.',
+    href: '/games/strike-arena',
+  },
+  {
     id: 'road-runner',
     title: 'Yor Road Runner',
     subtitle: 'Playable in this site',
