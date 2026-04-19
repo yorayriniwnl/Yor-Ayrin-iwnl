@@ -8,9 +8,9 @@ import QuickApply from '../../components/QuickApply'
 
 export const metadata: Metadata = {
   title: 'Recruiter Dashboard | Ayush Roy',
-  description: `A one-glance hiring summary for ${SITE_PROFILE.name} â€” featured projects, core skills, availability status, and direct contact. Built for recruiters who move fast.`,
+  description: `A one-glance hiring summary for ${SITE_PROFILE.name} - featured projects, core skills, availability status, and direct contact. Built for recruiters who move fast.`,
   openGraph: {
-    title: `${SITE_PROFILE.name} â€” Recruiter Dashboard`,
+    title: `${SITE_PROFILE.name} - Recruiter Dashboard`,
     description: `${SITE_PROFILE.role} - Open to verified opportunities - ${SITE_PROFILE.websiteLabel}`,
     url: `${SITE_PROFILE.websiteHref}/dashboard`,
     type: 'profile',
@@ -100,7 +100,7 @@ export default function DashboardPage(): JSX.Element {
             letterSpacing: '0.04em',
           }}
         >
-          Everything you need to evaluate, contact, and move fast â€” no navigation required.
+          Everything you need to evaluate, contact, and move fast - no navigation required.
         </p>
       </div>
 
@@ -130,4 +130,3 @@ export default function DashboardPage(): JSX.Element {
     </main>
   )
 }
-

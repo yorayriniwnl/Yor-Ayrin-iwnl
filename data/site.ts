@@ -697,7 +697,7 @@ export const GAME_LIBRARY: GameEntry[] = [
   {
     id: 'yor-chess',
     title: 'Yor Chess',
-    subtitle: 'AI opponent · Strategic gameplay',
+    subtitle: 'AI opponent - Strategic gameplay',
     status: 'Playable now',
     mode: 'playable',
     metric: 'Stockfish engine',
@@ -708,7 +708,7 @@ export const GAME_LIBRARY: GameEntry[] = [
   {
     id: 'memory-match',
     title: 'Memory Match',
-    subtitle: 'Timed puzzle Â· Tech-stack board',
+    subtitle: 'Timed puzzle - Tech-stack board',
     status: 'Playable now',
     mode: 'playable',
     metric: 'Easy + hard boards',
@@ -719,7 +719,7 @@ export const GAME_LIBRARY: GameEntry[] = [
   {
     id: 'snake',
     title: 'Snake',
-    subtitle: 'Arcade reflex Â· Wraparound play',
+    subtitle: 'Arcade reflex - Wraparound play',
     status: 'Playable now',
     mode: 'playable',
     metric: '6 food types',
@@ -730,7 +730,7 @@ export const GAME_LIBRARY: GameEntry[] = [
   {
     id: 'tic-tac-toe',
     title: 'Tic-Tac-Toe',
-    subtitle: 'Strategy duel Â· Minimax AI',
+    subtitle: 'Strategy duel - Minimax AI',
     status: 'Playable now',
     mode: 'playable',
     metric: 'AI difficulty tiers',
@@ -741,7 +741,7 @@ export const GAME_LIBRARY: GameEntry[] = [
   {
     id: 'devwordle',
     title: 'DevWordle',
-    subtitle: 'Word game Â· Daily and free play',
+    subtitle: 'Word game - Daily and free play',
     status: 'Playable now',
     mode: 'playable',
     metric: '5- and 6-letter modes',
@@ -752,7 +752,7 @@ export const GAME_LIBRARY: GameEntry[] = [
   {
     id: 'typing-challenge',
     title: 'Typing Challenge',
-    subtitle: 'Code typing Â· Portfolio snippets',
+    subtitle: 'Code typing - Portfolio snippets',
     status: 'Playable now',
     mode: 'playable',
     metric: 'Real TypeScript snippets',

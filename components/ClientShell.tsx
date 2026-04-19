@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { setLoadTime } from '../lib/perfStore'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -8,6 +9,7 @@ import { setLoadTime } from '../lib/perfStore'
 const INTERACTIVE_SELECTOR =
   'a[href], button, [role="button"], input, select, textarea, [tabindex]:not([tabindex="-1"])'
 const CUSTOM_CURSOR_OPT_OUT_SELECTOR = '[data-disable-custom-cursor="true"]'
+const ONBOARDING_VISITED_KEY = 'hasVisited'
 
 const LERP_FACTOR = 0.12
 
@@ -195,6 +197,7 @@ function usePerfMark() {
 // ─── Main export ──────────────────────────────────────────────────────────────
 
 export default function ClientShell({ children }: { children?: React.ReactNode }): JSX.Element {
+  const pathname = usePathname() ?? '/'
   const [mounted,   setMounted]   = useState(false)
   const [hasFinePointer, setHasFinePointer] = useState(true)
 
@@ -244,6 +247,18 @@ export default function ClientShell({ children }: { children?: React.ReactNode }
       window.removeEventListener('mousemove', onMouseMove)
     }
   }, [])
+
+  useEffect(() => {
+    if (!mounted || pathname !== '/') return
+
+    try {
+      if (window.localStorage.getItem(ONBOARDING_VISITED_KEY) !== '1') {
+        window.location.replace('/onboarding')
+      }
+    } catch {
+      // Ignore storage access failures and fall back to the homepage.
+    }
+  }, [mounted, pathname])
 
   const showCursor = mounted && hasFinePointer
 

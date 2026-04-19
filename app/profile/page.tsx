@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from 'react'
-import type { Metadata } from 'next'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { usePageView } from '../../lib/analytics'
@@ -461,7 +460,7 @@ function ProjectsSection() {
                 paddingTop: '2px',
               }}
             >
-              GitHub â†’
+              View on GitHub
             </a>
           </motion.div>
         ))}
@@ -474,9 +473,9 @@ function ProjectsSection() {
 
 function CTASection() {
   const btns = [
-    { label: 'ðŸ“„ Download Resume', href: '/resume.pdf',  download: true,  primary: true  },
-    { label: 'ðŸ’¼ View All Projects', href: '/projects',  download: false, primary: false },
-    { label: 'âœ‰ï¸ Get in Touch',     href: '/contact',   download: false, primary: false },
+    { label: 'Download Resume', href: '/resume.pdf', download: true, primary: true },
+    { label: 'View All Projects', href: '/projects', download: false, primary: false },
+    { label: 'Get in Touch', href: '/contact', download: false, primary: false },
   ]
 
   return (
@@ -586,4 +585,3 @@ export default function ProfilePage(): JSX.Element {
     </main>
   )
 }
-
