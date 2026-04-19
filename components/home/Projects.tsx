@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { HOME_PROJECTS, PROJECT_BADGE_CLASS_MAP } from '../../data/home'
 import { useReveal } from './hooks/useReveal'
 
@@ -34,15 +35,13 @@ export default function Projects() {
 
         <div className="projects-grid">
           {HOME_PROJECTS.map((project, index) => (
-            <a
+            <Link
               key={project.title}
               ref={setRef(index)}
               data-reveal-key={`project-${index}`}
               style={revealStyle(`project-${index}`)}
               className={`project-card ${project.featured ? 'featured' : ''}`}
-              href={project.github ?? '#'}
-              target="_blank"
-              rel="noreferrer"
+              href={`/projects/${project.id}`}
             >
               <span
                 className={`proj-badge ${
@@ -62,10 +61,10 @@ export default function Projects() {
               </div>
               <div className="proj-meta">
                 <span className="proj-date">{project.date ?? 'Apr 2026'}</span>
-                <span className="proj-link">github.com</span>
+                <span className="proj-link">Open case study</span>
               </div>
               <span className="proj-number">0{index + 1}</span>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

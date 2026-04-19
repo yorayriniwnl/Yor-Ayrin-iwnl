@@ -24,7 +24,7 @@ function FallbackAvatar(): React.ReactElement {
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/images/avatar-fallback.svg"
+        src="/avatar-fallback.svg"
         alt="Avatar placeholder"
         style={{ maxWidth: 280, maxHeight: 400, objectFit: 'contain', opacity: 0.8 }}
       />

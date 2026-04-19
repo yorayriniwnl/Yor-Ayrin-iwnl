@@ -1,33 +1,98 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type FormEvent } from 'react'
+import { SITE_PROFILE } from '../../data/personal'
 
-type ContactForm = { name: string; email: string; msg: string }
+type ContactFormState = {
+  name: string
+  email: string
+  msg: string
+}
 
-/**
- * Contact
- *
- * Two-column contact section with link list and inline form.
- * Needs 'use client' for:
- *   - useState (controlled form inputs)
- *   - sendMessage handler (button onClick)
- */
+type Status = 'idle' | 'sending' | 'success' | 'error'
+
+const INITIAL_FORM: ContactFormState = {
+  name: '',
+  email: '',
+  msg: '',
+}
+
+function getFirstErrorMessage(payload: unknown): string | null {
+  if (!payload || typeof payload !== 'object') return null
+
+  const maybeErrors = (payload as { errors?: unknown }).errors
+  if (!maybeErrors || typeof maybeErrors !== 'object') return null
+
+  return Object.values(maybeErrors).find((value): value is string => typeof value === 'string') ?? null
+}
+
 export default function Contact() {
-  const [form, setForm] = useState<ContactForm>({ name: '', email: '', msg: '' })
+  const [form, setForm] = useState<ContactFormState>(INITIAL_FORM)
+  const [status, setStatus] = useState<Status>('idle')
+  const [feedback, setFeedback] = useState('')
 
-  const sendMessage = () => {
-    if (!form.name.trim() && !form.msg.trim()) {
-      alert('Fill in your message first.')
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setFeedback('')
+
+    if (!form.name.trim()) {
+      setStatus('error')
+      setFeedback('Please enter your name.')
       return
     }
-    alert(`Message sent from: ${form.name || 'Anonymous'}`)
+
+    if (!form.email.trim()) {
+      setStatus('error')
+      setFeedback('Please enter your email.')
+      return
+    }
+
+    if (!form.msg.trim()) {
+      setStatus('error')
+      setFeedback('Please enter a message.')
+      return
+    }
+
+    setStatus('sending')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          subject: 'Homepage inquiry',
+          message: form.msg,
+        }),
+      })
+
+      const body = await response.json().catch(() => ({}))
+
+      if (!response.ok) {
+        setStatus('error')
+        setFeedback(
+          getFirstErrorMessage(body) ??
+            (typeof body?.error === 'string' ? body.error : 'Message failed to send.'),
+        )
+        return
+      }
+
+      setStatus('success')
+      setFeedback("Message sent. I'll get back to you soon.")
+      setForm(INITIAL_FORM)
+    } catch {
+      setStatus('error')
+      setFeedback(`Something went wrong. Email me directly at ${SITE_PROFILE.email}.`)
+    }
   }
+
+  const isBusy = status === 'sending'
 
   return (
     <section className="contact" id="contact">
       <div className="section-wrap">
         <div className="contact-inner">
-          {/* ── Left column ── */}
           <div className="contact-left">
             <div className="section-label">Get in Touch</div>
             <h2 className="contact-heading">
@@ -39,44 +104,32 @@ export default function Contact() {
             </p>
 
             <div className="contact-links">
-              <a
-                className="contact-link-row"
-                href="mailto:yorayriniwnl@gmail.com"
-              >
+              <a className="contact-link-row" href={`mailto:${SITE_PROFILE.email}`}>
                 <span className="contact-link-label">Email</span>
-                <span className="contact-link-val">yorayriniwnl@gmail.com</span>
+                <span className="contact-link-val">{SITE_PROFILE.email}</span>
                 <span className="contact-link-arrow">-&gt;</span>
               </a>
               <a
                 className="contact-link-row"
-                href="https://github.com/yorayriniwnl"
+                href={SITE_PROFILE.githubHref}
                 target="_blank"
                 rel="noreferrer"
               >
                 <span className="contact-link-label">GitHub</span>
-                <span className="contact-link-val">
-                  github.com/yorayriniwnl
-                </span>
+                <span className="contact-link-val">{SITE_PROFILE.githubLabel}</span>
                 <span className="contact-link-arrow">-&gt;</span>
               </a>
               <a
                 className="contact-link-row"
-                href="https://linkedin.com/in/yorayriniwnl"
+                href={SITE_PROFILE.linkedinHref}
                 target="_blank"
                 rel="noreferrer"
               >
                 <span className="contact-link-label">LinkedIn</span>
-                <span className="contact-link-val">
-                  linkedin.com/in/yorayriniwnl
-                </span>
+                <span className="contact-link-val">{SITE_PROFILE.linkedinLabel}</span>
                 <span className="contact-link-arrow">-&gt;</span>
               </a>
-              <a
-                className="contact-link-row"
-                href="/resume.pdf"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a className="contact-link-row" href="/resume.pdf" target="_blank" rel="noreferrer">
                 <span className="contact-link-label">Resume</span>
                 <span className="contact-link-val">Download PDF</span>
                 <span className="contact-link-arrow">download</span>
@@ -84,9 +137,8 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* ── Right column — form ── */}
           <div className="contact-right">
-            <div className="contact-form">
+            <form className="contact-form" onSubmit={handleSubmit}>
               <div className="contact-form-bar">
                 <span className="contact-form-title">send-message.md</span>
                 <div className="form-dots">
@@ -103,9 +155,10 @@ export default function Contact() {
                   type="text"
                   placeholder="Who am I speaking to?"
                   value={form.name}
-                  onChange={(e) =>
-                    setForm((p) => ({ ...p, name: e.target.value }))
+                  onChange={(event) =>
+                    setForm((previous) => ({ ...previous, name: event.target.value }))
                   }
+                  disabled={isBusy}
                 />
               </div>
 
@@ -116,9 +169,10 @@ export default function Contact() {
                   type="email"
                   placeholder="Where should I reply?"
                   value={form.email}
-                  onChange={(e) =>
-                    setForm((p) => ({ ...p, email: e.target.value }))
+                  onChange={(event) =>
+                    setForm((previous) => ({ ...previous, email: event.target.value }))
                   }
+                  disabled={isBusy}
                 />
               </div>
 
@@ -128,19 +182,22 @@ export default function Contact() {
                   id="contactMsg"
                   placeholder="What are you building? What's the opportunity?"
                   value={form.msg}
-                  onChange={(e) =>
-                    setForm((p) => ({ ...p, msg: e.target.value }))
+                  onChange={(event) =>
+                    setForm((previous) => ({ ...previous, msg: event.target.value }))
                   }
+                  disabled={isBusy}
                 />
               </div>
 
               <div className="form-footer">
-                <span className="form-note">Response within 24-48 hours</span>
-                <button className="btn-send" onClick={sendMessage}>
-                  Send Message
+                <span className="form-note">
+                  {feedback || (status === 'success' ? "I'll reply within 24 hours." : 'Response within 24-48 hours')}
+                </span>
+                <button className="btn-send" type="submit" disabled={isBusy}>
+                  {isBusy ? 'Sending...' : 'Send Message'}
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

@@ -92,7 +92,11 @@ export const metadata: Metadata = {
     creator: '@yorayriniwnl',
   },
   robots: { index: true, follow: true },
-  icons: { icon: '/favicon.ico', shortcut: '/favicon.ico', apple: '/apple-touch-icon.png' },
+  icons: {
+    icon: '/images/profile.svg',
+    shortcut: '/images/profile.svg',
+    apple: '/images/profile.svg',
+  },
   alternates: { canonical: SITE_URL },
 }
 

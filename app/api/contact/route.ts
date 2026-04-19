@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 import nodemailer from 'nodemailer'
 import {
   contactNotification,
@@ -7,8 +7,6 @@ import {
   type ContactFormData,
 } from '../../../lib/emailTemplates'
 
-// ─── In-memory rate limit store ───────────────────────────────────────────────
-
 type RateLimitEntry = {
   count: number
   resetAt: number
@@ -16,15 +14,16 @@ type RateLimitEntry = {
 
 const rateLimitMap = new Map<string, RateLimitEntry>()
 
-const RATE_LIMIT_MAX    = 3
-const RATE_LIMIT_WINDOW = 60 * 60 * 1000 // 60 minutes in ms
+const RATE_LIMIT_MAX = 3
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000
 
 function getRateLimitEntry(ip: string): RateLimitEntry {
   const now = Date.now()
 
-  // Purge stale entries on every request
   for (const [key, entry] of rateLimitMap.entries()) {
-    if (entry.resetAt < now) rateLimitMap.delete(key)
+    if (entry.resetAt < now) {
+      rateLimitMap.delete(key)
+    }
   }
 
   const existing = rateLimitMap.get(ip)
@@ -33,10 +32,9 @@ function getRateLimitEntry(ip: string): RateLimitEntry {
     rateLimitMap.set(ip, fresh)
     return fresh
   }
+
   return existing
 }
-
-// ─── Validation ───────────────────────────────────────────────────────────────
 
 type FieldErrors = Record<string, string>
 
@@ -56,9 +54,9 @@ function validateFields(body: Record<string, unknown>): FieldErrors {
     errors.email = 'Please enter a valid email address.'
   }
 
-  if (!subject || typeof subject !== 'string' || subject.trim().length < 2) {
-    errors.subject = 'Please select a subject.'
-  } else if (subject.trim().length > 200) {
+  if (subject !== null && subject !== undefined && typeof subject !== 'string') {
+    errors.subject = 'Subject must be plain text.'
+  } else if (typeof subject === 'string' && subject.trim().length > 200) {
     errors.subject = 'Subject must be 200 characters or fewer.'
   }
 
@@ -71,8 +69,6 @@ function validateFields(body: Record<string, unknown>): FieldErrors {
   return errors
 }
 
-// ─── GET → 405 ────────────────────────────────────────────────────────────────
-
 export async function GET(): Promise<NextResponse> {
   return NextResponse.json(
     { ok: false, error: 'Method not allowed' },
@@ -80,10 +76,7 @@ export async function GET(): Promise<NextResponse> {
   )
 }
 
-// ─── POST ─────────────────────────────────────────────────────────────────────
-
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  // 1. Parse JSON body
   let body: Record<string, unknown>
   try {
     body = await req.json()
@@ -91,21 +84,22 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ ok: false, error: 'Invalid JSON body' }, { status: 400 })
   }
 
-  // 2. Validate fields
   const fieldErrors = validateFields(body)
   if (Object.keys(fieldErrors).length > 0) {
     return NextResponse.json({ ok: false, errors: fieldErrors }, { status: 400 })
   }
 
-  const name    = (body.name    as string).trim()
-  const email   = (body.email   as string).trim()
-  const subject = (body.subject as string).trim()
+  const name = (body.name as string).trim()
+  const email = (body.email as string).trim()
+  const subject =
+    typeof body.subject === 'string' && body.subject.trim().length > 0
+      ? body.subject.trim()
+      : 'General Inquiry'
   const message = (body.message as string).trim()
 
-  // 3. Rate limiting
   const forwarded = req.headers.get('x-forwarded-for')
-  const ip        = (forwarded ? forwarded.split(',')[0] : '127.0.0.1').trim()
-  const entry     = getRateLimitEntry(ip)
+  const ip = (forwarded ? forwarded.split(',')[0] : '127.0.0.1').trim()
+  const entry = getRateLimitEntry(ip)
 
   if (entry.count >= RATE_LIMIT_MAX) {
     const retryAfter = Math.ceil((entry.resetAt - Date.now()) / 1000)
@@ -115,10 +109,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     )
   }
 
-  // Increment before sending to block concurrent duplicate requests
   entry.count++
 
-  // 4. Spam check
   const formData: ContactFormData = {
     name,
     email,
@@ -132,21 +124,19 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ ok: false, error: 'Message flagged as spam' }, { status: 400 })
   }
 
-  // 5. Development short-circuit — skip actual send
   if (process.env.NODE_ENV !== 'production') {
     const template = contactNotification(formData)
-    console.log('[contact] DEV mode — email send skipped')
-    console.log('[contact] To:     ', process.env.EMAIL_TO ?? '(EMAIL_TO not set)')
-    console.log('[contact] Subject:', template.subject)
-    console.log('[contact] Body:\n', template.text)
+    console.warn('[contact] DEV mode: email send skipped')
+    console.warn('[contact] To:     ', process.env.EMAIL_TO ?? '(EMAIL_TO not set)')
+    console.warn('[contact] Subject:', template.subject)
+    console.warn('[contact] Body:\n', template.text)
     return NextResponse.json({ ok: true, message: 'Message sent successfully' })
   }
 
-  // 6. Send via Nodemailer
   try {
     const transport = nodemailer.createTransport({
-      host:   process.env.EMAIL_HOST,
-      port:   Number(process.env.EMAIL_PORT ?? 587),
+      host: process.env.EMAIL_HOST,
+      port: Number(process.env.EMAIL_PORT ?? 587),
       secure: process.env.EMAIL_PORT === '465',
       auth: {
         user: process.env.EMAIL_USER,
@@ -157,24 +147,23 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const notification = contactNotification(formData)
 
     await transport.sendMail({
-      from:    process.env.EMAIL_USER,
-      to:      process.env.EMAIL_TO,
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_TO,
       replyTo: email,
       subject: notification.subject,
-      html:    notification.html,
-      text:    notification.text,
+      html: notification.html,
+      text: notification.text,
     })
 
-    // 7. Optional confirmation email to sender
     if (process.env.SEND_CONFIRMATION === 'true') {
       const confirmation = confirmationEmail(formData)
       await transport.sendMail({
-        from:    process.env.EMAIL_USER,
-        to:      email,
+        from: process.env.EMAIL_USER,
+        to: email,
         replyTo: process.env.EMAIL_USER,
         subject: confirmation.subject,
-        html:    confirmation.html,
-        text:    confirmation.text,
+        html: confirmation.html,
+        text: confirmation.text,
       })
     }
   } catch (err: unknown) {

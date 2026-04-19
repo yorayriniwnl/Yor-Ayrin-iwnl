@@ -1,42 +1,8 @@
 'use client'
 
-import React, { useState, useRef, useEffect, KeyboardEvent } from 'react'
-
-// ─── Knowledge base ───────────────────────────────────────────────────────────
-
-const KNOWLEDGE = {
-  name: 'Ayush Roy',
-  role: 'System Builder & Developer',
-  location: 'India',
-  available: true,
-  skills: ['React', 'Next.js', 'TypeScript', 'Three.js', 'Python', 'Node.js', 'WebGL'],
-  projects: [
-    { name: 'Yor Zenith',       desc: 'Solar planning platform with React + D3. Scaled 10x, cut latency 40%.' },
-    { name: 'AI Detector',  desc: 'Low-latency image classifier. PyTorch + React frontend.' },
-    { name: 'Neo Sculpt',   desc: 'Interactive 3D web sculpting tool. Three.js + WebGL.' },
-  ],
-  contact: 'Contact via the /contact page or ayush@example.com',
-  github: 'https://github.com/yorayriniwnl',
-}
-
-function getAnswer(question: string): string {
-  const q = question.toLowerCase()
-  if (q.includes('skill') || q.includes('tech') || q.includes('stack'))
-    return 'Ayush works with: ' + KNOWLEDGE.skills.join(', ') + '. Strong focus on React, TypeScript, and Three.js.'
-  if (q.includes('project') || q.includes('built') || q.includes('work'))
-    return KNOWLEDGE.projects.map((p) => p.name + ': ' + p.desc).join('\n\n')
-  if (q.includes('available') || q.includes('hire') || q.includes('open'))
-    return 'Yes! Ayush is currently open to work. Best way to reach out: ' + KNOWLEDGE.contact
-  if (q.includes('contact') || q.includes('email') || q.includes('reach'))
-    return KNOWLEDGE.contact
-  if (q.includes('where') || q.includes('location') || q.includes('based'))
-    return 'Based in India, open to remote work worldwide.'
-  if (q.includes('github') || q.includes('code') || q.includes('repo'))
-    return 'GitHub: ' + KNOWLEDGE.github
-  return "I can answer questions about Ayush's skills, projects, availability, and contact info. What would you like to know?"
-}
-
-// ─── Types ────────────────────────────────────────────────────────────────────
+import React, { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { generateAnswerFromKnowledge } from '../../lib/ai/chatHelpers'
+import { ASSISTANT_KNOWLEDGE } from '../../lib/ai/knowledgeBase'
 
 type Message = {
   id: string
@@ -45,54 +11,58 @@ type Message = {
 }
 
 const PRESET_QUESTIONS = [
-  'What projects has Ayush built?',
-  'Is he available for work?',
-  "What's his tech stack?",
-  'How can I contact him?',
+  'Explain Yor Zenith',
+  'What projects have you built?',
+  "What's your experience?",
+  'How can I contact you?',
 ]
 
 const SESSION_LIMIT = 20
 
-// ─── Component ────────────────────────────────────────────────────────────────
-
 export default function AIAssistant(): React.JSX.Element {
   const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput]       = useState<string>('')
-  const [thinking, setThinking] = useState<boolean>(false)
-  const bottomRef               = useRef<HTMLDivElement>(null)
-  const inputRef                = useRef<HTMLInputElement>(null)
+  const [input, setInput] = useState('')
+  const [thinking, setThinking] = useState(false)
+  const bottomRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const nextIdRef = useRef(0)
 
-  const atLimit  = messages.length >= SESSION_LIMIT
+  const atLimit = messages.length >= SESSION_LIMIT
   const hasChats = messages.length > 0
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, thinking])
 
+  function makeMessageId(): string {
+    nextIdRef.current += 1
+    return `msg-${nextIdRef.current}`
+  }
+
   function sendMessage(text: string): void {
     const trimmed = text.trim()
     if (!trimmed || thinking || atLimit) return
 
-    const userMsg: Message = { id: Date.now().toString(), role: 'user', text: trimmed }
+    const userMsg: Message = { id: makeMessageId(), role: 'user', text: trimmed }
     setMessages((prev) => [...prev, userMsg])
     setInput('')
     setThinking(true)
 
-    setTimeout(() => {
-      const answer = getAnswer(trimmed)
+    window.setTimeout(() => {
+      const answer = generateAnswerFromKnowledge(ASSISTANT_KNOWLEDGE, trimmed)
       const aiMsg: Message = {
-        id: (Date.now() + 1).toString(),
+        id: makeMessageId(),
         role: 'ai',
         text: answer,
       }
       setMessages((prev) => [...prev, aiMsg])
       setThinking(false)
-    }, 300)
+    }, 260)
   }
 
-  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>): void {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
+  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>): void {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault()
       sendMessage(input)
     }
   }
@@ -108,8 +78,6 @@ export default function AIAssistant(): React.JSX.Element {
           background: var(--ds-bg, #060a14);
           font-family: var(--font-ds-body, 'DM Sans', ui-sans-serif, sans-serif);
         }
-
-        /* header */
         .aip-header {
           display: flex;
           align-items: center;
@@ -134,8 +102,6 @@ export default function AIAssistant(): React.JSX.Element {
           padding: 2px 7px;
           border-radius: 99px;
         }
-
-        /* messages */
         .aip-messages {
           flex: 1;
           overflow-y: auto;
@@ -146,8 +112,6 @@ export default function AIAssistant(): React.JSX.Element {
           scrollbar-width: thin;
           scrollbar-color: var(--ds-border, rgba(255,255,255,0.07)) transparent;
         }
-
-        /* preset chips */
         .aip-presets {
           display: flex;
           flex-direction: column;
@@ -180,8 +144,6 @@ export default function AIAssistant(): React.JSX.Element {
           border-color: var(--ds-primary, #6366f1);
           background: rgba(99,102,241,0.07);
         }
-
-        /* bubbles */
         .aip-bubble {
           max-width: 88%;
           padding: 10px 14px;
@@ -202,8 +164,6 @@ export default function AIAssistant(): React.JSX.Element {
           color: #fff;
           border-radius: 12px 12px 12px 2px;
         }
-
-        /* thinking dots */
         .aip-thinking {
           align-self: flex-start;
           background: #1e293b;
@@ -224,10 +184,8 @@ export default function AIAssistant(): React.JSX.Element {
         .aip-dot:nth-child(3) { animation-delay: 0.4s; }
         @keyframes aip-bounce {
           0%,80%,100% { transform: translateY(0); }
-          40%          { transform: translateY(-6px); }
+          40% { transform: translateY(-6px); }
         }
-
-        /* limit notice */
         .aip-limit {
           align-self: center;
           font-size: 12px;
@@ -238,8 +196,6 @@ export default function AIAssistant(): React.JSX.Element {
           padding: 8px 14px;
           text-align: center;
         }
-
-        /* input bar */
         .aip-footer {
           flex-shrink: 0;
           padding: 12px 16px;
@@ -294,36 +250,34 @@ export default function AIAssistant(): React.JSX.Element {
       `}</style>
 
       <div className="aip-root">
-        {/* Header */}
         <div className="aip-header">
           <span className="aip-header__title">Ask about Ayush</span>
           <span className="aip-badge">AI</span>
         </div>
 
-        {/* Messages */}
         <div className="aip-messages">
           {!hasChats && (
             <div className="aip-presets">
               <p className="aip-presets__label">Try asking</p>
-              {PRESET_QUESTIONS.map((q) => (
+              {PRESET_QUESTIONS.map((question) => (
                 <button
-                  key={q}
+                  key={question}
                   className="aip-chip"
-                  onClick={() => sendMessage(q)}
+                  onClick={() => sendMessage(question)}
                   type="button"
                 >
-                  {q}
+                  {question}
                 </button>
               ))}
             </div>
           )}
 
-          {messages.map((msg) => (
+          {messages.map((message) => (
             <div
-              key={msg.id}
-              className={`aip-bubble ${msg.role === 'user' ? 'aip-bubble--user' : 'aip-bubble--ai'}`}
+              key={message.id}
+              className={`aip-bubble ${message.role === 'user' ? 'aip-bubble--user' : 'aip-bubble--ai'}`}
             >
-              {msg.text}
+              {message.text}
             </div>
           ))}
 
@@ -342,15 +296,14 @@ export default function AIAssistant(): React.JSX.Element {
           <div ref={bottomRef} />
         </div>
 
-        {/* Input bar */}
         <div className="aip-footer">
           <input
             ref={inputRef}
             className="aip-input"
             type="text"
-            placeholder={atLimit ? 'Session limit reached' : 'Ask a question…'}
+            placeholder={atLimit ? 'Session limit reached' : 'Ask about projects, skills, or experience...'}
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(event) => setInput(event.target.value)}
             onKeyDown={handleKeyDown}
             disabled={atLimit || thinking}
             aria-label="Chat input"

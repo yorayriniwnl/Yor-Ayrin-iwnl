@@ -193,12 +193,24 @@ export default function QuickContactModal({ open, onClose }: QuickContactModalPr
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({
+          name,
+          email,
+          subject: 'Quick contact request',
+          message,
+        }),
       })
 
       if (!res.ok) {
         const body = await res.json().catch(() => ({}))
-        setFieldError(body?.error ?? 'Failed to send. Try emailing directly.')
+        const firstValidationError =
+          body?.errors && typeof body.errors === 'object'
+            ? Object.values(body.errors).find((value): value is string => typeof value === 'string')
+            : null
+
+        setFieldError(
+          firstValidationError ?? body?.error ?? 'Failed to send. Try emailing directly.',
+        )
         setStatus('error')
         return
       }
@@ -387,7 +399,7 @@ export default function QuickContactModal({ open, onClose }: QuickContactModalPr
                         fontFamily: 'var(--ds-font-mono)',
                       }}
                     >
-                      I'll get back to you soon.
+                      I&apos;ll get back to you soon.
                     </p>
                   </motion.div>
                 ) : (

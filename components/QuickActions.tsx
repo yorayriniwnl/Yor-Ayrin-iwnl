@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { SITE_PROFILE } from '../lib/data'
 import { usesMinimalChrome } from '../lib/chromeVisibility'
+import { openPluginPanel } from '../lib/pluginPanels'
 import QuickContactModal from './QuickContactModal'
 
 // ─── Icons (inline SVG, no external deps) ────────────────────────────────────
@@ -42,6 +43,17 @@ function IconMail() {
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
       <polyline points="22,6 12,13 2,6" />
+    </svg>
+  )
+}
+
+function IconAssistant() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M12 3a6 6 0 0 0-6 6v4a3 3 0 0 0 3 3h1l2 3 2-3h1a3 3 0 0 0 3-3V9a6 6 0 0 0-6-6Z" />
+      <circle cx="10" cy="10" r="1" fill="currentColor" stroke="none" />
+      <circle cx="14" cy="10" r="1" fill="currentColor" stroke="none" />
+      <path d="M9 14c.75.67 1.75 1 3 1s2.25-.33 3-1" />
     </svg>
   )
 }
@@ -204,6 +216,15 @@ function QuickActionsBody(): JSX.Element {
       icon: <IconResume />,
       href: '/resume.pdf',
       download: true,
+    },
+    {
+      id: 'assistant',
+      label: 'Assistant',
+      icon: <IconAssistant />,
+      onClick: () => {
+        setExpanded(false)
+        openPluginPanel('ai-assistant')
+      },
     },
     {
       id: 'contact',

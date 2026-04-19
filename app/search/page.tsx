@@ -27,6 +27,8 @@ import {
   type SearchItem,
   type SearchResult,
 } from '../../lib/searchIndex'
+import { SITE_PROFILE } from '../../lib/data'
+import { openPluginPanel } from '../../lib/pluginPanels'
 
 // ─────────────────────────────────────────────────────────────
 // ─────────────────────────────────────────────────────────────
@@ -70,20 +72,6 @@ const BADGE_COLORS: Record<GroupName, { bg: string; color: string }> = {
 // ─────────────────────────────────────────────────────────────
 // Helpers
 // ─────────────────────────────────────────────────────────────
-
-function groupItems(
-  items: (SearchItem | SearchResult)[]
-): Array<{ group: GroupName; items: (SearchItem | SearchResult)[] }> {
-  const map = new Map<GroupName, (SearchItem | SearchResult)[]>()
-  for (const item of items) {
-    const g = TYPE_TO_GROUP[item.type]
-    if (!map.has(g)) map.set(g, [])
-    map.get(g)!.push(item)
-  }
-  return GROUP_ORDER
-    .filter((g) => map.has(g))
-    .map((g) => ({ group: g, items: map.get(g)! }))
-}
 
 function totalCount(
   groups: Array<{ group: GroupName; items: (SearchItem | SearchResult)[] }>
@@ -322,10 +310,16 @@ export default function SearchPage(): React.ReactElement {
             window.open('/resume.pdf', '_blank')
             break
           case 'copy-email':
-            navigator.clipboard.writeText('ayush@example.com').catch(() => {})
+            navigator.clipboard.writeText(SITE_PROFILE.email).catch(() => {})
             break
           case 'toggle-theme':
             window.dispatchEvent(new CustomEvent('toggle-theme'))
+            break
+          case 'open-assistant':
+            openPluginPanel('ai-assistant')
+            break
+          case 'open-activity-feed':
+            openPluginPanel('activity-feed')
             break
           case 'github':
             window.open(item.url, '_blank')

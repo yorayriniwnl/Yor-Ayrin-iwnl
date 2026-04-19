@@ -22,6 +22,7 @@ import React, {
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { SITE_PROFILE } from '../lib/data'
+import { openPluginPanel } from '../lib/pluginPanels'
 import {
   search,
   getRecentItems,
@@ -357,6 +358,14 @@ export default function CommandPalette(): React.ReactElement | null {
               break
             case 'toggle-theme':
               window.dispatchEvent(new CustomEvent('toggle-theme'))
+              closePalette()
+              break
+            case 'open-assistant':
+              openPluginPanel('ai-assistant')
+              closePalette()
+              break
+            case 'open-activity-feed':
+              openPluginPanel('activity-feed')
               closePalette()
               break
             case 'github':

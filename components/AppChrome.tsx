@@ -5,6 +5,7 @@ import { AnimatePresence } from 'framer-motion'
 import CommandPalette from './CommandPalette'
 import Layout from './layout/Layout'
 import PageTransition from './PageTransition'
+import PluginPanelsHost from './PluginPanelsHost'
 import QuickActions from './QuickActions'
 import RecruiterStrip from './RecruiterStrip'
 
@@ -30,6 +31,7 @@ export default function AppChrome({ children, footer, nav, shell }: AppChromePro
 
       {shell}
       <CommandPalette />
+      <PluginPanelsHost />
       <QuickActions />
       <RecruiterStrip />
     </>

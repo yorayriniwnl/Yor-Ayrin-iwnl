@@ -1,4 +1,4 @@
-// ─── Types ────────────────────────────────────────────────────────────────────
+import { SITE_PROFILE } from '../data/personal'
 
 export type ContactFormData = {
   name: string
@@ -16,8 +16,6 @@ export type EmailTemplate = {
   replyTo: string
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
 function escapeHtml(raw: string): string {
   return raw
     .replace(/&/g, '&amp;')
@@ -26,8 +24,6 @@ function escapeHtml(raw: string): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
 }
-
-// ─── Notification email (sent to portfolio owner) ─────────────────────────────
 
 export function contactNotification(data: ContactFormData): EmailTemplate {
   const { name, email, subject, message, ip, timestamp } = data
@@ -44,8 +40,6 @@ export function contactNotification(data: ContactFormData): EmailTemplate {
     <tr>
       <td align="center">
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#0f172a;border-radius:12px;overflow:hidden;border:1px solid #1e293b;">
-
-          <!-- Header -->
           <tr>
             <td style="padding:32px 36px 0;">
               <h1 style="margin:0 0 12px;font-size:24px;font-weight:700;color:#ffffff;letter-spacing:-0.02em;">
@@ -54,8 +48,6 @@ export function contactNotification(data: ContactFormData): EmailTemplate {
               <div style="height:2px;background:#6366f1;border-radius:2px;margin-bottom:28px;"></div>
             </td>
           </tr>
-
-          <!-- Fields -->
           <tr>
             <td style="padding:0 36px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
@@ -86,8 +78,6 @@ export function contactNotification(data: ContactFormData): EmailTemplate {
               </table>
             </td>
           </tr>
-
-          <!-- Message body -->
           <tr>
             <td style="padding:0 36px 28px;">
               <div style="margin-top:8px;background:#0a0f1e;border-left:3px solid #6366f1;border-radius:0 8px 8px 0;padding:18px 20px;">
@@ -96,8 +86,6 @@ export function contactNotification(data: ContactFormData): EmailTemplate {
               </div>
             </td>
           </tr>
-
-          <!-- Footer -->
           <tr>
             <td style="padding:20px 36px 32px;border-top:1px solid #1e293b;">
               <p style="margin:0;font-size:13px;color:#475569;line-height:1.6;">
@@ -105,7 +93,6 @@ export function contactNotification(data: ContactFormData): EmailTemplate {
               </p>
             </td>
           </tr>
-
         </table>
       </td>
     </tr>
@@ -132,10 +119,8 @@ export function contactNotification(data: ContactFormData): EmailTemplate {
   }
 }
 
-// ─── Confirmation email (sent to form submitter) ──────────────────────────────
-
 export function confirmationEmail(data: ContactFormData): EmailTemplate {
-  const { name, email, message } = data
+  const { name, message } = data
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -149,7 +134,6 @@ export function confirmationEmail(data: ContactFormData): EmailTemplate {
     <tr>
       <td align="center">
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#0f172a;border-radius:12px;overflow:hidden;border:1px solid #1e293b;">
-
           <tr>
             <td style="padding:32px 36px 0;">
               <h1 style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;letter-spacing:-0.02em;">
@@ -161,7 +145,6 @@ export function confirmationEmail(data: ContactFormData): EmailTemplate {
               </p>
             </td>
           </tr>
-
           <tr>
             <td style="padding:0 36px 32px;">
               <p style="margin:0 0 12px;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#475569;">Your message</p>
@@ -170,15 +153,13 @@ export function confirmationEmail(data: ContactFormData): EmailTemplate {
               </div>
             </td>
           </tr>
-
           <tr>
             <td style="padding:20px 36px 32px;border-top:1px solid #1e293b;">
               <p style="margin:0;font-size:13px;color:#475569;line-height:1.6;">
-                — Ayush Roy &nbsp;·&nbsp; <a href="https://github.com/yorayriniwnl" style="color:#818cf8;text-decoration:none;">GitHub</a>
+                - Ayush Roy &nbsp;·&nbsp; <a href="https://github.com/yorayriniwnl" style="color:#818cf8;text-decoration:none;">GitHub</a>
               </p>
             </td>
           </tr>
-
         </table>
       </td>
     </tr>
@@ -195,32 +176,27 @@ export function confirmationEmail(data: ContactFormData): EmailTemplate {
     '---',
     message,
     '---',
-    '— Ayush Roy',
+    '- Ayush Roy',
   ].join('\n')
 
   return {
     subject: `Got your message, ${name}!`,
     html,
     text,
-    replyTo: 'ayush@example.com',
+    replyTo: SITE_PROFILE.email,
   }
 }
-
-// ─── Spam detection ───────────────────────────────────────────────────────────
 
 export function isSpam(data: ContactFormData): boolean {
   const { email, message } = data
 
-  // Too short
   if (message.trim().length < 10) return true
 
-  // Invalid email structure
   if (!email.includes('@')) return true
   const atIndex = email.indexOf('@')
   const afterAt = email.slice(atIndex + 1)
   if (!afterAt.includes('.')) return true
 
-  // Too many URLs
   const urlMatches = message.match(/https?:\/\//gi)
   if (urlMatches && urlMatches.length >= 3) return true
 

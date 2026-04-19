@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest'
 
-import assistantData from '../public/assistant_data.json'
 import {
   findProjectByIdOrName,
   generateAnswerFromKnowledge,
   simpleGenerateAnswer,
 } from '../lib/ai/chatHelpers'
+import { ASSISTANT_KNOWLEDGE } from '../lib/ai/knowledgeBase'
 
 describe('chat helpers', () => {
   it('answers experience questions from the shipped assistant data', () => {
-    const answer = generateAnswerFromKnowledge(assistantData, "What's your experience?")
+    const answer = generateAnswerFromKnowledge(ASSISTANT_KNOWLEDGE, "What's your experience?")
 
     expect(answer).toContain('Experience:')
     expect(answer).toContain('Independent Project Work')
@@ -30,8 +30,8 @@ describe('chat helpers', () => {
   })
 
   it('does not match a project for a blank query', () => {
-    expect(findProjectByIdOrName(assistantData, '')).toBeNull()
-    expect(findProjectByIdOrName(assistantData, '   ')).toBeNull()
+    expect(findProjectByIdOrName(ASSISTANT_KNOWLEDGE, '')).toBeNull()
+    expect(findProjectByIdOrName(ASSISTANT_KNOWLEDGE, '   ')).toBeNull()
   })
 
   it('returns a safe fallback when sparse data is loaded', () => {

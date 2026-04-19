@@ -9,6 +9,7 @@ import React, {
   FormEvent,
 } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { SITE_PROFILE } from '../lib/data'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -199,12 +200,12 @@ export default function ContactForm(): React.JSX.Element {
         }
 
         setGlobalError(
-          'Something went wrong. Please try again or email directly at ayush@example.com',
+          `Something went wrong. Please try again or email directly at ${SITE_PROFILE.email}`,
         )
         setStatus('error')
       } catch {
         setGlobalError(
-          'Something went wrong. Please try again or email directly at ayush@example.com',
+          `Something went wrong. Please try again or email directly at ${SITE_PROFILE.email}`,
         )
         setStatus('error')
       }

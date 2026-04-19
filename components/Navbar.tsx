@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import ThemeToggle from './ThemeToggle'
 import { NAV_LINKS, NAV_MENU_GROUPS, SITE_PROFILE } from '../lib/data'
+import { openPluginPanel } from '../lib/pluginPanels'
 
 export default function Navbar(): JSX.Element {
   const pathname = usePathname() ?? '/'
@@ -102,9 +103,13 @@ export default function Navbar(): JSX.Element {
             <Link href="/resume" className="ds-button ds-button--ghost ds-button--sm">
               Resume
             </Link>
-            <Link href="/settings" className="ds-button ds-button--secondary ds-button--sm">
-              Settings
-            </Link>
+            <button
+              type="button"
+              className="ds-button ds-button--secondary ds-button--sm"
+              onClick={() => openPluginPanel('ai-assistant')}
+            >
+              Ask AI
+            </button>
           </div>
           <button
             type="button"
@@ -133,7 +138,17 @@ export default function Navbar(): JSX.Element {
                 <Link href="/resume" className="ds-button ds-button--ghost ds-button--sm">
                   Resume
                 </Link>
-                <Link href="/settings" className="ds-button ds-button--secondary ds-button--sm">
+                <button
+                  type="button"
+                  className="ds-button ds-button--secondary ds-button--sm"
+                  onClick={() => {
+                    openPluginPanel('ai-assistant')
+                    setIsMenuOpen(false)
+                  }}
+                >
+                  Ask AI
+                </button>
+                <Link href="/settings" className="ds-button ds-button--ghost ds-button--sm">
                   Settings
                 </Link>
               </div>

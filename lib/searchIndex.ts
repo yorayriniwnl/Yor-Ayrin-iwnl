@@ -1,387 +1,193 @@
-/**
- * lib/searchIndex.ts
- *
- * Client-side search index for Ayush Roy's portfolio.
- * Hardcoded content - no network requests, no external search library.
- * Scoring is hand-rolled to match the spec precisely.
- */
+import {
+  FOOTER_LINK_GROUPS,
+  NAV_LINKS,
+  NAV_MENU_GROUPS,
+  ORDERED_PROJECTS,
+  SITE_PROFILE,
+  SKILL_CATEGORIES,
+} from './data'
 
 export type SearchItem = {
-  type:  'page' | 'project' | 'skill' | 'action'
-  id:    string
+  type: 'page' | 'project' | 'skill' | 'action'
+  id: string
   title: string
-  body:  string
-  url:   string
-  tags:  string[]
+  body: string
+  url: string
+  tags: string[]
   icon?: string
 }
 
 export type SearchResult = SearchItem & {
-  score:        number
+  score: number
   matchedTerms: string[]
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// Index data
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+export type SearchActionId =
+  | 'download-resume'
+  | 'copy-email'
+  | 'toggle-theme'
+  | 'github'
+  | 'open-assistant'
+  | 'open-activity-feed'
 
-export const SEARCH_ITEMS: SearchItem[] = [
-  // â”€â”€ Pages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  {
-    type:  'page',
-    id:    'home',
-    title: 'Home',
-    body:  'Portfolio homepage',
-    url:   '/',
-    tags:  ['home'],
-    icon:  'ðŸ ',
-  },
-  {
-    type:  'page',
-    id:    'about',
-    title: 'About',
-    body:  'My story, philosophy, and background',
-    url:   '/about',
-    tags:  ['about', 'bio'],
-    icon:  'ðŸ‘¤',
-  },
-  {
-    type:  'page',
-    id:    'projects',
-    title: 'Projects',
-    body:  'All the projects I have built',
-    url:   '/projects',
-    tags:  ['projects', 'work'],
-    icon:  'ðŸ”§',
-  },
-  {
-    type:  'page',
-    id:    'skills',
-    title: 'Skills',
-    body:  'Tech stack and skills visualization',
-    url:   '/skills',
-    tags:  ['skills', 'tech'],
-    icon:  'âš¡',
-  },
-  {
-    type:  'page',
-    id:    'resume',
-    title: 'Resume',
-    body:  'My full resume and work history',
-    url:   '/resume',
-    tags:  ['resume', 'cv'],
-    icon:  'ðŸ“„',
-  },
-  {
-    type:  'page',
-    id:    'contact',
-    title: 'Contact',
-    body:  'Get in touch with me',
-    url:   '/contact',
-    tags:  ['contact', 'email'],
-    icon:  'âœ‰ï¸',
-  },
-  {
-    type:  'page',
-    id:    'timeline',
-    title: 'Timeline',
-    body:  'Career journey and milestones',
-    url:   '/timeline',
-    tags:  ['timeline', 'career'],
-    icon:  'ðŸ“…',
-  },
-  {
-    type:  'page',
-    id:    'achievements',
-    title: 'Achievements',
-    body:  'Verified milestones, accomplishments, and profile highlights',
-    url:   '/achievements',
-    tags:  ['achievements', 'milestones'],
-    icon:  'A',
-  },
-  {
-    type:  'page',
-    id:    'stats',
-    title: 'Stats',
-    body:  'Portfolio metrics, coding activity, and gaming profile stats',
-    url:   '/stats',
-    tags:  ['stats', 'metrics', 'activity'],
-    icon:  'S',
-  },
-  {
-    type:  'page',
-    id:    'dashboard',
-    title: 'Dashboard',
-    body:  'Overview dashboard with profile modules and system views',
-    url:   '/dashboard',
-    tags:  ['dashboard', 'overview'],
-    icon:  'D',
-  },
-  {
-    type:  'page',
-    id:    'profile',
-    title: 'Profile',
-    body:  'Expanded profile framing with highlights, progress, and shelves',
-    url:   '/profile',
-    tags:  ['profile', 'identity'],
-    icon:  'P',
-  },
-  {
-    type:  'page',
-    id:    'blog',
-    title: 'Blog',
-    body:  'Writing, essays, and portfolio notes',
-    url:   '/blog',
-    tags:  ['blog', 'writing'],
-    icon:  'B',
-  },
-  {
-    type:  'page',
-    id:    'hobbies',
-    title: 'Hobbies',
-    body:  'Personal curation across gallery, philosophy, videos, music, and creative experiments.',
-    url:   '/hobbies',
-    tags:  ['hobbies', 'curation'],
-    icon:  'ðŸ“',
-  },
-  {
-    type:  'page',
-    id:    'avatar',
-    title: 'Avatar',
-    body:  'Interactive avatar route with character presentation, motion, and identity cues.',
-    url:   '/avatar',
-    tags:  ['avatar', '3d', 'identity'],
-    icon:  'V',
-  },
-  {
-    type:  'page',
-    id:    'devlog',
-    title: 'DevLog',
-    body:  'Build diary and dev notes',
-    url:   '/devlog',
-    tags:  ['devlog', 'diary'],
-    icon:  'ðŸ”¨',
-  },
-  {
-    type:  'page',
-    id:    'gallery',
-    title: 'Gallery',
-    body:  'Visual work, illustrations, snapshots, and portfolio assets',
-    url:   '/gallery',
-    tags:  ['gallery', 'visuals'],
-    icon:  'G',
-  },
-  {
-    type:  'page',
-    id:    'media',
-    title: 'Media',
-    body:  'Media shelf for clips, visuals, and embedded portfolio material',
-    url:   '/media',
-    tags:  ['media', 'videos'],
-    icon:  'M',
-  },
-  {
-    type:  'page',
-    id:    'cv',
-    title: 'CV',
-    body:  'Extended curriculum vitae and supporting academic profile',
-    url:   '/cv',
-    tags:  ['cv', 'resume'],
-    icon:  'C',
-  },
-  {
-    type:  'page',
-    id:    'onboarding',
-    title: 'Onboarding',
-    body:  'Guided entry route for visitors who want a quick tour of the portfolio.',
-    url:   '/onboarding',
-    tags:  ['onboarding', 'guide', 'tour'],
-    icon:  'N',
-  },
-  {
-    type:  'page',
-    id:    'search-page',
-    title: 'Search',
-    body:  'Standalone search route for navigating pages, projects, skills, and actions.',
-    url:   '/search',
-    tags:  ['search', 'navigation', 'command'],
-    icon:  'Q',
-  },
-  {
-    type:  'page',
-    id:    'steam',
-    title: 'Steam',
-    body:  'Steam profile, game library context, and gaming identity',
-    url:   '/steam',
-    tags:  ['steam', 'gaming'],
-    icon:  'T',
-  },
-  {
-    type:  'page',
-    id:    'settings',
-    title: 'Settings',
-    body:  'Theme, plugins, and font-size preferences for the portfolio',
-    url:   '/settings',
-    tags:  ['settings', 'preferences', 'theme'],
-    icon:  'O',
-  },
-  {
-    type:  'page',
-    id:    'value-education',
-    title: 'Value Education',
-    body:  'Course notes and prompt-based reflections, including Who are the happiest people?',
-    url:   '/value-education',
-    tags:  ['value education', 'course', 'reflection'],
-    icon:  'ðŸ“š',
-  },
-  {
-    type:  'page',
-    id:    'three-demo',
-    title: '3D Demo',
-    body:  'Three.js experiment route for scene testing, interaction, and rendering demos.',
-    url:   '/three-demo',
-    tags:  ['3d', 'threejs', 'demo'],
-    icon:  '3',
-  },
-  {
-    type:  'page',
-    id:    'fun',
-    title: 'Fun',
-    body:  'Games, hobbies, easter eggs',
-    url:   '/fun',
-    tags:  ['fun', 'games'],
-    icon:  'ðŸŽ®',
-  },
-  // â”€â”€ Projects â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  {
-    type:  'project',
-    id:    'zenith',
-    title: 'Yor Zenith',
-    body:  'Solar planning platform with React, Three.js, Python, and TypeScript.',
-    url:   '/projects/zenith',
-    tags:  ['react', 'threejs', 'python', 'solar'],
-    icon:  'âš¡',
-  },
-  {
-    type:  'project',
-    id:    'ai-detector',
-    title: 'AI Detector',
-    body:  'AI vs real image classifier with OpenCV, Scikit-Learn, Streamlit, and Python.',
-    url:   '/projects/ai-detector',
-    tags:  ['python', 'opencv', 'scikit-learn', 'ml', 'ai'],
-    icon:  'ðŸ¤–',
-  },  {
-    type:  'project',
-    id:    'mentor-mentee',
-    title: 'Mentor-Mentee System',
-    body:  'Python mentorship coordination system with Flask, Tkinter, and SQLite.',
-    url:   '/projects/mentor-mentee',
-    tags:  ['python', 'flask', 'sqlite', 'mentorship'],
-    icon:  'M',
-  },
-  // â”€â”€ Skills â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  {
-    type:  'skill',
-    id:    'react',
-    title: 'React',
-    body:  'Used in Yor Zenith dashboards and portfolio UI surfaces',
-    url:   '/skills#react',
-    tags:  ['frontend', 'javascript'],
-    icon:  'âš›ï¸',
-  },
-  {
-    type:  'skill',
-    id:    'typescript',
-    title: 'TypeScript',
-    body:  'Basic resume skill used across public TypeScript repositories',
-    url:   '/skills#typescript',
-    tags:  ['frontend', 'javascript'],
-    icon:  'ðŸ”·',
-  },
-  {
-    type:  'skill',
-    id:    'threejs',
-    title: 'Three.js',
-    body:  '3D visualization used in Yor Zenith and portfolio work',
-    url:   '/skills#threejs',
-    tags:  ['3d', 'graphics', 'webgl'],
-    icon:  'ðŸŒ',
-  },
-  // â”€â”€ Actions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  {
-    type:  'action',
-    id:    'download-resume',
-    title: 'Download Resume',
-    body:  'Download PDF resume',
-    url:   '/resume.pdf',
-    tags:  ['download', 'pdf'],
-    icon:  'â¬‡ï¸',
-  },
-  {
-    type:  'action',
-    id:    'copy-email',
-    title: 'Copy Email',
-    body:  'Copy yorayriniwnl@gmail.com to clipboard',
-    url:   '#copy-email',
-    tags:  ['email', 'contact'],
-    icon:  'ðŸ“‹',
-  },
-  {
-    type:  'action',
-    id:    'toggle-theme',
-    title: 'Toggle Theme',
-    body:  'Switch between dark and light mode',
-    url:   '#toggle-theme',
-    tags:  ['theme', 'dark', 'light'],
-    icon:  'ðŸŒ“',
-  },
-  {
-    type:  'action',
-    id:    'github',
-    title: 'Open GitHub',
-    body:  'View @yorayriniwnl on GitHub',
-    url:   'https://github.com/yorayriniwnl',
-    tags:  ['github', 'code'],
-    icon:  'â­',
-  },
-]
-
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// Tokenisation helpers
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-
-const STOPWORDS = new Set([
-  'a', 'an', 'the', 'is', 'in', 'on', 'at', 'to', 'for', 'of', 'and', 'or',
-])
+const STOPWORDS = new Set(['a', 'an', 'the', 'is', 'in', 'on', 'at', 'to', 'for', 'of', 'and', 'or'])
 
 function tokenize(raw: string): string[] {
   return raw
     .toLowerCase()
     .split(/\W+/)
-    .filter((t) => t.length > 0 && !STOPWORDS.has(t))
+    .filter((token) => token.length > 0 && !STOPWORDS.has(token))
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// Search
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function iconForLabel(label: string): string {
+  return label.slice(0, 1).toUpperCase() || '?'
+}
 
-/**
- * Full-text search over SEARCH_ITEMS.
- *
- * Scoring per token:
- *   +20  title exact match
- *   +15  title starts with token
- *   +10  title contains token
- *   + 5  body contains token
- *   + 8  any tag exact match
- *   + 4  any tag contains token
- *
- * Bonuses:
- *   + 2  type === 'action'
- *   +10  all tokens consecutively match title
- *
- * Returns up to 10 results sorted by descending score.
- */
+function uniqueBy<T>(items: T[], getKey: (item: T) => string): T[] {
+  const seen = new Set<string>()
+
+  return items.filter((item) => {
+    const key = getKey(item)
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
+}
+
+function routeTags(label: string, href: string): string[] {
+  const routeTokens = href
+    .split('/')
+    .filter(Boolean)
+    .flatMap((segment) => segment.split('-'))
+
+  return uniqueBy([...tokenize(label), ...routeTokens], (tag) => tag)
+}
+
+function buildPageItems(): SearchItem[] {
+  const linkedPages = [
+    ...NAV_LINKS,
+    ...NAV_MENU_GROUPS.flatMap((group) => group.links),
+    ...Object.values(FOOTER_LINK_GROUPS).flatMap((group) => group),
+  ].filter((link) => !link.external && link.href.startsWith('/'))
+
+  return uniqueBy(linkedPages, (link) => link.href).map((link) => ({
+    type: 'page',
+    id: link.href === '/' ? 'home' : link.href.slice(1).replace(/\//g, '-'),
+    title: link.label,
+    body: `${link.label} page`,
+    url: link.href,
+    tags: routeTags(link.label, link.href),
+    icon: iconForLabel(link.label),
+  }))
+}
+
+function buildProjectItems(): SearchItem[] {
+  return ORDERED_PROJECTS.map((project) => ({
+    type: 'project',
+    id: project.id,
+    title: project.title,
+    body: project.shortDescription,
+    url: `/projects/${project.id}`,
+    tags: uniqueBy(
+      [
+        ...tokenize(project.title),
+        ...tokenize(project.shortDescription),
+        ...project.tech.map((tech) => tech.toLowerCase()),
+        ...(project.tags ?? []).map((tag) => tag.toLowerCase()),
+        project.category.toLowerCase(),
+      ],
+      (tag) => tag,
+    ),
+    icon: iconForLabel(project.title),
+  }))
+}
+
+function buildSkillItems(): SearchItem[] {
+  const skills = uniqueBy(
+    Object.values(SKILL_CATEGORIES).flat(),
+    (skill) => skill.name.toLowerCase(),
+  )
+
+  return skills.map((skill) => ({
+    type: 'skill',
+    id: skill.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    title: skill.name,
+    body: skill.desc ?? `Skill signal: ${skill.value}%`,
+    url: `/skills#${skill.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+    tags: uniqueBy(
+      [...tokenize(skill.name), ...tokenize(skill.desc ?? ''), String(skill.value)],
+      (tag) => tag,
+    ),
+    icon: iconForLabel(skill.name),
+  }))
+}
+
+function buildActionItem(
+  id: SearchActionId,
+  title: string,
+  body: string,
+  url: string,
+  tags: string[],
+): SearchItem {
+  return {
+    type: 'action',
+    id,
+    title,
+    body,
+    url,
+    tags,
+    icon: iconForLabel(title),
+  }
+}
+
+export const SEARCH_ITEMS: SearchItem[] = [
+  ...buildPageItems(),
+  ...buildProjectItems(),
+  ...buildSkillItems(),
+  buildActionItem(
+    'download-resume',
+    'Download Resume',
+    'Download the recruiter-ready PDF resume.',
+    '/resume.pdf',
+    ['download', 'resume', 'pdf'],
+  ),
+  buildActionItem(
+    'copy-email',
+    'Copy Email',
+    `Copy ${SITE_PROFILE.email} to your clipboard.`,
+    '#copy-email',
+    ['email', 'contact', 'clipboard'],
+  ),
+  buildActionItem(
+    'toggle-theme',
+    'Toggle Theme',
+    'Switch between light and dark themes.',
+    '#toggle-theme',
+    ['theme', 'dark', 'light'],
+  ),
+  buildActionItem(
+    'github',
+    'Open GitHub',
+    `View ${SITE_PROFILE.githubLabel}.`,
+    SITE_PROFILE.githubHref,
+    ['github', 'repos', 'code'],
+  ),
+  buildActionItem(
+    'open-assistant',
+    'Open Assistant',
+    'Launch the built-in AI assistant panel.',
+    '#open-assistant',
+    ['assistant', 'ai', 'panel'],
+  ),
+  buildActionItem(
+    'open-activity-feed',
+    'Open Activity Feed',
+    'Launch the GitHub activity feed panel.',
+    '#open-activity-feed',
+    ['activity', 'github', 'feed'],
+  ),
+]
+
 export function search(query: string): SearchResult[] {
   const tokens = tokenize(query)
   if (tokens.length === 0) return []
@@ -389,94 +195,67 @@ export function search(query: string): SearchResult[] {
   const results: SearchResult[] = []
 
   for (const item of SEARCH_ITEMS) {
-    const titleLC = item.title.toLowerCase()
-    const bodyLC  = item.body.toLowerCase()
-
-    let score         = 0
-    const matchedSet  = new Set<string>()
+    const titleLower = item.title.toLowerCase()
+    const bodyLower = item.body.toLowerCase()
+    let score = 0
+    const matched = new Set<string>()
 
     for (const token of tokens) {
       let tokenScore = 0
 
-      // Title scoring
-      if (titleLC === token) {
-        tokenScore += 20
-      } else if (titleLC.startsWith(token)) {
-        tokenScore += 15
-      } else if (titleLC.includes(token)) {
-        tokenScore += 10
-      }
+      if (titleLower === token) tokenScore += 20
+      else if (titleLower.startsWith(token)) tokenScore += 15
+      else if (titleLower.includes(token)) tokenScore += 10
 
-      // Body scoring
-      if (bodyLC.includes(token)) {
-        tokenScore += 5
-      }
+      if (bodyLower.includes(token)) tokenScore += 5
 
-      // Tags scoring
       for (const tag of item.tags) {
-        const tagLC = tag.toLowerCase()
-        if (tagLC === token) {
+        if (tag === token) {
           tokenScore += 8
           break
-        } else if (tagLC.includes(token)) {
-          tokenScore += 4
-          // don't break â€” keep looking for exact match in subsequent tags
         }
+
+        if (tag.includes(token)) tokenScore += 4
       }
 
       if (tokenScore > 0) {
         score += tokenScore
-        matchedSet.add(token)
+        matched.add(token)
       }
     }
 
-    // Bonus: action items surface slightly higher
-    if (item.type === 'action' && score > 0) {
-      score += 2
-    }
+    if (item.type === 'action' && score > 0) score += 2
 
-    // Bonus: all tokens consecutively appear in title
-    if (tokens.length > 1 && tokens.every((t) => titleLC.includes(t))) {
-      const joined = tokens.join(' ')
-      if (titleLC.includes(joined)) {
-        score += 10
-      }
+    if (tokens.length > 1) {
+      const phrase = tokens.join(' ')
+      if (titleLower.includes(phrase)) score += 10
     }
 
     if (score > 0) {
       results.push({
         ...item,
         score,
-        matchedTerms: Array.from(matchedSet),
+        matchedTerms: Array.from(matched),
       })
     }
   }
 
-  results.sort((a, b) => b.score - a.score)
-  return results.slice(0, 10)
+  return results.sort((left, right) => right.score - left.score).slice(0, 10)
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// Additional exports
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-
-/**
- * Returns the last N 'page' items in the index.
- * Simulates recency with a fixed reverse order since there is no session data.
- */
 export function getRecentItems(limit = 5): SearchItem[] {
-  return SEARCH_ITEMS
-    .filter((item) => item.type === 'page')
-    .slice(-limit)
-    .reverse()
+  const preferredOrder = ['home', 'projects', 'resume', 'search', 'contact', 'dashboard']
+
+  return preferredOrder
+    .map((id) => SEARCH_ITEMS.find((item) => item.id === id && item.type === 'page'))
+    .filter((item): item is SearchItem => Boolean(item))
+    .slice(0, limit)
 }
 
-/** Returns all action items. */
 export function getActionItems(): SearchItem[] {
   return SEARCH_ITEMS.filter((item) => item.type === 'action')
 }
 
-/** Exposes the full index for the dedicated search page. */
 export function getAllItems(): SearchItem[] {
   return [...SEARCH_ITEMS]
 }
