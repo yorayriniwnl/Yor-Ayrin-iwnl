@@ -242,6 +242,7 @@ function QuickActionsBody(): JSX.Element {
         ref={containerRef}
         role="group"
         aria-label="Quick actions"
+        className="quick-actions-root"
         style={{
           position: 'fixed',
           right: 'var(--ds-space-5)',

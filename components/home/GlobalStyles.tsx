@@ -498,6 +498,8 @@ export default function GlobalStyles() {
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
         margin-bottom: 4rem;
         padding-bottom: 1.5rem;
         border-bottom: 1px solid var(--border);
@@ -997,6 +999,7 @@ export default function GlobalStyles() {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
         background: var(--bg);
         padding: 1.2rem 1.5rem;
         gap: 1rem;
@@ -1020,7 +1023,14 @@ export default function GlobalStyles() {
         font-size: 0.88rem;
         color: var(--cream-dim);
         flex: 1;
+        min-width: 0;
+        overflow-wrap: anywhere;
         transition: color 0.3s;
+      }
+
+      .contact-link-arrow {
+        margin-left: auto;
+        white-space: nowrap;
       }
 
       .contact-link-row:hover .contact-link-val {
@@ -1101,6 +1111,8 @@ export default function GlobalStyles() {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.9rem;
         padding: 1rem 1.5rem;
         background: var(--surface2);
       }
@@ -1108,6 +1120,7 @@ export default function GlobalStyles() {
       .btn-send {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 0.7rem;
         padding: 0.7rem 1.6rem;
         background: var(--gold);
@@ -1204,6 +1217,14 @@ export default function GlobalStyles() {
 
         .about-stats {
           grid-template-columns: 1fr 1fr;
+        }
+
+        .form-footer {
+          align-items: stretch;
+        }
+
+        .btn-send {
+          width: 100%;
         }
       }
     `}</style>

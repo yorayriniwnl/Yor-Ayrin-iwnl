@@ -36,6 +36,7 @@ function RecruiterStripBody(): JSX.Element {
             key="recruiter-strip"
             role="banner"
             aria-label="Recruiter quick-access strip"
+            className="recruiter-strip-root"
             initial={{ y: 72, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 72, opacity: 0 }}

@@ -276,6 +276,17 @@ html.theme-minimal .ds-section--accent {
   gap: clamp(2rem, 4vw, 4.5rem);
 }
 
+.ds-split > *,
+.ds-page-hero__grid > *,
+.ds-steam-grid > *,
+.ds-showcase-row > *,
+.ds-activity-row > *,
+.site-footer__inner > *,
+.site-menu__top > *,
+.site-header__inner > * {
+  min-width: 0;
+}
+
 .ds-split--hero {
   align-items: end;
 }
@@ -1059,6 +1070,7 @@ html.theme-minimal .site-header--scrolled {
   align-items: center;
   gap: 0.56rem;
   flex-shrink: 0;
+  min-width: 0;
 }
 
 .site-header__desktop-actions {
@@ -1923,6 +1935,13 @@ html.theme-minimal .ds-modal__panel {
 
   .ds-page-hero {
     padding-top: calc(var(--ds-header-height) + 0.5rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .quick-actions-root,
+  .recruiter-strip-root {
+    display: none !important;
   }
 }
 
