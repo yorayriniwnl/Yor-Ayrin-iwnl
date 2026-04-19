@@ -1,6 +1,6 @@
 import React from 'react'
-import { MEDIA_ITEMS } from '../../data/site'
-import type { MediaItem } from '../../data/site'
+import { MEDIA_ITEMS } from '../../data/media'
+import type { MediaItem } from '../../data/media'
 import Badge from '../../components/ui/Badge'
 import Card from '../../components/ui/Card'
 import Container from '../../components/ui/Container'
@@ -31,6 +31,8 @@ function getMediaIcon(kind: MediaItem['kind']): { emoji: string; color: string; 
 function MediaCard({ item }: { item: MediaItem }) {
   const icon = getMediaIcon(item.kind)
   const isExternal = item.href.startsWith('http')
+  const opensStandaloneAsset = item.kind === 'demo'
+  const openInNewTab = isExternal || opensStandaloneAsset
 
   return (
     <Card
@@ -79,12 +81,16 @@ function MediaCard({ item }: { item: MediaItem }) {
           <a
             href={item.href}
             className="ds-button ds-button--secondary ds-button--sm"
-            target={isExternal ? '_blank' : undefined}
-            rel={isExternal ? 'noopener noreferrer' : undefined}
+            target={openInNewTab ? '_blank' : undefined}
+            rel={openInNewTab ? 'noopener noreferrer' : undefined}
             style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--ds-space-2)' }}
           >
-            {item.kind === 'document' ? 'Download' : item.kind === 'demo' ? 'View demo' : 'View image'}
-            {isExternal && <span style={{ fontSize: '0.7rem' }}>↗</span>}
+            {item.kind === 'document'
+              ? 'Download'
+              : item.kind === 'demo'
+              ? 'Open demo'
+              : 'View image'}
+            {openInNewTab ? <span style={{ fontSize: '0.7rem' }}>↗</span> : null}
           </a>
         </div>
       </div>
@@ -163,8 +169,8 @@ export default function MediaPage(): JSX.Element {
             <div className="ds-section-intro" style={{ marginBottom: 0 }}>
               <Heading>Media kit</Heading>
               <Text className="max-w-3xl">
-                Everything here already exists inside the repository, making this route a practical 
-                asset shelf rather than a decorative extra page. Each item is production-ready and 
+                Everything here already exists inside the repository, making this route a practical
+                asset shelf rather than a decorative extra page. Each item is production-ready and
                 available for immediate use.
               </Text>
             </div>
@@ -193,9 +199,10 @@ export default function MediaPage(): JSX.Element {
                   </div>
                 </div>
                 <Text>
-                  Every asset in this media kit is stored locally in the repository and ready for 
-                  production use. No external dependencies, no broken links, no placeholder content — 
-                  just real materials that support the portfolio narrative.
+                  Every asset in this media kit is stored locally in the repository and ready for
+                  production use. Static demos open from their real archived asset URLs, so the
+                  cards stay honest about what is part of the app shell and what is a standalone
+                  presentation artifact.
                 </Text>
                 <div style={{ display: 'flex', gap: 'var(--ds-space-3)', flexWrap: 'wrap', paddingTop: 'var(--ds-space-2)' }}>
                   <ButtonLink href="/gallery" variant="ghost" size="sm">

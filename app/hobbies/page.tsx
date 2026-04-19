@@ -1,5 +1,6 @@
 import React from 'react'
-import { CS2_VIDEOS, SITE_PROFILE, YOUTUBE_CHANNEL } from '../../data/site'
+import Image from 'next/image'
+import { CS2_VIDEOS, YOUTUBE_CHANNEL } from '../../data/media'
 import { ButtonLink } from '../../components/ui/Button'
 import Card from '../../components/ui/Card'
 import Container from '../../components/ui/Container'
@@ -108,7 +109,13 @@ export default function HobbiesPage(): JSX.Element {
                 {YOR_GALLERY.map((item) => (
                   <Card key={item.title} as="article">
                     <div className="ds-stack ds-stack--tight">
-                      <img src={item.src} alt={item.title} className="h-44 w-full rounded-[1rem] border border-[var(--ds-border)] object-cover" />
+                      <Image
+                        src={item.src}
+                        alt={item.title}
+                        width={640}
+                        height={352}
+                        className="h-44 w-full rounded-[1rem] border border-[var(--ds-border)] object-cover"
+                      />
                       <Subheading>{item.title}</Subheading>
                       <Text size="sm">{item.caption}</Text>
                     </div>
@@ -208,7 +215,13 @@ export default function HobbiesPage(): JSX.Element {
                   favoriteVideos.map((video) => (
                     <Card key={video.id} as="article" interactive>
                       <div className="ds-stack ds-stack--tight">
-                        <img src={video.thumbnail} alt={video.title} className="h-40 w-full rounded-[1rem] border border-[var(--ds-border)] object-cover" />
+                        <Image
+                          src={video.thumbnail}
+                          alt={video.title}
+                          width={640}
+                          height={360}
+                          className="h-40 w-full rounded-[1rem] border border-[var(--ds-border)] object-cover"
+                        />
                         <Subheading>{video.title}</Subheading>
                         <Text size="sm">{video.duration}</Text>
                         {video.note ? <Text size="sm">{video.note}</Text> : null}
@@ -246,7 +259,8 @@ export default function HobbiesPage(): JSX.Element {
 
             <Card as="article" style={{ borderColor: 'rgba(122, 154, 122, 0.35)' }}>
               <Text>
-                Personal curation status: this page only shows verified media currently available in the project. Missing sets stay explicitly labeled until published.
+                Personal curation status: this page only shows verified media currently available in
+                the project. Missing sets stay explicitly labeled until published.
               </Text>
             </Card>
           </div>

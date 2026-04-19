@@ -28,16 +28,16 @@ export const MEDIA_ITEMS: MediaItem[] = [
   },
   {
     id: 'portfolio-demo',
-    title: 'Portfolio Demo',
-    href: '/demo',
-    summary: 'Local demo artifacts included in the repository for presentation use.',
+    title: 'Portfolio Demo Archive',
+    href: '/demo/index.html',
+    summary: 'Standalone HTML demo artifact included in the repository for presentation use.',
     kind: 'demo',
   },
   {
     id: 'delivery-demo',
-    title: 'Delivery Practice Demo',
-    href: '/delivery',
-    summary: 'Local delivery and presentation assets kept alongside the product site.',
+    title: 'Delivery Practice Demo Archive',
+    href: '/delivery/index.html',
+    summary: 'Standalone delivery practice demo preserved alongside the main product site.',
     kind: 'demo',
   },
   {
