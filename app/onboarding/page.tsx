@@ -130,7 +130,7 @@ export default function OnboardingPage(): React.JSX.Element {
       }
 
   return (
-    <>
+    <div className="ob-root">
       <style>{`
         .ob-root {
           min-height: 100vh;
@@ -138,10 +138,14 @@ export default function OnboardingPage(): React.JSX.Element {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          background: var(--ds-bg, #060a14);
+          background:
+            radial-gradient(circle at 50% 14%, rgba(201, 168, 76, 0.12), transparent 28%),
+            radial-gradient(circle at 18% 82%, rgba(192, 74, 58, 0.08), transparent 26%),
+            linear-gradient(180deg, #0d0b08 0%, var(--ds-bg, #0a0906) 54%, #070604 100%);
           font-family: var(--font-ds-body, 'DM Sans', ui-sans-serif, sans-serif);
           position: relative;
           padding: 2rem 1.25rem;
+          overflow: hidden;
         }
 
         /* subtle radial glow */
@@ -153,7 +157,7 @@ export default function OnboardingPage(): React.JSX.Element {
           transform: translateX(-50%);
           width: 80%;
           height: 60%;
-          background: radial-gradient(ellipse at center, rgba(99,102,241,0.1) 0%, transparent 65%);
+          background: radial-gradient(ellipse at center, rgba(201, 168, 76, 0.14) 0%, transparent 65%);
           pointer-events: none;
         }
 
@@ -195,7 +199,7 @@ export default function OnboardingPage(): React.JSX.Element {
           transition: background 0.2s, width 0.2s;
         }
         .ob-step-dot--active {
-          background: var(--ds-primary, #6366f1);
+          background: var(--ds-primary, #c9a84c);
           width: 20px;
           border-radius: 3px;
         }
@@ -203,13 +207,19 @@ export default function OnboardingPage(): React.JSX.Element {
         /* inner wrapper */
         .ob-inner {
           width: 100%;
-          max-width: 680px;
+          max-width: 860px;
           display: flex;
           flex-direction: column;
           align-items: center;
           gap: 0;
           position: relative;
           z-index: 1;
+          padding: clamp(2rem, 5vw, 3rem);
+          border: 1px solid var(--ds-border, rgba(42, 37, 32, 0.95));
+          border-radius: 28px;
+          background: linear-gradient(180deg, rgba(26, 23, 16, 0.92), rgba(12, 11, 8, 0.9));
+          box-shadow: 0 32px 80px rgba(0, 0, 0, 0.42);
+          backdrop-filter: blur(18px);
         }
 
         /* headings */
@@ -224,17 +234,19 @@ export default function OnboardingPage(): React.JSX.Element {
         }
         .ob-subtext {
           font-size: 15px;
-          color: var(--ds-text-muted, #8892aa);
+          color: var(--ds-text-muted, #a89878);
           text-align: center;
           margin: 0 0 2.75rem;
+          max-width: 34rem;
         }
 
         /* role card grid */
         .ob-roles {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 12px;
+          gap: 14px;
           width: 100%;
+          align-items: stretch;
         }
         @media (max-width: 560px) {
           .ob-roles { grid-template-columns: 1fr; }
@@ -250,18 +262,20 @@ export default function OnboardingPage(): React.JSX.Element {
           aspect-ratio: 1;
           max-height: 180px;
           border: 1px solid var(--ds-border, rgba(255,255,255,0.09));
-          border-radius: 16px;
+          border-radius: 20px;
           padding: 24px 16px;
           cursor: pointer;
-          background: var(--ds-surface, rgba(255,255,255,0.03));
+          background: linear-gradient(180deg, rgba(37, 33, 24, 0.88), rgba(20, 17, 12, 0.92));
           text-align: center;
           font-family: inherit;
           color: var(--ds-text, #e8effe);
-          transition: border-color 0.18s, background 0.18s;
+          box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+          transition: border-color 0.18s, background 0.18s, transform 0.18s, box-shadow 0.18s;
         }
         .ob-role-card:hover {
-          border-color: var(--ds-primary, #6366f1);
-          background: rgba(99,102,241,0.07);
+          border-color: var(--ds-primary, #c9a84c);
+          background: linear-gradient(180deg, rgba(45, 39, 28, 0.96), rgba(24, 20, 14, 0.96));
+          box-shadow: 0 24px 50px rgba(0, 0, 0, 0.24);
         }
         .ob-role-card__emoji { font-size: 32px; line-height: 1; }
         .ob-role-card__title {
@@ -270,8 +284,8 @@ export default function OnboardingPage(): React.JSX.Element {
           color: var(--ds-text, #e8effe);
         }
         .ob-role-card__sub {
-          font-size: 12px;
-          color: var(--ds-text-muted, #8892aa);
+          font-size: 12.5px;
+          color: var(--ds-text-muted, #a89878);
           line-height: 1.45;
         }
 
@@ -279,7 +293,7 @@ export default function OnboardingPage(): React.JSX.Element {
         .ob-ctas {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 12px;
+          gap: 14px;
           width: 100%;
           margin-bottom: 2rem;
         }
@@ -295,18 +309,20 @@ export default function OnboardingPage(): React.JSX.Element {
           gap: 8px;
           padding: 24px 16px;
           border: 1px solid var(--ds-border, rgba(255,255,255,0.09));
-          border-radius: 16px;
-          background: var(--ds-surface, rgba(255,255,255,0.03));
+          border-radius: 20px;
+          background: linear-gradient(180deg, rgba(37, 33, 24, 0.88), rgba(20, 17, 12, 0.92));
           cursor: pointer;
           font-family: inherit;
           color: var(--ds-text, #e8effe);
           text-align: center;
           text-decoration: none;
-          transition: border-color 0.18s, background 0.18s;
+          box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+          transition: border-color 0.18s, background 0.18s, transform 0.18s, box-shadow 0.18s;
         }
         .ob-cta-card:hover {
-          border-color: var(--ds-primary, #6366f1);
-          background: rgba(99,102,241,0.07);
+          border-color: var(--ds-primary, #c9a84c);
+          background: linear-gradient(180deg, rgba(45, 39, 28, 0.96), rgba(24, 20, 14, 0.96));
+          box-shadow: 0 24px 50px rgba(0, 0, 0, 0.24);
         }
         .ob-cta-card__emoji { font-size: 28px; line-height: 1; }
         .ob-cta-card__title {
@@ -316,7 +332,7 @@ export default function OnboardingPage(): React.JSX.Element {
         }
         .ob-cta-card__sub {
           font-size: 11.5px;
-          color: var(--ds-text-muted, #8892aa);
+          color: var(--ds-text-muted, #a89878);
           line-height: 1.4;
         }
 
@@ -326,18 +342,42 @@ export default function OnboardingPage(): React.JSX.Element {
           align-items: center;
           gap: 6px;
           padding: 12px 28px;
-          border-radius: 9px;
-          background: var(--ds-primary, #6366f1);
-          color: #fff;
+          border-radius: 999px;
+          background: linear-gradient(135deg, var(--ds-primary, #c9a84c), var(--ds-primary-strong, #e8c96e));
+          color: #1d160a;
           font-size: 15px;
           font-weight: 700;
           font-family: inherit;
           cursor: pointer;
           border: none;
           text-decoration: none;
-          transition: opacity 0.15s;
+          box-shadow: 0 16px 30px rgba(201, 168, 76, 0.18);
+          transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
         }
-        .ob-cta-btn:hover { opacity: 0.88; }
+        .ob-cta-btn:hover {
+          opacity: 0.94;
+          transform: translateY(-1px);
+          box-shadow: 0 18px 34px rgba(201, 168, 76, 0.24);
+        }
+
+        @media (max-width: 720px) {
+          .ob-root {
+            padding: 5rem 1rem 2rem;
+          }
+
+          .ob-inner {
+            padding: 1.5rem;
+            border-radius: 22px;
+          }
+
+          .ob-heading {
+            font-size: clamp(1.85rem, 8vw, 2.3rem);
+          }
+
+          .ob-subtext {
+            margin-bottom: 2rem;
+          }
+        }
       `}</style>
 
       {/* Skip */}
@@ -379,7 +419,7 @@ export default function OnboardingPage(): React.JSX.Element {
                   variants={cardVariants}
                   initial="hidden"
                   animate="visible"
-                  whileHover={prefersReduced ? {} : { scale: 1.03, borderColor: 'var(--ds-primary, #6366f1)' }}
+                  whileHover={prefersReduced ? {} : { scale: 1.03, borderColor: 'var(--ds-primary, #c9a84c)' }}
                   whileTap={prefersReduced ? {} : { scale: 0.97 }}
                   transition={{ type: 'spring', stiffness: 360, damping: 22 }}
                   onClick={() => handleRoleSelect(card.id)}
@@ -438,6 +478,6 @@ export default function OnboardingPage(): React.JSX.Element {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </div>
   )
 }
