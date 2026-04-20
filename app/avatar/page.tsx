@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import AvatarScene from '../../components/AvatarScene'
+import { PROFILE_PHOTO_SRC } from '../../lib/profilePhoto'
 
 export const metadata: Metadata = {
   title:       'Avatar | Yor Ayrin',
@@ -24,8 +25,8 @@ function FallbackAvatar(): React.ReactElement {
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/avatar-fallback.svg"
-        alt="Avatar placeholder"
+        src={PROFILE_PHOTO_SRC}
+        alt="Portrait of Ayush Roy"
         style={{ maxWidth: 280, maxHeight: 400, objectFit: 'contain', opacity: 0.8 }}
       />
     </div>

@@ -382,7 +382,7 @@ export default function AboutPage(): React.ReactElement {
             <div className="about-avatar-ring-static" aria-hidden="true" />
             <div className="about-avatar-circle">
               <Image
-                src="/images/ayush-about.png"
+                src={SITE_PROFILE.avatarSrc}
                 alt="Portrait of Ayush Roy"
                 fill
                 priority

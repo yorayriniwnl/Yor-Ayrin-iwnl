@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { CS2_VIDEOS, YOUTUBE_CHANNEL } from '../../data/media'
+import { SITE_PROFILE } from '../../lib/data'
 import { ButtonLink } from '../../components/ui/Button'
 import Card from '../../components/ui/Card'
 import Container from '../../components/ui/Container'
@@ -18,7 +19,7 @@ type GalleryItem = {
 const YOR_GALLERY: GalleryItem[] = [
   {
     title: 'Identity Frame',
-    src: '/images/profile.svg',
+    src: SITE_PROFILE.avatarSrc,
     caption: 'Personal identity mark used across portfolio and profile surfaces.',
   },
   {

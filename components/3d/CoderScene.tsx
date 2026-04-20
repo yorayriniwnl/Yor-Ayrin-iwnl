@@ -5,6 +5,7 @@ import * as THREE from 'three'
 import { Canvas, useFrame } from '@react-three/fiber'
 // HairSystem and FacialHair removed to simplify avatar rendering for hiring-focused site
 import { getSegmentCount, getDeviceScale, shouldDisable3D } from './devUtils'
+import { PROFILE_PHOTO_SRC } from '../../lib/profilePhoto'
 
 // Pull AvatarRig out as a memoized top-level component to avoid re-definition
 const AvatarRig = React.memo(function AvatarRig({ headRadius = 0.95 }: { headRadius?: number }) {
@@ -112,7 +113,7 @@ const CoderScene = function CoderScene({ height = 460 }: { height?: number }) {
   if (typeof window !== 'undefined' && shouldDisable3D()) {
     return (
       <div style={{ width: '100%', height, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, #05060a, #02030a)' }}>
-        <img src="/avatar-fallback.svg" alt="avatar" style={{ width: '60%', height: 'auto', objectFit: 'contain' }} />
+        <img src={PROFILE_PHOTO_SRC} alt="Portrait of Ayush Roy" style={{ width: '60%', height: 'auto', objectFit: 'contain' }} />
       </div>
     )
   }

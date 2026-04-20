@@ -4,6 +4,7 @@ import React, { Suspense, memo } from "react";
 import { shouldDisable3D } from './devUtils'
 import { Canvas } from "@react-three/fiber";
 import { Center, Environment, OrbitControls, useGLTF, Html } from "@react-three/drei";
+import { PROFILE_PHOTO_SRC } from '../../lib/profilePhoto'
 
 type Props = {
   src?: string;
@@ -22,7 +23,7 @@ function ModelViewer({ src = "/avatars/avatar.glb", className }: Props) {
   if (lowPerf) {
     return (
       <div className={className} style={{ width: "100%", height: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <img src="/avatar-fallback.svg" alt="avatar" style={{ width: '80%', height: 'auto', maxWidth: 420, objectFit: 'contain' }} />
+        <img src={PROFILE_PHOTO_SRC} alt="Portrait of Ayush Roy" style={{ width: '80%', height: 'auto', maxWidth: 420, objectFit: 'contain' }} />
       </div>
     )
   }
