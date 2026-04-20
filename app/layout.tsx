@@ -105,8 +105,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`h-full ${bodyFont.variable} ${displayFont.variable} ${monoFont.variable} ${serifFont.variable}`}
+      className={`h-full theme-dark ${bodyFont.variable} ${displayFont.variable} ${monoFont.variable} ${serifFont.variable}`}
+      data-theme="dark"
       data-scroll-behavior="smooth"
+      style={{ colorScheme: 'dark' }}
       suppressHydrationWarning
     >
       <head>
