@@ -1,7 +1,7 @@
 {
   "nodes": [
     { "id": "project:zenith", "type": "project", "projectId": "zenith", "title": "Yor Zenith", "summary": "Solar planning platform with React and Three.js dashboards" },
-    { "id": "project:ai-detector", "type": "project", "projectId": "ai-detector", "title": "AI vs Real Image Detector", "summary": "OpenCV and Scikit-Learn image classification pipeline" },
+    { "id": "project:ai-detector", "type": "project", "projectId": "ai-detector", "title": "Yor AI vs Real Image", "summary": "OpenCV and Scikit-Learn image classification pipeline" },
     { "id": "project:mentor", "type": "project", "projectId": "mentor-mentee", "title": "Mentor-Mentee System", "summary": "Python mentorship coordination system" },
     { "id": "project:portfolio", "type": "project", "projectId": "yor-ayrin-iwnl", "title": "Yor-Ayrin-iwnl", "summary": "This portfolio site" },
 

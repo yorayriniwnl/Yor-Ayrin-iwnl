@@ -1,4 +1,4 @@
-# Yor Ai vs Real Image
+# Yor AI vs Real Image
 
 1. What it is
 A machine learning pipeline that classifies whether an image is AI-generated or a real photograph using classical texture-based computer vision features.

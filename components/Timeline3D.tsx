@@ -59,7 +59,7 @@ export const TIMELINE: TimelineEntry[] = [
   {
     id: 't4',
     date: '2026-04-12',
-    title: 'AI vs Real Image Detector',
+    title: 'Yor AI vs Real Image',
     description: 'OpenCV, LBP/GLCM, Scikit-Learn SVM, and Streamlit image classifier',
     kind: 'project',
   },

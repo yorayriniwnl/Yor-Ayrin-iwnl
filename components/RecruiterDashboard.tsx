@@ -33,7 +33,7 @@ const FEATURED: FeaturedProject[] = [
   },
   {
     id: 'ai-detector',
-    title: 'AI Detector',
+    title: 'Yor AI vs Real Image',
     description: 'Image classifier using OpenCV texture features, LBP/GLCM analysis, Scikit-Learn SVM training, and Streamlit review.',
     tech: ['Python', 'OpenCV', 'Scikit-Learn', 'Streamlit'],
     category: 'AI / ML',

@@ -25,7 +25,7 @@
     },
     {
       "id": "ai-detector",
-      "title": "Yor Ai vs Real Image",
+      "title": "Yor AI vs Real Image",
       "shortDescription": "ML pipeline to classify AI-generated vs real images using texture-based features (LBP, GLCM) and an SVM classifier.",
       "fullDescription": "Uses OpenCV to extract image features, Scikit-Learn to train an SVM classifier, Local Binary Pattern and GLCM for image texture analysis, and Streamlit for uploading images and viewing prediction results.",
       "tech": ["Python", "OpenCV", "Scikit-Learn", "Streamlit"],

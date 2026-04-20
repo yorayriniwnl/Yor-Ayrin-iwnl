@@ -70,7 +70,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
   },  {
     id: 'ai-detector',
     date: 'Public project',
-    title: 'AI vs Real Image Detector',
+    title: 'Yor AI vs Real Image',
     description:
       'Computer vision pipeline using OpenCV, LBP/GLCM features, Scikit-Learn SVM, and Streamlit.',
     type: 'project',
@@ -232,4 +232,3 @@ export function timelineStats(entries: TimelineEntry[] = TIMELINE): Record<Timel
     { experience: 0, education: 0, project: 0, achievement: 0 } as Record<TimelineKind, number>,
   )
 }
-

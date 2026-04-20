@@ -21,7 +21,7 @@
       <g transform="translate(460,0)">
         <rect x="0" y="0" width="420" height="300" rx="14" fill="#0b1220" stroke="#ffffff11" />
         <rect x="18" y="18" width="384" height="160" rx="8" fill="#0f1724" />
-        <text x="28" y="200" font-size="20" font-weight="700">AI vs Real Image Detector</text>
+        <text x="28" y="200" font-size="20" font-weight="700">Yor AI vs Real Image</text>
         <text x="28" y="228" font-size="14" fill="#9aa7c6">OpenCV texture features and SVM classification.</text>
       </g>
 
@@ -37,4 +37,3 @@
 
   <text x="40" y="860" font-size="12" fill="#8b96b2">Clean, high-contrast project card previews</text>
 </svg>
-

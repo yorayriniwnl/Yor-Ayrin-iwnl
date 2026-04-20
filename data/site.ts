@@ -268,7 +268,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'ai-detector',
-    title: 'Yor Ai vs Real Image',
+    title: 'Yor AI vs Real Image',
     shortDescription:
       'ML pipeline to classify AI-generated vs real images using texture-based features (LBP, GLCM) and an SVM classifier.',
     fullDescription:
@@ -519,7 +519,7 @@ export const SKILL_CATEGORIES: Record<string, Skill[]> = {
     {
       name: 'OpenCV',
       value: 76,
-      desc: 'Image feature extraction for Yor Ai vs Real Image.',
+      desc: 'Image feature extraction for Yor AI vs Real Image.',
     },
     {
       name: 'Scikit-Learn',
@@ -673,7 +673,7 @@ export const ACHIEVEMENT_ITEMS: AchievementItem[] = [
   },
   {
     id: 'achievement-ai-detector',
-    title: 'ML image classifier - AI vs Real Detector',
+    title: 'ML image classifier - Yor AI vs Real Image',
     detail:
       'Built a working computer vision pipeline using OpenCV, Scikit-Learn SVM, and texture features (LBP/GLCM) to distinguish synthetic from real photographs.',
     label: 'Verified project',

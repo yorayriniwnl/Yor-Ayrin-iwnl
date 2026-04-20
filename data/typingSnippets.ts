@@ -59,7 +59,7 @@ export const TYPING_SNIPPETS: TypingSnippet[] = [
     title: 'Destructured Fetch Result',
     language: 'typescript',
     difficulty: 'easy',
-    sourceNote: 'from AI Detector — lib/classify.ts',
+    sourceNote: 'from Yor AI vs Real Image — lib/classify.ts',
     code: `const { label, confidence } = await classifyImage(file)`,
   },
 
@@ -114,7 +114,7 @@ export const TYPING_SNIPPETS: TypingSnippet[] = [
     title: 'File Upload Change Handler',
     language: 'typescript',
     difficulty: 'medium',
-    sourceNote: 'from AI Detector — components/UploadZone.tsx',
+    sourceNote: 'from Yor AI vs Real Image — components/UploadZone.tsx',
     code: `const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
   const file = e.target.files?.[0]
   if (!file) return

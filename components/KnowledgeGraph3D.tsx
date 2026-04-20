@@ -44,7 +44,7 @@ export const GRAPH: GraphData = {
     { id: 'sklearn',    name: 'Scikit-Learn',    type: 'skill'   },
     { id: 'streamlit',  name: 'Streamlit',       type: 'skill'   },
     { id: 'zenith',     name: 'Yor Zenith',          type: 'project' },
-    { id: 'ai-detector',name: 'AI Detector',     type: 'project' },
+    { id: 'ai-detector',name: 'Yor AI vs Real Image',     type: 'project' },
     { id: 'mentor',     name: 'Mentor-Mentee',   type: 'project' },
     { id: 'solar',      name: 'Solar Planning',  type: 'concept' },
     { id: 'ml',         name: 'Machine Learning',type: 'concept' },
