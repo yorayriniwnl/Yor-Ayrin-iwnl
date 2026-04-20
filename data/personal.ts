@@ -22,11 +22,11 @@ export type ExperienceItem = {
 export const SITE_PROFILE = {
   name: 'Ayush Roy',
   alias: 'Yor Ayrin Iwnl',
-  role: 'Full Stack Developer Intern Candidate - Product Builder',
+  role: 'Founder of Yor Zenith - Full Stack Developer Intern Candidate',
   summary:
-    'Full-stack focused B.Tech Computer Science and Communication Engineering student at KIIT building Next.js product surfaces, Python backend systems, realtime dashboards, computer-vision tools, and interactive web experiences.',
+    'Founder of Yor Zenith and a full-stack focused B.Tech Computer Science and Communication Engineering student at KIIT building Next.js product surfaces, Python backend systems, realtime dashboards, computer-vision tools, and interactive web experiences.',
   recruiterSummary:
-    'Full-stack developer intern candidate at KIIT, expected graduation 2027, with hands-on project work across Next.js, React, TypeScript, FastAPI, Flask, Python, SQL, Three.js, OpenCV, Scikit-Learn, Docker, and GitHub-driven product delivery.',
+    'Founder of Yor Zenith and full-stack developer intern candidate at KIIT, expected graduation 2027, with hands-on project work across Next.js, React, TypeScript, FastAPI, Flask, Python, SQL, Three.js, OpenCV, Scikit-Learn, Docker, and GitHub-driven product delivery.',
   seekingStatement: 'I am currently seeking full stack developer internship opportunities where product thinking and engineering execution both matter.',
   availability: 'Open to internships, entry-level software roles, and remote collaboration.',
   email: 'yorayriniwnl@gmail.com',
@@ -104,10 +104,10 @@ export const EXPERIENCE_ITEMS: ExperienceItem[] = [
     title: 'Independent Project Work',
     meta: 'Self-directed - Resume and GitHub verified',
     summary:
-      'Built internship-ready full-stack projects across realtime systems, decision-support products, and computer vision, supported by public GitHub repositories.',
+      'Built internship-ready full-stack projects across realtime systems, decision-support products, and computer vision, including founding Yor Zenith and supporting the work with public GitHub repositories.',
     bullets: [
       'Built Yor Helios using FastAPI, WebSocket alert streaming, and dashboard workflows for realtime operational monitoring.',
-      'Designed and built Yor Zenith, a solar planning platform with React and Three.js dashboards for rooftop feasibility and energy generation simulation.',
+      'Founded Yor Zenith and built a solar planning platform with React and Three.js dashboards for rooftop feasibility and energy generation simulation.',
       'Developed an ML image classifier using OpenCV, LBP/GLCM features, Scikit-Learn SVM, and Streamlit to classify AI-generated versus real photographs.',
       'Maintains public GitHub repositories spanning Next.js web products, Python backend systems, and applied ML/CV projects.',
     ],
