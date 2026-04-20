@@ -4,7 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { Sparkles, OrbitControls, Environment, ContactShadows } from '@react-three/drei'
 import CameraController from './CameraController'
 import { shouldDisable3D } from '../3d/devUtils'
-import { PROFILE_PHOTO_SRC } from '../../lib/profilePhoto'
+import { PROFILE_AVATAR_SRC } from '../../lib/profilePhoto'
 const AvatarModel = React.lazy(() => import('../3d/AvatarModel'))
 import * as THREE from 'three'
 import { PROJECTS } from '../../lib/data'
@@ -392,7 +392,17 @@ export default function CinematicHero({ option = 'A' }: { option?: 'A' }) {
         {/* Canvas / fallback column */}
         <div className="hero-canvas__canvas-wrapper layer-background w-full md:w-1/2 lg:w-6/12 h-64 sm:h-96 md:h-full" aria-hidden>
           {(isMobile || isLowPerf) ? (
-            <div style={{ width: '100%', height: '100%', backgroundImage: `url('${PROFILE_PHOTO_SRC}')`, backgroundSize: 'cover', backgroundPosition: 'center 18%' }} />
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                backgroundColor: '#06070d',
+                backgroundImage: `url('${PROFILE_AVATAR_SRC}')`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center bottom',
+              }}
+            />
           ) : (
             <Canvas
               camera={{ position: [0, 0.18, 5.1], fov: 40 }}

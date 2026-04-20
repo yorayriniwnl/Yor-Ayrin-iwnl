@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import TechCloud3D, { FlatCloud } from '../../components/TechCloud3D'
 import { SITE_PROFILE } from '../../lib/data'
+import { PROFILE_PHOTO_SRC } from '../../lib/profilePhoto'
 
 export const metadata: Metadata = {
   title:       'About | Ayush Roy',
@@ -233,8 +234,8 @@ const PAGE_CSS = `
   .about-avatar-image {
     width: 100%; height: 100%;
     object-fit: cover;
-    object-position: center 18%;
-    transform: scale(1.03);
+    object-position: center top;
+    transform: scale(1.01);
   }
 
   /* Stats */
@@ -382,7 +383,7 @@ export default function AboutPage(): React.ReactElement {
             <div className="about-avatar-ring-static" aria-hidden="true" />
             <div className="about-avatar-circle">
               <Image
-                src={SITE_PROFILE.avatarSrc}
+                src={PROFILE_PHOTO_SRC}
                 alt="Portrait of Ayush Roy"
                 fill
                 priority

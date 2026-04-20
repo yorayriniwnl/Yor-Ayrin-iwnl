@@ -1,7 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
 import { CS2_VIDEOS, YOUTUBE_CHANNEL } from '../../data/media'
-import { SITE_PROFILE } from '../../lib/data'
 import { ButtonLink } from '../../components/ui/Button'
 import Card from '../../components/ui/Card'
 import Container from '../../components/ui/Container'
@@ -9,6 +8,7 @@ import Divider from '../../components/ui/Divider'
 import Text from '../../components/ui/Text'
 import PageHero from '../../components/sections/PageHero'
 import { Heading, Subheading } from '../../components/ui/Typography'
+import { PROFILE_PHOTO_SRC } from '../../lib/profilePhoto'
 
 type GalleryItem = {
   title: string
@@ -19,7 +19,7 @@ type GalleryItem = {
 const YOR_GALLERY: GalleryItem[] = [
   {
     title: 'Identity Frame',
-    src: SITE_PROFILE.avatarSrc,
+    src: PROFILE_PHOTO_SRC,
     caption: 'Personal identity mark used across portfolio and profile surfaces.',
   },
   {
@@ -115,7 +115,11 @@ export default function HobbiesPage(): JSX.Element {
                         alt={item.title}
                         width={640}
                         height={352}
-                        className="h-44 w-full rounded-[1rem] border border-[var(--ds-border)] object-cover"
+                        className={`h-44 w-full rounded-[1rem] border border-[var(--ds-border)] ${
+                          item.title === 'Identity Frame'
+                            ? 'bg-[#f6f3ee] object-contain p-4'
+                            : 'object-cover'
+                        }`}
                       />
                       <Subheading>{item.title}</Subheading>
                       <Text size="sm">{item.caption}</Text>

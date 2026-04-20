@@ -1,6 +1,6 @@
 // ─── Types ───────────────────────────────────────────────────────────────────
 
-import { PROFILE_PHOTO_SRC } from '../lib/profilePhoto'
+import { PROFILE_AVATAR_SRC } from '../lib/profilePhoto'
 
 export type NavLink = {
   label: string
@@ -41,7 +41,7 @@ export const SITE_PROFILE = {
   steamHref: process.env.NEXT_PUBLIC_STEAM_PROFILE_URL ?? 'https://steamcommunity.com/id/YorAyriniwnl',
   websiteLabel: 'yorayriniwnl.vercel.app',
   websiteHref: 'https://yorayriniwnl.vercel.app',
-  avatarSrc: PROFILE_PHOTO_SRC,
+  avatarSrc: PROFILE_AVATAR_SRC,
 } as const
 
 // ─── Links ────────────────────────────────────────────────────────────────────
