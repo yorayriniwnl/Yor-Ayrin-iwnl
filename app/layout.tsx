@@ -2,6 +2,7 @@
 import '../styles/design-system.css'
 import type { Metadata } from 'next'
 import React from 'react'
+import Script from 'next/script'
 import { Cormorant_Garamond, DM_Mono, DM_Sans, Playfair_Display } from 'next/font/google'
 import AppChrome from '../components/AppChrome'
 import Navbar from '../components/Navbar'
@@ -110,8 +111,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         <meta name="theme-color" content="#0a0906" />
-        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
-        <script
+        <Script id="theme-bootstrap" strategy="beforeInteractive">
+          {THEME_BOOTSTRAP_SCRIPT}
+        </Script>
+        <Script
+          id="person-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({

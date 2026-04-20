@@ -87,6 +87,12 @@ function resolve(theme: Theme): ResolvedTheme {
   return theme
 }
 
+function readDOMResolvedTheme(): ResolvedTheme {
+  if (typeof document === 'undefined') return 'dark'
+  const value = document.documentElement.getAttribute('data-theme')
+  return value === 'light' || value === 'dark' ? value : 'dark'
+}
+
 function applyToDOM(resolved: ResolvedTheme) {
   if (typeof document === 'undefined') return
   const root = document.documentElement
@@ -107,16 +113,35 @@ function applyToDOM(resolved: ResolvedTheme) {
 // ─── Provider ────────────────────────────────────────────────────────────────
 
 export default function ThemeProvider({ children }: { children: ReactNode }): JSX.Element {
-  const [theme, setThemeState] = useState<Theme>(() => readStored())
-  const [resolvedTheme, setResolved] = useState<ResolvedTheme>(() => resolve(readStored()))
+  const [theme, setThemeState] = useState<Theme>('dark')
+  const [resolvedTheme, setResolved] = useState<ResolvedTheme>('dark')
+  const [hydrated, setHydrated] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+
+    queueMicrotask(() => {
+      if (cancelled) return
+      const storedTheme = readStored()
+      setThemeState(storedTheme)
+      setResolved(storedTheme === 'system' ? readDOMResolvedTheme() : resolve(storedTheme))
+      setHydrated(true)
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   // Keep DOM in sync whenever resolvedTheme changes
   useEffect(() => {
+    if (!hydrated) return
     applyToDOM(resolvedTheme)
-  }, [resolvedTheme])
+  }, [hydrated, resolvedTheme])
 
   // System preference listener (only active when theme === 'system')
   useEffect(() => {
+    if (!hydrated) return
     if (theme !== 'system') return
     if (typeof window === 'undefined') return
 
@@ -128,7 +153,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }): JS
 
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)
-  }, [theme])
+  }, [hydrated, theme])
 
   const setTheme = useCallback((next: Theme) => {
     const r = resolve(next)
