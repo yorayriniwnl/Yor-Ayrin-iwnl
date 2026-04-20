@@ -54,7 +54,7 @@ function validateFields(body: Record<string, unknown>): FieldErrors {
     errors.email = 'Please enter a valid email address.'
   }
 
-  if (subject !== null && subject !== undefined && typeof subject !== 'string') {
+  if (subject != null && typeof subject !== 'string') {
     errors.subject = 'Subject must be plain text.'
   } else if (typeof subject === 'string' && subject.trim().length > 200) {
     errors.subject = 'Subject must be 200 characters or fewer.'

@@ -399,7 +399,7 @@ export default function QuickContactModal({ open, onClose }: QuickContactModalPr
                         fontFamily: 'var(--ds-font-mono)',
                       }}
                     >
-                      I&apos;ll get back to you soon.
+                      I'll get back to you soon.
                     </p>
                   </motion.div>
                 ) : (

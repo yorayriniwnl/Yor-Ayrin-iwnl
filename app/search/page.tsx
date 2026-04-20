@@ -73,6 +73,20 @@ const BADGE_COLORS: Record<GroupName, { bg: string; color: string }> = {
 // Helpers
 // ─────────────────────────────────────────────────────────────
 
+function groupItems(
+  items: (SearchItem | SearchResult)[]
+): Array<{ group: GroupName; items: (SearchItem | SearchResult)[] }> {
+  const map = new Map<GroupName, (SearchItem | SearchResult)[]>()
+  for (const item of items) {
+    const g = TYPE_TO_GROUP[item.type]
+    if (!map.has(g)) map.set(g, [])
+    map.get(g)!.push(item)
+  }
+  return GROUP_ORDER
+    .filter((g) => map.has(g))
+    .map((g) => ({ group: g, items: map.get(g)! }))
+}
+
 function totalCount(
   groups: Array<{ group: GroupName; items: (SearchItem | SearchResult)[] }>
 ): number {
