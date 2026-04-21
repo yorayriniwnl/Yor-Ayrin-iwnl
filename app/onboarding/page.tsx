@@ -340,7 +340,9 @@ export default function OnboardingPage(): React.JSX.Element {
         .ob-cta-btn {
           display: inline-flex;
           align-items: center;
+          justify-content: center;
           gap: 6px;
+          min-width: 220px;
           padding: 12px 28px;
           border-radius: 999px;
           background: linear-gradient(135deg, var(--ds-primary, #c9a84c), var(--ds-primary-strong, #e8c96e));
@@ -358,6 +360,12 @@ export default function OnboardingPage(): React.JSX.Element {
           opacity: 0.94;
           transform: translateY(-1px);
           box-shadow: 0 18px 34px rgba(201, 168, 76, 0.24);
+        }
+        .ob-cta-actions {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
         }
 
         @media (max-width: 720px) {
@@ -468,13 +476,25 @@ export default function OnboardingPage(): React.JSX.Element {
               ))}
             </div>
 
-            <Link
-              href={currentCta.buttonHref}
-              className="ob-cta-btn"
-              onClick={() => markVisited(role ?? undefined)}
-            >
-              {currentCta.buttonLabel}
-            </Link>
+            <div className="ob-cta-actions">
+              <Link
+                href={currentCta.buttonHref}
+                className="ob-cta-btn"
+                onClick={() => markVisited(role ?? undefined)}
+              >
+                {currentCta.buttonLabel}
+              </Link>
+
+              {currentCta.buttonHref !== '/' && (
+                <Link
+                  href="/"
+                  className="ob-cta-btn"
+                  onClick={() => markVisited(role ?? undefined)}
+                >
+                  Go to Home Page →
+                </Link>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
