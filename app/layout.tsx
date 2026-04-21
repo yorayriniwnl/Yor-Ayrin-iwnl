@@ -39,6 +39,8 @@ const serifFont = Cormorant_Garamond({
 })
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://yorayriniwnl.vercel.app'
+const ADSENSE_CLIENT_ID =
+  process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT_ID ?? 'ca-pub-9625375445358337'
 const THEME_BOOTSTRAP_SCRIPT = `
 (() => {
   try {
@@ -113,6 +115,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         <meta name="theme-color" content="#0a0906" />
+        <meta name="google-adsense-account" content={ADSENSE_CLIENT_ID} />
+        <Script
+          id="google-adsense"
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
+          crossOrigin="anonymous"
+          strategy="beforeInteractive"
+        />
         <Script id="theme-bootstrap" strategy="beforeInteractive">
           {THEME_BOOTSTRAP_SCRIPT}
         </Script>
