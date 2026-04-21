@@ -1,12 +1,12 @@
 'use client'
 
 import { type ReactNode } from 'react'
+import dynamic from 'next/dynamic'
 import { AnimatePresence } from 'framer-motion'
 import CommandPalette from './CommandPalette'
 import Layout from './layout/Layout'
 import PageTransition from './PageTransition'
 import PluginPanelsHost from './PluginPanelsHost'
-import QuickActions from './QuickActions'
 import RecruiterStrip from './RecruiterStrip'
 
 type AppChromeProps = {
@@ -15,6 +15,8 @@ type AppChromeProps = {
   nav: ReactNode
   shell: ReactNode
 }
+
+const QuickActions = dynamic(() => import('./QuickActions'), { ssr: false })
 
 export default function AppChrome({ children, footer, nav, shell }: AppChromeProps): JSX.Element {
   void AnimatePresence
