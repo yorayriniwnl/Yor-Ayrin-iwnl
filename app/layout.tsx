@@ -7,6 +7,7 @@ import { Cormorant_Garamond, DM_Mono, DM_Sans, Playfair_Display } from 'next/fon
 import AppChrome from '../components/AppChrome'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import GoogleAdSenseLoader from '../components/GoogleAdSenseLoader'
 import ThemeProvider from '../components/ui/ThemeProvider'
 import AdaptiveProvider from '../components/ui/AdaptiveProvider'
 import ClientShell from '../components/ClientShell'
@@ -116,13 +117,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta name="theme-color" content="#0a0906" />
         <meta name="google-adsense-account" content={ADSENSE_CLIENT_ID} />
-        <Script
-          id="google-adsense"
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
-          crossOrigin="anonymous"
-          strategy="beforeInteractive"
-        />
         <Script id="theme-bootstrap" strategy="beforeInteractive">
           {THEME_BOOTSTRAP_SCRIPT}
         </Script>
@@ -142,6 +136,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen flex flex-col ds-root">
+        <GoogleAdSenseLoader clientId={ADSENSE_CLIENT_ID} />
         <ThemeProvider>
           <AdaptiveProvider>
             <a
