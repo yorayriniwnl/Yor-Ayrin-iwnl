@@ -6,6 +6,7 @@ import { ButtonLink } from '../../components/ui/Button'
 
 const CONTACT_CHANNELS = [
   { label: 'Email', meta: SITE_PROFILE.email, href: `mailto:${SITE_PROFILE.email}` },
+  { label: 'Phone', meta: SITE_PROFILE.phone, href: `tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}` },
   { label: 'LinkedIn', meta: SITE_PROFILE.linkedinLabel, href: SITE_PROFILE.linkedinHref },
   { label: 'GitHub', meta: SITE_PROFILE.githubLabel, href: SITE_PROFILE.githubHref },
 ]
@@ -36,7 +37,7 @@ export default function ContactPage(): JSX.Element {
       />
       <ContactSurface
         title="Reach out"
-        description="Use whichever path fits the conversation: direct message, LinkedIn, GitHub, or the integrated contact form."
+        description="Use whichever path fits the conversation: email, phone, LinkedIn, GitHub, or the integrated contact form."
         channels={CONTACT_CHANNELS}
       />
     </>
