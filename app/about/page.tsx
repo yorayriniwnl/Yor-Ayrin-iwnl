@@ -438,9 +438,10 @@ export default function AboutPage(): React.ReactElement {
                 claim stays accurate, current, and easy to verify.
               </p>
               <div className="about-bio-links">
-                <a href="https://github.com/yorayriniwnl" className="about-bio-pill" target="_blank" rel="noreferrer">GitHub</a>
-                <a href="https://linkedin.com/in/yorayriniwnl" className="about-bio-pill" target="_blank" rel="noreferrer">LinkedIn</a>
-                <a href="mailto:yorayriniwnl@gmail.com" className="about-bio-pill">Email</a>
+                <a href={SITE_PROFILE.githubHref} className="about-bio-pill" target="_blank" rel="noreferrer">GitHub</a>
+                <a href={SITE_PROFILE.linkedinHref} className="about-bio-pill" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a href={`mailto:${SITE_PROFILE.email}`} className="about-bio-pill">Email</a>
+                <a href={`tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}`} className="about-bio-pill">Phone</a>
                 <Link href="/cv" className="about-bio-pill">CV</Link>
               </div>
             </div>

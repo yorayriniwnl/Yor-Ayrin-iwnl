@@ -10,6 +10,10 @@ import type { AssistantKnowledgeData } from './chatHelpers'
 export const ASSISTANT_KNOWLEDGE: AssistantKnowledgeData = {
   profile: {
     summary: SITE_PROFILE.recruiterSummary,
+    email: SITE_PROFILE.email,
+    phone: SITE_PROFILE.phone,
+    github: SITE_PROFILE.githubHref,
+    linkedin: SITE_PROFILE.linkedinHref,
   },
   projects: ORDERED_PROJECTS.map((project) => ({
     id: project.id,

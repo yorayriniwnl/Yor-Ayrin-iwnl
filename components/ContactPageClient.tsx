@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import ContactForm from './ContactForm'
+import { SITE_PROFILE } from '../lib/data'
 
 // ─── FAQ data ─────────────────────────────────────────────────────────────────
 
@@ -343,21 +344,27 @@ export default function ContactPageClient(): React.JSX.Element {
                 <ContactLinkRow
                   icon="✉"
                   label="Email"
-                  href="mailto:ayush@example.com"
-                  display="ayush@example.com"
+                  href={`mailto:${SITE_PROFILE.email}`}
+                  display={SITE_PROFILE.email}
+                />
+                <ContactLinkRow
+                  icon="tel"
+                  label="Phone"
+                  href={`tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}`}
+                  display={SITE_PROFILE.phone}
                 />
                 <ContactLinkRow
                   icon="⌥"
                   label="GitHub"
-                  href="https://github.com/yorayriniwnl"
-                  display="github.com/yorayriniwnl"
+                  href={SITE_PROFILE.githubHref}
+                  display={SITE_PROFILE.githubLabel}
                   external
                 />
                 <ContactLinkRow
                   icon="in"
                   label="LinkedIn"
-                  href="https://linkedin.com/in/yorayriniwnl"
-                  display="linkedin.com/in/yorayriniwnl"
+                  href={SITE_PROFILE.linkedinHref}
+                  display={SITE_PROFILE.linkedinLabel}
                   external
                 />
               </div>

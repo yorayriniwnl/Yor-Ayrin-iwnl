@@ -356,6 +356,16 @@ export default function CommandPalette(): React.ReactElement | null {
                 })
                 .catch(() => setFeedback('Failed to copy'))
               break
+            case 'copy-phone':
+              navigator.clipboard
+                .writeText(SITE_PROFILE.phone)
+                .then(() => {
+                  setFeedback('Copied!')
+                  if (feedbackTimer.current) clearTimeout(feedbackTimer.current)
+                  feedbackTimer.current = setTimeout(() => setFeedback(null), 1500)
+                })
+                .catch(() => setFeedback('Failed to copy'))
+              break
             case 'toggle-theme':
               window.dispatchEvent(new CustomEvent('toggle-theme'))
               closePalette()

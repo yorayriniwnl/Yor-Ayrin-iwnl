@@ -109,6 +109,11 @@ export default function Contact() {
                 <span className="contact-link-val">{SITE_PROFILE.email}</span>
                 <span className="contact-link-arrow">-&gt;</span>
               </a>
+              <a className="contact-link-row" href={`tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}`}>
+                <span className="contact-link-label">Phone</span>
+                <span className="contact-link-val">{SITE_PROFILE.phone}</span>
+                <span className="contact-link-arrow">call</span>
+              </a>
               <a
                 className="contact-link-row"
                 href={SITE_PROFILE.githubHref}

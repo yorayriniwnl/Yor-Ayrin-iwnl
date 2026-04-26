@@ -75,7 +75,7 @@ export default function About() {
                 About Page
               </Link>
               <a
-                href="https://github.com/yorayriniwnl"
+                href={SITE_PROFILE.githubHref}
                 className="link-pill"
                 target="_blank"
                 rel="noreferrer"
@@ -83,7 +83,7 @@ export default function About() {
                 GitHub
               </a>
               <a
-                href="https://linkedin.com/in/yorayriniwnl"
+                href={SITE_PROFILE.linkedinHref}
                 className="link-pill"
                 target="_blank"
                 rel="noreferrer"
@@ -91,13 +91,19 @@ export default function About() {
                 LinkedIn
               </a>
               <a
-                href="mailto:yorayriniwnl@gmail.com"
+                href={`mailto:${SITE_PROFILE.email}`}
                 className="link-pill"
               >
                 Email
               </a>
               <a
-                href="https://yorayriniwnl.vercel.app"
+                href={`tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}`}
+                className="link-pill"
+              >
+                Phone
+              </a>
+              <a
+                href={SITE_PROFILE.websiteHref}
                 className="link-pill"
                 target="_blank"
                 rel="noreferrer"

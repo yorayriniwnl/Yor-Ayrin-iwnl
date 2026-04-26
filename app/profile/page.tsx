@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { usePageView } from '../../lib/analytics'
+import { SITE_PROFILE } from '../../lib/data'
 
 // â”€â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
@@ -475,6 +476,7 @@ function CTASection() {
   const btns = [
     { label: 'Download Resume', href: '/resume.pdf', download: true, primary: true },
     { label: 'View All Projects', href: '/projects', download: false, primary: false },
+    { label: 'Call', href: `tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}`, download: false, primary: false },
     { label: 'Get in Touch', href: '/contact', download: false, primary: false },
   ]
 
@@ -489,11 +491,11 @@ function CTASection() {
       }}
     >
       {btns.map(btn => (
-        btn.download ? (
+        btn.download || btn.href.startsWith('tel:') || btn.href.startsWith('mailto:') ? (
           <a
             key={btn.label}
             href={btn.href}
-            download
+            download={btn.download ? true : undefined}
             style={{
               display: 'inline-flex',
               alignItems: 'center',

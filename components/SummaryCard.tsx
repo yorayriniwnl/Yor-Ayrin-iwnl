@@ -1,4 +1,5 @@
 import React from 'react'
+import { SITE_PROFILE } from '../lib/data'
 
 export default function SummaryCard(): JSX.Element {
   return (
@@ -10,7 +11,9 @@ export default function SummaryCard(): JSX.Element {
           <p className="text-sm text-indigo-100/90 mt-1 text-center">Focused on scalable and clean architecture.</p>
 
           <div className="mt-4 text-center">
-            <a href="mailto:yorayriniwnl@gmail.com" className="text-sm text-indigo-200 font-medium">yorayriniwnl@gmail.com</a>
+            <a href={`mailto:${SITE_PROFILE.email}`} className="text-sm text-indigo-200 font-medium">{SITE_PROFILE.email}</a>
+            <span className="mx-2 text-sm text-indigo-100/50">|</span>
+            <a href={`tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}`} className="text-sm text-indigo-200 font-medium">{SITE_PROFILE.phone}</a>
             <div className="mt-2">
               <a href="/resume.pdf" download className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/6 text-xs text-white/90 backdrop-blur-sm border border-white/6 hover:bg-white/10">Download Resume</a>
             </div>

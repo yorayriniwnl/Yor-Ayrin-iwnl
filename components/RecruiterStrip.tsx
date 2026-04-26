@@ -189,6 +189,31 @@ function RecruiterStripBody(): JSX.Element {
                   <span className="strip-label-sm">Resume</span>
                 </a>
 
+                <a
+                  href={`tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}`}
+                  aria-label="Call phone number"
+                  data-disable-custom-cursor="true"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    padding: '6px 13px',
+                    borderRadius: 'var(--ds-radius-sm)',
+                    border: '1px solid var(--ds-border)',
+                    background: 'var(--ds-bg-raised)',
+                    color: 'var(--ds-text-muted)',
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    letterSpacing: '0.07em',
+                    fontFamily: 'var(--ds-font-mono)',
+                    textDecoration: 'none',
+                    transition: 'border-color 0.18s, color 0.18s',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <span className="strip-label-md">Call</span>
+                  <span className="strip-label-sm">Call</span>
+                </a>
+
                 <button
                   onClick={() => setContactOpen(true)}
                   aria-label="Open contact modal"

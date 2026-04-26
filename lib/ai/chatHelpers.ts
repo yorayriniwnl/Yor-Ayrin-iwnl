@@ -53,6 +53,10 @@ type AssistantGraph = {
 export type AssistantKnowledgeData = {
   profile?: {
     summary?: string
+    email?: string
+    phone?: string
+    github?: string
+    linkedin?: string
   }
   projects?: AssistantProject[]
   skills?: AssistantSkill[]
@@ -155,6 +159,22 @@ function getExperienceAnswer(data: AssistantKnowledgeData): string {
   }
 
   return `Experience:\n${sections.join('\n')}`
+}
+
+function getContactAnswer(data: AssistantKnowledgeData): string {
+  const profile = data.profile
+  const lines = [
+    profile?.email ? `Email: ${profile.email}` : '',
+    profile?.phone ? `Phone: ${profile.phone}` : '',
+    profile?.linkedin ? `LinkedIn: ${profile.linkedin}` : '',
+    profile?.github ? `GitHub: ${profile.github}` : '',
+  ].filter(hasText)
+
+  if (!lines.length) {
+    return "I don't have direct contact details loaded right now."
+  }
+
+  return `You can contact me here:\n${lines.join('\n')}`
 }
 
 function getProjectListAnswer(projects: AssistantProject[]): string {
@@ -341,6 +361,17 @@ export function generateAnswerFromKnowledge(
   const skills = getSkills(data)
   const graph = getGraph(data)
 
+  if (
+    q.includes('contact') ||
+    q.includes('email') ||
+    q.includes('phone') ||
+    q.includes('mobile') ||
+    q.includes('call') ||
+    q.includes('reach')
+  ) {
+    return getContactAnswer(data)
+  }
+
   if (graph) {
     const useMatch =
       q.match(/which projects (?:use|using) (.+)/) ||
@@ -446,6 +477,17 @@ export function simpleGenerateAnswer(
   const q = String(query || '').toLowerCase()
   const projects = getProjects(data)
   const skills = getSkills(data)
+
+  if (
+    q.includes('contact') ||
+    q.includes('email') ||
+    q.includes('phone') ||
+    q.includes('mobile') ||
+    q.includes('call') ||
+    q.includes('reach')
+  ) {
+    return getContactAnswer(data)
+  }
 
   for (const project of projects) {
     const title = String(project.title || '').toLowerCase()

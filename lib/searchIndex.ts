@@ -25,6 +25,7 @@ export type SearchResult = SearchItem & {
 export type SearchActionId =
   | 'download-resume'
   | 'copy-email'
+  | 'copy-phone'
   | 'toggle-theme'
   | 'github'
   | 'open-assistant'
@@ -157,6 +158,13 @@ export const SEARCH_ITEMS: SearchItem[] = [
     `Copy ${SITE_PROFILE.email} to your clipboard.`,
     '#copy-email',
     ['email', 'contact', 'clipboard'],
+  ),
+  buildActionItem(
+    'copy-phone',
+    'Copy Phone',
+    `Copy ${SITE_PROFILE.phone} to your clipboard.`,
+    '#copy-phone',
+    ['phone', 'mobile', 'call', 'contact', 'clipboard'],
   ),
   buildActionItem(
     'toggle-theme',

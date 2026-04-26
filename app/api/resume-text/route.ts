@@ -11,8 +11,14 @@ function buildText() {
   lines.push('My portfolio uses my resume and GitHub as the single source of truth, so every project claim stays accurate, current, and easy to verify.')
   lines.push('')
 
+  lines.push(`Email: ${SITE_PROFILE.email}`)
+  lines.push(`Phone: ${SITE_PROFILE.phone}`)
+  lines.push(`Portfolio: ${SITE_PROFILE.websiteHref}`)
+
   const github = LINKS.find((l) => l.id === 'github')
+  const linkedin = LINKS.find((l) => l.id === 'linkedin')
   if (github) lines.push(`GitHub: ${github.href}`)
+  if (linkedin) lines.push(`LinkedIn: ${linkedin.href}`)
   lines.push('')
 
   lines.push('Skills:')

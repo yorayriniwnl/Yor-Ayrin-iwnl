@@ -468,7 +468,7 @@ export default function QuickContactModal({ open, onClose }: QuickContactModalPr
                     </AnimatePresence>
 
                     {/* Actions */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--ds-space-3)', paddingTop: 'var(--ds-space-1)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--ds-space-3)', paddingTop: 'var(--ds-space-1)', flexWrap: 'wrap' }}>
                       <a
                         href={`mailto:${SITE_PROFILE.email}`}
                         style={{
@@ -481,6 +481,20 @@ export default function QuickContactModal({ open, onClose }: QuickContactModalPr
                         }}
                       >
                         or email directly →
+                      </a>
+
+                      <a
+                        href={`tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}`}
+                        style={{
+                          fontSize: '11px',
+                          color: 'var(--ds-text-dim)',
+                          fontFamily: 'var(--ds-font-mono)',
+                          textDecoration: 'none',
+                          letterSpacing: '0.03em',
+                          transition: 'color 0.18s',
+                        }}
+                      >
+                        {SITE_PROFILE.phone}
                       </a>
 
                       <div style={{ display: 'flex', gap: 'var(--ds-space-2)' }}>

@@ -40,10 +40,11 @@ const NAV_COLS = [
 ]
 
 const SOCIAL_LINKS = [
-  { label: 'GitHub',   href: 'https://github.com/yorayriniwnl',         external: true },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/yorayriniwnl',    external: true },
-  { label: 'Email',    href: 'mailto:yorayriniwnl@gmail.com',           external: false },
-  { label: 'Resume',   href: '/resume',                                  external: false },
+  { label: 'GitHub',   href: SITE_PROFILE.githubHref, external: true },
+  { label: 'LinkedIn', href: SITE_PROFILE.linkedinHref, external: true },
+  { label: 'Email',    href: `mailto:${SITE_PROFILE.email}`, external: false },
+  { label: 'Phone',    href: `tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}`, external: false },
+  { label: 'Resume',   href: '/resume', external: false },
 ]
 
 const CSS = `
@@ -248,3 +249,4 @@ export default function HomeFooter() {
     </footer>
   )
 }
+import { SITE_PROFILE } from '../../lib/data'

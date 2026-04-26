@@ -326,6 +326,9 @@ export default function SearchPage(): React.ReactElement {
           case 'copy-email':
             navigator.clipboard.writeText(SITE_PROFILE.email).catch(() => {})
             break
+          case 'copy-phone':
+            navigator.clipboard.writeText(SITE_PROFILE.phone).catch(() => {})
+            break
           case 'toggle-theme':
             window.dispatchEvent(new CustomEvent('toggle-theme'))
             break

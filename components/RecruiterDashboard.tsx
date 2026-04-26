@@ -607,6 +607,7 @@ export default function RecruiterDashboard(): JSX.Element {
             <a
               href={`mailto:${SITE_PROFILE.email}`}
               style={{
+                display: 'block',
                 fontSize: '13px',
                 color: 'var(--ds-primary)',
                 fontFamily: 'var(--ds-font-mono)',
@@ -615,6 +616,20 @@ export default function RecruiterDashboard(): JSX.Element {
               }}
             >
               {SITE_PROFILE.email}
+            </a>
+            <a
+              href={`tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}`}
+              style={{
+                display: 'block',
+                marginTop: '4px',
+                fontSize: '13px',
+                color: 'var(--ds-primary)',
+                fontFamily: 'var(--ds-font-mono)',
+                textDecoration: 'none',
+                letterSpacing: '0.03em',
+              }}
+            >
+              {SITE_PROFILE.phone}
             </a>
           </div>
 

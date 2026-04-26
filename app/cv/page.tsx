@@ -62,6 +62,7 @@ export default function CvPage(): JSX.Element {
                   <Text size="sm">{SITE_PROFILE.githubLabel}</Text>
                   <Text size="sm">{SITE_PROFILE.linkedinLabel}</Text>
                   <Text size="sm">{SITE_PROFILE.email}</Text>
+                  <Text size="sm">{SITE_PROFILE.phone}</Text>
                 </div>
               </Card>
 

@@ -245,6 +245,17 @@ export default function QuickApply(): JSX.Element {
       ),
     },
     {
+      id: 'phone',
+      label: 'Phone',
+      value: SITE_PROFILE.phone,
+      description: SITE_PROFILE.phone,
+      icon: (
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.35 1.9.66 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.31 1.85.53 2.81.66A2 2 0 0122 16.92z" />
+        </svg>
+      ),
+    },
+    {
       id: 'github',
       label: 'GitHub',
       value: SITE_PROFILE.githubHref,
@@ -300,6 +311,7 @@ export default function QuickApply(): JSX.Element {
       `${SITE_PROFILE.name} — ${SITE_PROFILE.role}`,
       '',
       `Email:     ${SITE_PROFILE.email}`,
+      `Phone:     ${SITE_PROFILE.phone}`,
       `GitHub:    ${SITE_PROFILE.githubHref}`,
       `LinkedIn:  ${SITE_PROFILE.linkedinHref}`,
       `Portfolio: ${SITE_URL}`,

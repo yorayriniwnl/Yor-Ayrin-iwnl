@@ -50,6 +50,7 @@ export const SITE_LINKS = [
   { id: 'github', label: SITE_PROFILE.githubLabel, href: SITE_PROFILE.githubHref },
   { id: 'linkedin', label: SITE_PROFILE.linkedinLabel, href: SITE_PROFILE.linkedinHref },
   { id: 'email', label: SITE_PROFILE.email, href: `mailto:${SITE_PROFILE.email}` },
+  { id: 'phone', label: SITE_PROFILE.phone, href: `tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}` },
   { id: 'resume', label: 'Resume PDF', href: '/resume.pdf' },
 ] as const
 

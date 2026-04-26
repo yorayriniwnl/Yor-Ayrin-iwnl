@@ -76,6 +76,13 @@ export default function StickyContactButton(): JSX.Element {
                       >
                         {RESUME_PROFILE.email}
                       </a>
+                      {' '}or call{' '}
+                      <a
+                        href={`tel:${RESUME_PROFILE.phone.replace(/\s+/g, '')}`}
+                        className="ds-shell-link"
+                      >
+                        {RESUME_PROFILE.phone}
+                      </a>
                       .
                     </p>
                   </div>
