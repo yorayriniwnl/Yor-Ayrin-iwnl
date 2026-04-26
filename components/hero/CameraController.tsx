@@ -11,6 +11,10 @@ type Props = {
   zoomSensitivity?: number
 }
 
+type FocusDetail = {
+  position?: [number, number, number]
+}
+
 export default function CameraController({
   initialPosition = [0, 0, 6],
   parallaxIntensity = 0.42,
@@ -51,8 +55,8 @@ export default function CameraController({
       )
     }
 
-    function onFocus(e: any) {
-      const d = e?.detail || {}
+    function onFocus(e: Event) {
+      const d = (e as CustomEvent<FocusDetail>).detail || {}
       if (focusTimeout.current) window.clearTimeout(focusTimeout.current)
 
       if (d.position && Array.isArray(d.position) && d.position.length === 3) {

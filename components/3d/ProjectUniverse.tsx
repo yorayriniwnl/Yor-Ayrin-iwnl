@@ -1,7 +1,8 @@
 "use client"
+import type { ThreeEvent } from '@react-three/fiber'
 
 import React, { useRef, useMemo, useState, useCallback, Suspense, useEffect } from 'react'
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber' // types added below
 import { Html } from '@react-three/drei'
 import ScrollCameraController from './ScrollCameraController'
 import * as THREE from 'three'
@@ -141,19 +142,19 @@ const ProjectNode = React.memo(function ProjectNode({
     m.scale.setScalar(s)
   })
 
-  const onPointerOver = useCallback((e: any) => {
+  const onPointerOver = useCallback((e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     hoveredRef.current = true
     setHovered(true)
   }, [])
 
-  const onPointerOut = useCallback((e: any) => {
+  const onPointerOut = useCallback((e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     hoveredRef.current = false
     setHovered(false)
   }, [])
 
-  const onClick = useCallback((e: any) => {
+  const onClick = useCallback((e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     const p = meshRef.current?.position
     if (p) onFocus(p)

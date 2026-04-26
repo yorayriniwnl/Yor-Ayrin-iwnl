@@ -1,7 +1,8 @@
 "use client"
+import type { ThreeEvent } from '@react-three/fiber'
 
 import React, { useRef, useState, useCallback, useMemo } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber' // types added below
 import { Float, Html, PerspectiveCamera } from '@react-three/drei'
 import * as THREE from 'three'
 
@@ -101,20 +102,20 @@ function ProjectCard3D({ project, index, total, onSelect, angleRef }: ProjectCar
   })
 
   const handleClick = useCallback(
-    (e: any) => {
+    (e: ThreeEvent<PointerEvent>) => {
       e.stopPropagation()
       onSelect(project.id)
     },
     [onSelect, project.id]
   )
 
-  const handlePointerEnter = useCallback((e: any) => {
+  const handlePointerEnter = useCallback((e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     setHovered(true)
     document.body.style.cursor = 'pointer'
   }, [])
 
-  const handlePointerLeave = useCallback((e: any) => {
+  const handlePointerLeave = useCallback((e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     setHovered(false)
     document.body.style.cursor = 'default'

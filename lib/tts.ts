@@ -107,7 +107,7 @@ export function speak(text: string, setTalkingOrOpts?: ((v: boolean) => void) | 
 
     // Some browsers (Chrome) fire onboundary with word/char info
     // @ts-ignore - not all TS envs expose onboundary typings
-    utter.onboundary = (ev: any) => {
+    utter.onboundary = (ev: SpeechSynthesisEvent) => {
       boundarySeen = true
       try {
         const idx = typeof ev.charIndex === 'number' ? ev.charIndex : 0

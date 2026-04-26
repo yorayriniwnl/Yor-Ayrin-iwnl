@@ -63,7 +63,7 @@ export default function GlobalStyles() {
       body {
         background: var(--bg);
         color: var(--text);
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: var(--ds-font-body, 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif);
         font-weight: 300;
         line-height: 1.7;
         overflow-x: hidden;
@@ -154,7 +154,7 @@ export default function GlobalStyles() {
       }
 
       .hero-title {
-        font-family: Georgia, 'Times New Roman', serif;
+        font-family: var(--ds-font-display, 'Playfair Display', Georgia, serif);
         font-size: clamp(4rem, 10vw, 9.5rem);
         font-weight: 900;
         line-height: 0.9;
@@ -404,7 +404,7 @@ export default function GlobalStyles() {
       .projects-title,
       .feature-title,
       .blog-title {
-        font-family: Georgia, 'Times New Roman', serif;
+        font-family: var(--ds-font-display, 'Playfair Display', Georgia, serif);
         line-height: 1.1;
         color: var(--cream);
         letter-spacing: -0.02em;
@@ -431,7 +431,7 @@ export default function GlobalStyles() {
       }
 
       .stat-num {
-        font-family: Georgia, 'Times New Roman', serif;
+        font-family: var(--ds-font-display, 'Playfair Display', Georgia, serif);
         font-size: 2.5rem;
         font-weight: 900;
         color: var(--gold);
@@ -637,7 +637,7 @@ export default function GlobalStyles() {
       }
 
       .feature-card-title {
-        font-family: Georgia, 'Times New Roman', serif;
+        font-family: var(--ds-font-display, 'Playfair Display', Georgia, serif);
         font-size: 1.35rem;
         font-weight: 700;
         line-height: 1.2;
@@ -713,6 +713,41 @@ export default function GlobalStyles() {
         background: linear-gradient(180deg, rgba(201,168,76,0.10), rgba(201,168,76,0.04));
         box-shadow: 0 0 0 1px rgba(201,168,76,0.06) inset;
       }
+      .badge-ai {
+        color: #b8d4f8;
+        border-color: rgba(122,122,200,0.38);
+        background: rgba(122,122,200,0.07);
+      }
+      .badge-systems {
+        color: #a8c4a8;
+        border-color: rgba(122,154,122,0.38);
+        background: rgba(122,154,122,0.07);
+      }
+      .badge-python {
+        color: #f3dfad;
+        border-color: rgba(201,168,76,0.30);
+        background: rgba(201,168,76,0.06);
+      }
+      .badge-web {
+        color: #f0c4a8;
+        border-color: rgba(192,120,74,0.36);
+        background: rgba(192,120,74,0.06);
+      }
+      .badge-3d {
+        color: #c8b4e8;
+        border-color: rgba(160,120,200,0.36);
+        background: rgba(160,120,200,0.06);
+      }
+      .badge-github {
+        color: #b8b8b8;
+        border-color: rgba(180,180,180,0.28);
+        background: rgba(180,180,180,0.05);
+      }
+      .badge-other {
+        color: var(--cream-dim);
+        border-color: rgba(168,152,120,0.28);
+        background: transparent;
+      }
       .cat-life { color: var(--gold-dim); }
       .cat-personal { color: #7a9a7a; }
       .cat-real { color: var(--red); }
@@ -720,7 +755,7 @@ export default function GlobalStyles() {
 
       .proj-title,
       .blog-post-title {
-        font-family: Georgia, 'Times New Roman', serif;
+        font-family: var(--ds-font-display, 'Playfair Display', Georgia, serif);
         font-weight: 700;
         color: var(--cream);
         line-height: 1.2;
@@ -825,7 +860,7 @@ export default function GlobalStyles() {
         position: absolute;
         bottom: 1.5rem;
         right: 2rem;
-        font-family: Georgia, 'Times New Roman', serif;
+        font-family: var(--ds-font-display, 'Playfair Display', Georgia, serif);
         font-size: 5rem;
         font-weight: 900;
         color: var(--surface2);
@@ -930,7 +965,7 @@ export default function GlobalStyles() {
       }
 
       .exp-title {
-        font-family: Georgia, 'Times New Roman', serif;
+        font-family: var(--ds-font-display, 'Playfair Display', Georgia, serif);
         font-size: 1.1rem;
         font-weight: 700;
         color: var(--cream);
@@ -1150,7 +1185,7 @@ export default function GlobalStyles() {
       }
 
       .footer-brand {
-        font-family: Georgia, 'Times New Roman', serif;
+        font-family: var(--ds-font-display, 'Playfair Display', Georgia, serif);
         font-size: 1.8rem;
         font-weight: 900;
         font-style: italic;

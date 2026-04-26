@@ -50,7 +50,25 @@ function timeAgoFromISO(iso?: string): string {
   return `${Math.floor(delta / 86400)}d ago`
 }
 
-function mapEventToItem(e: any): ActivityItem {
+
+type RawGitHubEvent = {
+  type?: string
+  repo?: { name?: string }
+  created_at?: string
+  payload?: {
+    commits?: { message?: string }[]
+    action?: string
+    ref_type?: string
+    ref?: string
+    pull_request?: { title?: string }
+    issue?: { title?: string }
+    release?: { tag_name?: string; name?: string }
+    forkee?: { full_name?: string }
+    member?: { login?: string }
+  }
+}
+
+function mapEventToItem(e: RawGitHubEvent): ActivityItem {
   const repo = e?.repo?.name?.split('/')?.pop() || e?.repo?.name || 'unknown-repo'
   const created = e?.created_at || new Date().toISOString()
   const eventType = e?.type || 'Event'

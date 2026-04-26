@@ -23,4 +23,8 @@ declare global {
     hardwareConcurrency?: number
     connection?: { effectiveType?: string; downlink?: number; rtt?: number }
   }
+
+  interface SpeechRecognitionEvent extends Event {
+    results: SpeechRecognitionResultList
+  }
 }

@@ -25,7 +25,7 @@ const CSS = `
   }
 
   .sk-root {
-    background:  #060a14;
+    background:  #0a0906;
     min-height:  100vh;
     overflow:    hidden;
   }
@@ -34,9 +34,9 @@ const CSS = `
   .sk {
     background:         linear-gradient(
                           90deg,
-                          #1e293b 0px,
-                          #2d3f55 80px,
-                          #1e293b 160px
+                          #1a1710 0px,
+                          #2a2218 80px,
+                          #1a1710 160px
                         );
     background-size:    400px 100%;
     animation:          __sk_shimmer 1.4s ease-in-out infinite;
@@ -47,7 +47,7 @@ const CSS = `
   /* ── Nav ─────────────────────────────────────────────────── */
   .sk-nav {
     height:        64px;
-    border-bottom: 1px solid #1e293b;
+    border-bottom: 1px solid #2a2520;
     display:       flex;
     align-items:   center;
     justify-content: space-between;

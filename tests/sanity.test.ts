@@ -25,6 +25,7 @@ type ExperienceItem = {
 
 const VALID_CATEGORIES = [
   'frontend', 'backend', 'ai', '3d', 'fullstack', 'other',
+  'Systems', 'AI / ML', 'Python', 'Web', 'GitHub',
 ] as const
 
 const VALID_KINDS = [
@@ -390,5 +391,114 @@ describe("API route handlers exist and are async functions", () => {
     handlers.forEach((handler) => {
       expect(isAsyncFunction(handler)).toBe(true)
     })
+  })
+})
+
+// ─── Suite 6: Live source-data contracts (imports real modules) ────────────────
+// These tests use the actual data arrays so regressions in real content are
+// caught immediately — no mock data, no hermetic isolation.
+
+import { PROJECTS, ORDERED_PROJECTS, SKILL_CATEGORIES } from '../data/projects'
+import { EXPERIENCE_ITEMS, EDUCATION_ITEMS, NAV_LINKS, FOOTER_LINK_GROUPS } from '../data/personal'
+import { HOME_METRICS } from '../data/site'
+
+describe('live data/projects.ts contracts', () => {
+  it('every project has a non-empty id, title, and tech array', () => {
+    PROJECTS.forEach((p) => {
+      expect(p.id.length, `project id blank`).toBeGreaterThan(0)
+      expect(p.title.length, `title blank on ${p.id}`).toBeGreaterThan(0)
+      expect(p.tech.length, `tech empty on ${p.id}`).toBeGreaterThan(0)
+    })
+  })
+
+  it('all project ids are slug-safe (lowercase alphanumeric + hyphen)', () => {
+    const slugPattern = /^[a-z0-9-]+$/
+    PROJECTS.forEach((p) => {
+      expect(p.id, `bad slug: ${p.id}`).toMatch(slugPattern)
+    })
+  })
+
+  it('project categories use the allowed set', () => {
+    const validCategories = new Set(VALID_CATEGORIES)
+    PROJECTS.forEach((p) => {
+      expect(validCategories.has(p.category), `unknown category "${p.category}" on ${p.id}`).toBe(
+        true,
+      )
+    })
+  })
+
+  it('ORDERED_PROJECTS is a permutation of PROJECTS (same length, same ids)', () => {
+    expect(ORDERED_PROJECTS.length).toBe(PROJECTS.length)
+    const ids = new Set(PROJECTS.map((p) => p.id))
+    ORDERED_PROJECTS.forEach((p) => {
+      expect(ids.has(p.id), `ordered project id "${p.id}" not in PROJECTS`).toBe(true)
+    })
+  })
+
+  it('SKILL_CATEGORIES has at least one skill in each category', () => {
+    const entries = Object.entries(SKILL_CATEGORIES)
+    expect(entries.length).toBeGreaterThan(0)
+    entries.forEach(([cat, skills]) => {
+      expect(skills.length, `category "${cat}" is empty`).toBeGreaterThan(0)
+    })
+  })
+})
+
+describe('live data/personal.ts contracts', () => {
+  it('all NAV_LINKS have non-empty label and href starting with /', () => {
+    NAV_LINKS.forEach((link) => {
+      expect(link.label.length, `blank nav label`).toBeGreaterThan(0)
+      expect(link.href.startsWith('/'), `nav href not relative: ${link.href}`).toBe(true)
+    })
+  })
+
+  it('FOOTER_LINK_GROUPS has primary, product, and resources keys', () => {
+    expect(Object.keys(FOOTER_LINK_GROUPS)).toEqual(
+      expect.arrayContaining(['primary', 'product', 'resources']),
+    )
+  })
+
+  it('all EXPERIENCE_ITEMS have required fields and valid kind', () => {
+    const VALID_KINDS = new Set(['verified', 'placeholder', 'education'])
+    EXPERIENCE_ITEMS.forEach((e) => {
+      expect(e.id.length, `blank experience id`).toBeGreaterThan(0)
+      expect(e.title.length, `blank title on ${e.id}`).toBeGreaterThan(0)
+      expect(VALID_KINDS.has(e.kind), `invalid kind "${e.kind}" on ${e.id}`).toBe(true)
+    })
+  })
+
+  it('verified experience items each have at least one bullet', () => {
+    EXPERIENCE_ITEMS.filter((e) => e.kind === 'verified').forEach((e) => {
+      expect(e.bullets.length, `verified item "${e.id}" has no bullets`).toBeGreaterThan(0)
+    })
+  })
+
+  it('all EDUCATION_ITEMS have id, title, and meta', () => {
+    EDUCATION_ITEMS.forEach((e) => {
+      expect(e.id.length).toBeGreaterThan(0)
+      expect(e.title.length).toBeGreaterThan(0)
+      expect(e.meta.length).toBeGreaterThan(0)
+    })
+  })
+})
+
+describe('live HOME_METRICS contract', () => {
+  it('has exactly four metric entries', () => {
+    expect(HOME_METRICS).toHaveLength(4)
+  })
+
+  it('every metric has a non-empty label and value', () => {
+    HOME_METRICS.forEach((m) => {
+      expect(m.label.length).toBeGreaterThan(0)
+      expect(m.value.length).toBeGreaterThan(0)
+    })
+  })
+
+  it('portfolio projects count is a zero-padded 2-digit number', () => {
+    const metric = HOME_METRICS.find((m) => m.label === 'Portfolio projects')
+    expect(metric).toBeDefined()
+    expect(/^\d{2}$/.test(metric!.value)).toBe(true)
+    const count = parseInt(metric!.value, 10)
+    expect(count).toBeGreaterThan(0)
   })
 })

@@ -55,7 +55,7 @@ export default function GridFloor(): JSX.Element {
     matRef.current.uniforms.uClickPower.value = Math.max(0, matRef.current.uniforms.uClickPower.value - delta * 1.2)
   })
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: import("@react-three/fiber").ThreeEvent<MouseEvent>) => {
     e.stopPropagation()
     const p = e.point as THREE.Vector3
     if (matRef.current) {

@@ -90,10 +90,10 @@ export default function PanelsOverlay({
 
     plugin
       .loader()
-      .then((mod: any) => {
+      .then((mod: { default?: unknown; [key: string]: unknown }) => {
         const Component = mod?.default ?? null
         if (Component) {
-          setPluginComponent(() => Component)
+          setPluginComponent(() => Component as ComponentType<{}>)
         } else {
           setLoadError(true)
         }
@@ -148,10 +148,10 @@ export default function PanelsOverlay({
       }
       plugin
         .loader()
-        .then((mod: any) => {
+        .then((mod: { default?: unknown; [key: string]: unknown }) => {
           const Component = mod?.default ?? null
           if (Component) {
-            setPluginComponent(() => Component)
+            setPluginComponent(() => Component as ComponentType<{}>)
           } else {
             setLoadError(true)
           }

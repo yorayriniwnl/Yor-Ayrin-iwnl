@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import type { Metadata } from 'next'
 import { SITE_PROFILE } from '../../lib/data'
 import RecruiterDashboard from '../../components/RecruiterDashboard'

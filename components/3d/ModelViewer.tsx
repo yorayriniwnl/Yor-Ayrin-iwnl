@@ -12,8 +12,7 @@ type Props = {
 };
 
 const ModelInner = memo(function ModelInner({ src }: { src: string }) {
-  // cast to any to avoid strict typing issues with various glTF exports
-  const gltf: any = useGLTF(src);
+  const gltf = useGLTF(src) as { scene: import("three").Group };
   return <primitive object={gltf.scene} dispose={null} />;
 });
 

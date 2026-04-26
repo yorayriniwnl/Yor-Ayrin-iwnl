@@ -20,7 +20,7 @@ export default function SessionWelcome(): JSX.Element | null {
       .then((r) => r.json())
       .then((d) => {
         const projects = Array.isArray(d?.projects) ? d.projects : []
-        const found = projects.find((p: any) => String(p.id).toLowerCase() === String(memory.lastProject).toLowerCase() || String(p.title || '').toLowerCase().includes(String(memory.lastProject).toLowerCase()))
+        const found = projects.find((p: Record<string, unknown>) => String(p.id).toLowerCase() === String(memory.lastProject).toLowerCase() || String(p.title || '').toLowerCase().includes(String(memory.lastProject).toLowerCase()))
         setTitle(found ? (found.title || found.id) : memory.lastProject || null)
         setVisible(true)
       })

@@ -10,7 +10,7 @@ export const meta = {
   mount: 'scene'
 }
 
-export default function ThreeEnginePlugin(): any {
+export default function ThreeEnginePlugin(): React.ReactElement {
   // When mounted inside the r3f Scene, this can return r3f elements (meshes, lights, groups).
   // Keep this file minimal — plugin authors can replace with complex systems.
   return (

@@ -203,11 +203,11 @@ export default function ChatWidget(): JSX.Element {
       r.interimResults = false
       r.maxAlternatives = 1
       r.onstart = () => setRecognizing(true)
-      r.onerror = (_ev: any) => {
+      r.onerror = (_ev: Event) => {
         setRecognizing(false)
       }
       r.onend = () => setRecognizing(false)
-      r.onresult = (ev: any) => {
+      r.onresult = (ev: SpeechRecognitionEvent) => {
         const res = ev.results && ev.results[0] && ev.results[0][0] && ev.results[0][0].transcript
         if (res) {
           setInput(res)

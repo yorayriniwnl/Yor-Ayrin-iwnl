@@ -10,10 +10,10 @@ export default function PresenceBanner(): JSX.Element | null {
 
   useEffect(() => {
     const handler = (e: Event) => {
-      const ev = e as CustomEvent
+      const ev = e as CustomEvent<{sessions?: Session[]}>
       const s = ev?.detail?.sessions || []
       // only keep recent ones
-      const recent = s.filter((ss: any) => {
+      const recent = s.filter((ss) => {
         try { return Date.now() - Date.parse(ss.lastSeen) < 45_000 } catch { return false }
       })
       setSessions(recent)

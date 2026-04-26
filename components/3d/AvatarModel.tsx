@@ -51,7 +51,7 @@ const AvatarModel = function AvatarModel({ headRadius = 0.95 }: { headRadius?: n
   // listen for monitor hover events to increase screen glow subtly
   const [monitorHover, setMonitorHover] = useState(false)
   useEffect(() => {
-    const handler = (e: any) => setMonitorHover(Boolean(e?.detail?.hover))
+    const handler = (e: Event) => setMonitorHover(Boolean((e as CustomEvent<{hover?: boolean}>).detail?.hover))
     window.addEventListener('monitor-hover', handler as EventListener)
     return () => window.removeEventListener('monitor-hover', handler as EventListener)
   }, [])
@@ -63,21 +63,21 @@ const AvatarModel = function AvatarModel({ headRadius = 0.95 }: { headRadius?: n
   const lastVisemeAtRef = useRef(0)
 
   useEffect(() => {
-    const onStart = (e: any) => {
-      const id = e?.detail?.id ?? null
+    const onStart = (event: CustomEvent<{id?: number | null}>) => {
+      const id = event.detail?.id ?? null
       ttsIdRef.current = id
       setIsSpeaking(true)
     }
-    const onEnd = (e: any) => {
-      const id = e?.detail?.id ?? null
+    const onEnd = (event: CustomEvent<{id?: number | null}>) => {
+      const id = event.detail?.id ?? null
       // if id is present and doesn't match current, ignore
       if (id !== null && ttsIdRef.current !== null && id !== ttsIdRef.current) return
       ttsIdRef.current = null
       setIsSpeaking(false)
       visemeAmpRef.current = 0
     }
-    const onViseme = (e: any) => {
-      const d = e?.detail || {}
+    const onViseme = (event: CustomEvent<{id?: number | null; amplitude?: number}>) => {
+      const d = event.detail || {}
       const id = typeof d.id !== 'undefined' ? d.id : null
       const amp = typeof d.amplitude === 'number' ? Math.max(0, Math.min(1, d.amplitude)) : 0.35
       // if an id exists, ignore visemes that don't match the active tts id
@@ -249,11 +249,11 @@ const AvatarModel = function AvatarModel({ headRadius = 0.95 }: { headRadius?: n
 
 export default React.memo(AvatarModel)
 
-function GLBAvatarAsync({ screenLightRef, isSpeaking }: { screenLightRef: any; isSpeaking?: boolean }) {
+function GLBAvatarAsync({ screenLightRef, isSpeaking }: { screenLightRef: React.RefObject<import("three").DirectionalLight>; isSpeaking?: boolean }) {
   // Async GLTF loader to avoid throwing inside suspense boundaries if load fails
-  const [gltf, setGltf] = useState<any | null>(null)
+  const [gltf, setGltf] = useState<{ scene: import("three").Group } | null>(null)
   const [err, setErr] = useState(false)
-  const groupRef = useRef<any>(null)
+  const groupRef = useRef<import("three").Group>(null)
 
   useEffect(() => {
     let mounted = true
@@ -292,28 +292,29 @@ function GLBAvatarAsync({ screenLightRef, isSpeaking }: { screenLightRef: any; i
   useEffect(() => {
     if (!gltf || !gltf.scene) return
     try {
-      gltf.scene.traverse((node: any) => {
-        if (!node.isMesh || !node.material) return
+      gltf.scene.traverse((node: THREE.Object3D) => {
+        if (!(node instanceof THREE.Mesh) || !node.material) return
         const materials = Array.isArray(node.material) ? node.material : [node.material]
-        materials.forEach((mat: any) => {
+        materials.forEach((mat: THREE.Material) => {
           if (!mat) return
-          if (mat.map) {
+          const material = mat as THREE.MeshStandardMaterial
+          if (material.map) {
             try {
-              mat.map.generateMipmaps = false
-              mat.map.minFilter = THREE.LinearFilter
-              mat.map.magFilter = THREE.LinearFilter
-              mat.map.anisotropy = 1
-              mat.map.needsUpdate = true
-            } catch (e) {}
+              material.map.generateMipmaps = false
+              material.map.minFilter = THREE.LinearFilter
+              material.map.magFilter = THREE.LinearFilter
+              material.map.anisotropy = 1
+              material.map.needsUpdate = true
+            } catch {}
           }
-          if (mat.normalMap) mat.normalMap = null
-          if (mat.roughnessMap) mat.roughnessMap = null
-          if (mat.metalnessMap) mat.metalnessMap = null
-          if (mat.emissiveMap) mat.emissiveMap = null
-          if (mat.aoMap) mat.aoMap = null
-          mat.metalness = Math.min(mat.metalness ?? 0, 0.0)
-          mat.roughness = Math.max(mat.roughness ?? 0.5, 0.8)
-          mat.needsUpdate = true
+          if (material.normalMap) material.normalMap = null
+          if (material.roughnessMap) material.roughnessMap = null
+          if (material.metalnessMap) material.metalnessMap = null
+          if (material.emissiveMap) material.emissiveMap = null
+          if (material.aoMap) material.aoMap = null
+          material.metalness = Math.min(material.metalness ?? 0, 0.0)
+          material.roughness = Math.max(material.roughness ?? 0.5, 0.8)
+          material.needsUpdate = true
         })
         node.frustumCulled = true
       })

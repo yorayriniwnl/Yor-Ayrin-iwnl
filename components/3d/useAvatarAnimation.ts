@@ -2,24 +2,32 @@ import { useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-type AnyRef = { current: any }
+type ThreeRef<T> = { current: T | null | undefined }
+
+type AnimatedMesh = THREE.Object3D & {
+  morphTargetInfluences?: number[]
+}
+
+type AnimatableMaterial = THREE.Material & {
+  emissiveIntensity?: number
+}
 
 function randBlinkInterval() {
   return 2200 + Math.random() * 4800 // ms
 }
 
 export type AvatarAnimationOptions = {
-  groupRef?: AnyRef
-  headRef?: AnyRef
-  mouthRef?: AnyRef
-  leftEyeRef?: AnyRef
-  rightEyeRef?: AnyRef
-  screenLightRef?: AnyRef
-  screenMatRef?: AnyRef
-  glbMouthNodesRef?: AnyRef
-  glbEyeNodesRef?: AnyRef
-  glbBlinkNodesRef?: AnyRef
-  visemeAmpRef?: AnyRef
+  groupRef?: ThreeRef<THREE.Object3D>
+  headRef?: ThreeRef<THREE.Object3D>
+  mouthRef?: ThreeRef<THREE.Object3D>
+  leftEyeRef?: ThreeRef<THREE.Object3D>
+  rightEyeRef?: ThreeRef<THREE.Object3D>
+  screenLightRef?: ThreeRef<THREE.Light>
+  screenMatRef?: ThreeRef<AnimatableMaterial>
+  glbMouthNodesRef?: ThreeRef<AnimatedMesh[]>
+  glbEyeNodesRef?: ThreeRef<THREE.Object3D[]>
+  glbBlinkNodesRef?: ThreeRef<AnimatedMesh[]>
+  visemeAmpRef?: ThreeRef<number>
   reducedMotion?: boolean
   monitorHover?: boolean
   isSpeaking?: boolean

@@ -24,8 +24,8 @@ function normalizeRepoInput(r: RepoInput) {
   }
   // assume object-like
   if (typeof r === 'object' && r !== null) {
-    const o: any = r
-    return { name: o.name || o.full_name || '', full_name: o.full_name || o.name || '', html_url: o.html_url || '' }
+    const o = r as Record<string, unknown>
+    return { name: String(o.name || o.full_name || ''), full_name: String(o.full_name || o.name || ''), html_url: String(o.html_url || '') }
   }
   return null
 }

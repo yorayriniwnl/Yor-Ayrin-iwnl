@@ -1,6 +1,7 @@
 "use client"
+import type { ThreeEvent } from '@react-three/fiber'
 import React, { useEffect, useMemo, useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber' // types added below
 import * as THREE from 'three'
 import { PROJECTS } from '../../lib/data'
 import UI from '../../lib/uiConfig'
@@ -56,20 +57,20 @@ export default function ProjectNodes({ radius = 4 }: { radius?: number }): JSX.E
     meshRef.current.instanceMatrix.needsUpdate = true
   })
 
-  const onPointerMove = (e: any) => {
+  const onPointerMove = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     const id = e.instanceId
     if (typeof id === 'number') hoverRef.current = id
     document.body.style.cursor = 'pointer'
   }
 
-  const onPointerOut = (e: any) => {
+  const onPointerOut = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     hoverRef.current = null
     document.body.style.cursor = 'auto'
   }
 
-  const onClick = (e: any) => {
+  const onClick = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     const id = e.instanceId
     if (typeof id !== 'number' || !meshRef.current) return

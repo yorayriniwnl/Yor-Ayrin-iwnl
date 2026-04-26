@@ -235,7 +235,7 @@ function EffectsLoader() {
       // eslint-disable-next-line no-new-func
       const importer = new Function('m', 'return import(m)')
       importer(modName)
-        .then((mod: any) => {
+        .then((mod: { default?: unknown; [k: string]: unknown }) => {
           if (!mounted) return
           setEffects(mod)
         })

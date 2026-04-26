@@ -189,7 +189,7 @@ export default function AdaptiveProvider({ children }: { children: React.ReactNo
   useEffect(() => {
     try {
       const mql = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null
-      const onChange = (e: any) => {
+      const onChange = (_e: MediaQueryListEvent) => {
         try {
           const override = localStorage.getItem('reduced_motion')
           if (override === null && mql) setReducedMotionState(!!mql.matches)

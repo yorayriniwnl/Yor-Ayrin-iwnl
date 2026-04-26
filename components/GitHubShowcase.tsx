@@ -102,8 +102,8 @@ function GitHubShowcase(): JSX.Element {
       } catch (err) {
         // ignore dispatch errors
       }
-    } catch (err: any) {
-      setError(err?.message ?? 'Failed to fetch repositories')
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch repositories')
       setRepos(null)
     } finally {
       setLoading(false)

@@ -35,11 +35,17 @@ export const GITHUB_OWNER =
 
 /** CSS class applied to project badge by category. */
 export const PROJECT_BADGE_CLASS_MAP: Record<string, string> = {
-  Systems: 'badge-premium',
-  'AI / ML': 'badge-premium',
-  Python: 'badge-premium',
-  Web: 'badge-premium',
-  GitHub: 'badge-premium',
+  Systems:   'badge-systems',
+  'AI / ML': 'badge-ai',
+  Python:    'badge-python',
+  Web:       'badge-web',
+  GitHub:    'badge-github',
+  frontend:  'badge-web',
+  backend:   'badge-systems',
+  ai:        'badge-ai',
+  '3d':      'badge-3d',
+  fullstack: 'badge-premium',
+  other:     'badge-other',
 }
 
 // ---------------------------------------------------------------------------

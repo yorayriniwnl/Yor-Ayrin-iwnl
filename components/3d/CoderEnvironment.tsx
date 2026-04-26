@@ -1,7 +1,8 @@
 "use client"
+import type { ThreeEvent } from '@react-three/fiber'
 
 import React, { Suspense, useRef, useEffect, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber' // types added below
 import * as THREE from 'three'
 import { Environment, OrbitControls, ContactShadows, Html } from '@react-three/drei'
 import AvatarModel from './AvatarModel'
@@ -12,12 +13,12 @@ import CoderCamera from './CoderCamera'
   const lightRef = useRef<any>(null)
   const hoveredRef = useRef(false)
 
-  const onOver = (e: any) => {
+  const onOver = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     hoveredRef.current = true
     window.dispatchEvent(new CustomEvent('monitor-hover', { detail: { hover: true } }))
   }
-  const onOut = (e: any) => {
+  const onOut = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     hoveredRef.current = false
     window.dispatchEvent(new CustomEvent('monitor-hover', { detail: { hover: false } }))

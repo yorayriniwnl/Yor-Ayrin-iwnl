@@ -8,6 +8,6 @@ const AvatarWithHair = dynamic(() => import('./AvatarWithHair'), {
   loading: () => <div className="skeleton h-64 w-full bg-white/4 rounded" />,
 })
 
-export default function AvatarWithHairClient(props: any) {
+export default function AvatarWithHairClient(props: Record<string, unknown>) {
   return <AvatarWithHair {...props} />
 }

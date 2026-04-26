@@ -5,6 +5,24 @@ import { STATIC_ACTIVITY, type Activity } from '../../lib/activity'
 
 type FeedItem = Activity & { id: string }
 
+type GitHubEvent = {
+  type?: string
+  created_at?: string
+  createdAt?: string
+  repo?: {
+    name?: string
+  }
+  payload?: {
+    action?: string
+    ref?: string
+    ref_type?: string
+    commits?: Array<{message?: string}>
+    pull_request?: {
+      title?: string
+    }
+  }
+}
+
 function timeAgo(ts?: string) {
   if (!ts) return ''
   try {
@@ -39,8 +57,8 @@ export default function ActivityFeed(): JSX.Element {
         if (token) headers.Authorization = `token ${token}`
         const res = await fetch(`https://api.github.com/users/${username}/events?per_page=40`, { headers, cache: 'no-store' })
         if (!res.ok) return
-        const events = await res.json()
-        const mapped: FeedItem[] = events.map((e: any) => {
+        const events = await res.json() as GitHubEvent[]
+        const mapped: FeedItem[] = events.map((e: GitHubEvent) => {
           const repo = e.repo?.name?.split('/')?.pop() || e.repo?.name || ''
           const ts = e.created_at || e.createdAt || new Date().toISOString()
           const id = `${e.type}-${repo}-${ts}`
@@ -50,7 +68,8 @@ export default function ActivityFeed(): JSX.Element {
             message = cm ? `Pushed to ${repo}: ${cm}` : `Pushed new code to ${repo}`
           } else if (e.type === 'PullRequestEvent') {
             const title = e.payload?.pull_request?.title
-            message = title ? `${e.payload.action || 'Updated'} PR in ${repo}: ${title}` : `${e.payload.action || 'Updated'} PR in ${repo}`
+            const action = e.payload?.action || 'Updated'
+            message = title ? `${action} PR in ${repo}: ${title}` : `${action} PR in ${repo}`
           } else if (e.type === 'CreateEvent') {
             message = `Created ${e.payload?.ref_type || 'branch'} in ${repo}${e.payload?.ref ? ': ' + e.payload.ref : ''}`
           } else if (e.type === 'WatchEvent') {
@@ -59,7 +78,7 @@ export default function ActivityFeed(): JSX.Element {
             message = `${e.type} on ${repo}`
           }
 
-          return { id, message, ts, source: 'github', badge: 'Auto-generated from GitHub', repo }
+          return { id, message, ts, source: 'github' as const, badge: 'Auto-generated from GitHub', repo }
         }).filter(Boolean)
 
         if (!mounted) return

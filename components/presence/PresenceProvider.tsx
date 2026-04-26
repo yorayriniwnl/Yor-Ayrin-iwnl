@@ -4,6 +4,16 @@ import React, { useEffect, useRef } from 'react'
 
 type Session = { id: string; name?: string; lastSeen: string; cursor?: { x: number; y: number } }
 
+type WireMessage = {
+  type?: string
+  id?: string
+  name?: string
+  ts?: string
+  cursor?: { x: number; y: number }
+  sessionId?: string
+  payload?: unknown
+}
+
 function genId() {
   return Math.random().toString(36).slice(2, 9)
 }
@@ -38,7 +48,7 @@ export default function PresenceProvider(): null {
       try { window.dispatchEvent(new CustomEvent('presence-updated', { detail: { sessions: arr } })) } catch {}
     }
 
-    function handleIncoming(msg: any) {
+    function handleIncoming(msg: WireMessage) {
       if (!msg || !msg.type) return
       if (String(msg.id) === String(selfIdRef.current)) return
       const now = new Date().toISOString()
@@ -65,7 +75,7 @@ export default function PresenceProvider(): null {
       dispatch()
     }
 
-    function sendMessage(payload: any) {
+    function sendMessage(payload: Record<string, unknown>) {
       const message = { ...payload, id, name: nameRef.current, ts: new Date().toISOString() }
       try {
         if (ws && ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(message))

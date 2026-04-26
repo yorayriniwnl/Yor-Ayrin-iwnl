@@ -64,20 +64,20 @@ export default function FloatingIcons({ count = 6 }: { count?: number }) {
     meshRef.current.instanceMatrix.needsUpdate = true
   })
 
-  const onPointerMove = (e: any) => {
+  const onPointerMove = (e: import("@react-three/fiber").ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     const id = e.instanceId
     if (typeof id === 'number') hoverRef.current = id
     document.body.style.cursor = 'pointer'
   }
 
-  const onPointerOut = (e: any) => {
+  const onPointerOut = (e: import("@react-three/fiber").ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     hoverRef.current = null
     document.body.style.cursor = 'auto'
   }
 
-  const onClick = (e: any) => {
+  const onClick = (e: import("@react-three/fiber").ThreeEvent<MouseEvent>) => {
     e.stopPropagation()
     const id = e.instanceId
     if (typeof id === 'number') {

@@ -4,7 +4,7 @@ import {
   ORDERED_PROJECTS,
   SITE_PROFILE,
   SKILL_CATEGORIES,
-} from '../../data'
+} from '../data'
 import type { AssistantKnowledgeData } from './chatHelpers'
 
 export const ASSISTANT_KNOWLEDGE: AssistantKnowledgeData = {

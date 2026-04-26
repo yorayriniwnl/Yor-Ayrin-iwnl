@@ -10,6 +10,7 @@ import React, {
   type ErrorInfo,
 } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import type { ThreeEvent } from '@react-three/fiber'
 import { Html, OrbitControls, OrthographicCamera } from '@react-three/drei'
 import * as THREE from 'three'
 
@@ -309,7 +310,7 @@ function GraphScene({ graph, onNodeHover, onNodeClick, hovered, selected }: Scen
     document.body.style.cursor = 'default'
   }, [onNodeHover])
 
-  const handleClick = useCallback((id: string) => (e: any) => {
+  const handleClick = useCallback((id: string) => (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation()
     onNodeClick(id)
   }, [onNodeClick])

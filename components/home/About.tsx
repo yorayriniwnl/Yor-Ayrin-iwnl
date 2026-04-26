@@ -1,10 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { SITE_PROFILE } from '../../lib/data'
+import { SITE_PROFILE, SKILL_CATEGORIES } from '../../lib/data'
 import { HOME_PROJECTS, GITHUB_OWNER } from '../../data/home'
 import { useReveal } from './hooks/useReveal'
 import { useGitHubRepoCount } from './hooks/useGitHubRepoCount'
+
+const SKILL_COUNT = Object.values(SKILL_CATEGORIES).flat().length
 
 /**
  * About
@@ -21,7 +23,7 @@ export default function About() {
   const stats: [string, string][] = [
     [String(HOME_PROJECTS.length).padStart(2, '0'), 'Portfolio Projects'],
     [String(publicRepoCount).padStart(2, '0'), 'Public Repos'],
-    ['16', 'Skill Signals'],
+    [String(SKILL_COUNT).padStart(2, '0'), 'Skill Signals'],
     ['2027', 'Graduation'],
   ]
 
