@@ -11,7 +11,7 @@
 [![portfolio](https://img.shields.io/badge/-portfolio-0d0018?style=for-the-badge&logo=vercel&logoColor=f4a7c3&labelColor=0d0018)](https://yorayriniwnl.vercel.app)
 [![linkedin](https://img.shields.io/badge/-linkedin-0d0018?style=for-the-badge&logo=linkedin&logoColor=f4a7c3&labelColor=0d0018)](https://linkedin.com/in/yorayriniwnl)
 [![resume](https://img.shields.io/badge/-resume-0d0018?style=for-the-badge&logo=adobeacrobatreader&logoColor=f4a7c3&labelColor=0d0018)](https://yorayriniwnl.vercel.app/resume.pdf)
-[![hire me](https://img.shields.io/badge/-hire%20me-0d0018?style=for-the-badge&logo=gmail&logoColor=f4a7c3&labelColor=0d0018)](mailto:yorayriniwnl@gmail.com)
+[![hire me](https://img.shields.io/badge/-hire%20me-0d0018?style=for-the-badge&logo=gmail&logoColor=f4a7c3&labelColor=0d0018)](mailto:Ayush.Roy.Dev@gmail.com)
 
 </div>
 
@@ -144,7 +144,7 @@ Real-time sculpting and exploration, directly in the browser. The kind of experi
 |---|---|
 | Timezone | IST · UTC +5:30 · flexible overlap |
 | Resume | [view online](https://yorayriniwnl.vercel.app/resume) · [download pdf](https://yorayriniwnl.vercel.app/resume.pdf) |
-| Write me | [yorayriniwnl@gmail.com](mailto:yorayriniwnl@gmail.com) · [linkedin](https://linkedin.com/in/yorayriniwnl) |
+| Write me | [Ayush.Roy.Dev@gmail.com](mailto:Ayush.Roy.Dev@gmail.com) · [linkedin](https://linkedin.com/in/yorayriniwnl) |
 
 </div>
 

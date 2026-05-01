@@ -119,7 +119,7 @@ export const SITE_PROFILE = {
     'Founder of Yor Zenith and full-stack developer intern candidate at KIIT, expected graduation 2027, with hands-on project work across Next.js, React, TypeScript, FastAPI, Flask, Python, SQL, Three.js, OpenCV, Scikit-Learn, Docker, and GitHub-driven product delivery.',
   seekingStatement: 'I am currently seeking full stack developer internship opportunities where product thinking and engineering execution both matter.',
   availability: 'Open to internships, entry-level software roles, and remote collaboration.',
-  email: 'yorayriniwnl@gmail.com',
+  email: 'Ayush.Roy.Dev@gmail.com',
   phone: '+91 8918940799',
   githubLabel: 'github.com/yorayriniwnl',
   githubHref: 'https://github.com/yorayriniwnl',
