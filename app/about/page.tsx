@@ -198,30 +198,37 @@ const PAGE_CSS = `
   /* Avatar */
   .about-avatar-wrap {
     position: relative;
-    width: clamp(220px, 23vw, 280px);
-    aspect-ratio: 4 / 5;
+    width: clamp(240px, 25vw, 320px);
+    aspect-ratio: 1;
     flex-shrink: 0; align-self: flex-end; margin-bottom: 0.5rem;
+    isolation: isolate;
   }
   .about-avatar-ring-spin {
-    position: absolute; inset: 1rem -0.9rem -0.9rem 1rem;
-    border-radius: 2rem;
-    border: 1.5px dashed rgba(201,168,76,0.3);
+    position: absolute; inset: 1rem -1rem -1rem 1rem;
+    border-radius: 0;
+    border: 1px solid rgba(201,168,76,0.36);
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.01));
     animation: none;
+    z-index: 0;
   }
   .about-avatar-ring-static {
-    position: absolute; inset: -0.6rem 0.9rem 0.9rem -0.6rem;
-    border-radius: 2rem;
-    border: 1px solid rgba(201,168,76,0.15);
+    position: absolute; inset: -1rem 1rem 1rem -1rem;
+    border-radius: 0;
+    border: 1px solid rgba(240,232,216,0.12);
+    background: rgba(10,9,6,0.42);
+    z-index: 0;
   }
   .about-avatar-circle {
     width: 100%; height: 100%;
-    border-radius: 1.7rem;
+    border-radius: 0;
     background:
       radial-gradient(circle at 20% 15%, rgba(255,255,255,0.08) 0%, transparent 30%),
       linear-gradient(160deg, #1a1710 0%, #0a0906 100%);
     position: relative; overflow: hidden;
-    border: 1px solid rgba(201,168,76,0.18);
-    box-shadow: 0 0 48px rgba(201,168,76,0.12), inset 0 0 24px rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.32);
+    box-shadow: 0 28px 80px rgba(0,0,0,0.34), inset 0 0 24px rgba(201,168,76,0.05);
+    transform: translate(-0.35rem, -0.35rem);
+    z-index: 1;
   }
   .about-avatar-circle::after {
     content: '';
@@ -234,8 +241,8 @@ const PAGE_CSS = `
   .about-avatar-image {
     width: 100%; height: 100%;
     object-fit: cover;
-    object-position: center top;
-    transform: scale(1.01);
+    object-position: center 18%;
+    transform: scale(1.04);
   }
 
   /* Stats */
@@ -330,7 +337,7 @@ const PAGE_CSS = `
     .about-hero { padding: 0 1.5rem clamp(3rem, 6vw, 5rem); }
     .about-hero-inner { grid-template-columns: 1fr; }
     .about-avatar-wrap {
-      width: min(62vw, 220px);
+      width: min(68vw, 240px);
       justify-self: start; margin-top: 1rem;
     }
     .about-section-wrap { padding: 0 1.5rem; }
@@ -387,7 +394,7 @@ export default function AboutPage(): React.ReactElement {
                 alt="Portrait of Ayush Roy"
                 fill
                 priority
-                sizes="(max-width: 900px) 160px, 180px"
+                sizes="(max-width: 900px) 240px, 320px"
                 className="about-avatar-image"
               />
             </div>
