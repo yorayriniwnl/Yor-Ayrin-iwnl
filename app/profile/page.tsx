@@ -476,6 +476,7 @@ function CTASection() {
   const btns = [
     { label: 'Download Resume', href: '/resume.pdf', download: true, primary: true },
     { label: 'View All Projects', href: '/projects', download: false, primary: false },
+    { label: 'View BHASKAR Profile', href: SITE_PROFILE.startupIndiaHref, download: false, primary: false, external: true },
     { label: 'Call', href: `tel:${SITE_PROFILE.phone.replace(/\s+/g, '')}`, download: false, primary: false },
     { label: 'Get in Touch', href: '/contact', download: false, primary: false },
   ]
@@ -496,6 +497,8 @@ function CTASection() {
             key={btn.label}
             href={btn.href}
             download={btn.download ? true : undefined}
+            target={btn.external ? '_blank' : undefined}
+            rel={btn.external ? 'noreferrer' : undefined}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -523,6 +526,8 @@ function CTASection() {
           <Link
             key={btn.label}
             href={btn.href}
+            target={btn.external ? '_blank' : undefined}
+            rel={btn.external ? 'noreferrer' : undefined}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
