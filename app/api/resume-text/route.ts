@@ -1,46 +1,60 @@
-import { PROJECTS, SKILL_CATEGORIES, LINKS, SITE_PROFILE } from '../../../lib/data'
+import {
+  EDUCATION_ENTRIES,
+  EXPERIENCE_ENTRIES,
+  PROJECT_ENTRIES,
+  RESUME_ACHIEVEMENTS,
+  RESUME_CERTIFICATIONS,
+  RESUME_PROFILE,
+  RESUME_SKILL_GROUPS,
+} from '../../../lib/resume'
+
+function appendEntry(lines: string[], entry: { title: string; meta: string; summary: string; bullets?: readonly string[] }) {
+  lines.push(entry.title)
+  lines.push(entry.meta)
+  lines.push(entry.summary)
+  for (const bullet of entry.bullets ?? []) lines.push(`- ${bullet}`)
+  lines.push('')
+}
 
 function buildText() {
   const lines: string[] = []
-  lines.push("I'm Ayush Roy (virtual alias: Yor Ayrin), a full-stack developer intern candidate at KIIT building Next.js product surfaces, Python backend systems, realtime dashboards, and computer-vision tools.")
+  lines.push(RESUME_PROFILE.name)
+  lines.push(RESUME_PROFILE.role)
   lines.push('')
-  lines.push(SITE_PROFILE.seekingStatement)
+  lines.push(RESUME_PROFILE.summary)
   lines.push('')
-  lines.push('My most credible, production-aligned work includes Yor Helios, Yor Zenith, Yor AI vs Real Image, and this portfolio platform.')
-  lines.push('')
-  lines.push('My portfolio uses my resume and GitHub as the single source of truth, so every project claim stays accurate, current, and easy to verify.')
-  lines.push('')
-
-  lines.push(`Email: ${SITE_PROFILE.email}`)
-  lines.push(`Phone: ${SITE_PROFILE.phone}`)
-  lines.push(`Portfolio: ${SITE_PROFILE.websiteHref}`)
-
-  const github = LINKS.find((l) => l.id === 'github')
-  const linkedin = LINKS.find((l) => l.id === 'linkedin')
-  if (github) lines.push(`GitHub: ${github.href}`)
-  if (linkedin) lines.push(`LinkedIn: ${linkedin.href}`)
+  lines.push(`Email: ${RESUME_PROFILE.email}`)
+  lines.push(`Phone: ${RESUME_PROFILE.phone}`)
+  lines.push(`Location: ${RESUME_PROFILE.location}`)
+  lines.push(`Portfolio: ${RESUME_PROFILE.websiteHref}`)
+  lines.push(`GitHub: ${RESUME_PROFILE.githubHref}`)
+  lines.push(`LinkedIn: ${RESUME_PROFILE.linkedinHref}`)
+  lines.push(`Devpost: ${RESUME_PROFILE.devpostHref}`)
   lines.push('')
 
-  lines.push('Skills:')
-  for (const cat of Object.keys(SKILL_CATEGORIES)) {
-    lines.push(`- ${cat}:`)
-    for (const s of SKILL_CATEGORIES[cat] ?? []) {
-      lines.push(`  - ${s.name} (${s.value})${s.desc ? ' — ' + s.desc : ''}`)
-    }
+  lines.push('Technical Skills:')
+  for (const group of RESUME_SKILL_GROUPS) {
+    lines.push(`- ${group.title}: ${group.skills.join(', ')}`)
   }
   lines.push('')
+
+  lines.push('Work Experience:')
+  for (const entry of EXPERIENCE_ENTRIES) appendEntry(lines, entry)
 
   lines.push('Projects:')
-  for (const p of PROJECTS) {
-    lines.push(`${p.title}`)
-    if (p.shortDescription) lines.push(`  ${p.shortDescription}`)
-    if (p.tech && p.tech.length) lines.push(`  Tech: ${p.tech.join(', ')}`)
-    if (p.outcome) lines.push(`  Outcome: ${p.outcome}`)
-    if (p.github) lines.push(`  Repo: ${p.github}`)
-    lines.push('')
-  }
+  for (const entry of PROJECT_ENTRIES) appendEntry(lines, entry)
 
-  lines.push('Generated from site data')
+  lines.push('Education:')
+  for (const entry of EDUCATION_ENTRIES) appendEntry(lines, entry)
+
+  lines.push('Achievements:')
+  for (const achievement of RESUME_ACHIEVEMENTS) lines.push(`- ${achievement}`)
+  lines.push('')
+
+  lines.push('Certifications:')
+  for (const entry of RESUME_CERTIFICATIONS) appendEntry(lines, entry)
+
+  lines.push('Generated from current resume data')
   return lines.join('\n')
 }
 
