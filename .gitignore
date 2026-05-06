@@ -1,0 +1,15 @@
+node_modules
+.next
+.env
+.env.local
+.env.*.local
+coverage
+*.log
+.DS_Store
+tsconfig.tsbuildinfo
+next-env.d.ts
+lint-report.json
+components/ui.zip
+.tmp_marks.patch
+*.patch
+*-report.json

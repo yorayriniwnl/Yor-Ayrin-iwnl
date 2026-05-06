@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice">
+  <title>Ayush Roy — System Builder | React • AI • 3D</title>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0" stop-color="#030214" />
+      <stop offset="1" stop-color="#071428" />
+    </linearGradient>
+
+    <radialGradient id="glow" cx="30%" cy="35%" r="50%">
+      <stop offset="0" stop-color="#7c3aed" stop-opacity="0.85" />
+      <stop offset="0.35" stop-color="#7c3aed" stop-opacity="0.35" />
+      <stop offset="1" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <filter id="softBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="36" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="textGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="g" />
+      <feMerge>
+        <feMergeNode in="g" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- base -->
+  <rect width="1200" height="630" fill="url(#bg)" />
+
+  <!-- cinematic colored glows behind text -->
+  <g filter="url(#softBlur)" opacity="0.9">
+    <ellipse cx="360" cy="220" rx="460" ry="180" fill="#7c3aed" opacity="0.12" />
+    <ellipse cx="420" cy="260" rx="300" ry="130" fill="#06b6d4" opacity="0.06" />
+  </g>
+
+  <!-- subtle vignette -->
+  <rect width="1200" height="630" fill="black" opacity="0.14" />
+
+  <!-- main text -->
+  <g transform="translate(80,0)" font-family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial" text-rendering="geometricPrecision">
+    <text x="0" y="260" font-size="84" font-weight="800" fill="#ffffff">Ayush Roy</text>
+    <text x="0" y="340" font-size="32" font-weight="600" fill="#c7bfff">System Builder | React • AI • 3D</text>
+  </g>
+
+  <!-- subtle glow overlay to lift text -->
+  <g transform="translate(80,0)" filter="url(#textGlow)" opacity="0.55">
+    <text x="0" y="260" font-size="84" font-weight="800" fill="#7c3aed">Ayush Roy</text>
+  </g>
+
+  <!-- finishing subtle dark overlay -->
+  <rect width="1200" height="630" fill="black" opacity="0.02" />
+</svg>

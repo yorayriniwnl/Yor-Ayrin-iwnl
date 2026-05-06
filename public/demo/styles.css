@@ -1,0 +1,27 @@
+:root{
+  --bg:#020318;
+  --muted:#9aa7c6;
+  --accent:#7c3aed;
+}
+html,body{height:100%;margin:0}
+body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial; background:var(--bg); color:#fff}
+.player{min-height:100vh;display:flex;flex-direction:column;align-items:stretch}
+.slides{flex:1;position:relative;overflow:hidden}
+.slide{position:absolute;inset:0;background-size:cover;background-position:center center;opacity:0;transition:opacity 800ms ease, transform 800ms ease}
+.slide.active{opacity:1}
+.overlay{position:absolute;left:6%;top:20%;max-width:48%;backdrop-filter: blur(6px);}
+.overlay h1{font-size:56px;margin:0 0 8px}
+.overlay h2{font-size:36px;margin:0 0 8px}
+.overlay p{color:var(--muted);margin:0;font-size:18px}
+.controls{padding:18px;background:linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.12));display:flex;align-items:center;gap:12px}
+.btn{background:#ffffff11;border:1px solid #ffffff18;color:#fff;padding:10px 14px;border-radius:8px;cursor:pointer}
+.btn:focus{outline:2px solid rgba(124,58,237,0.25)}
+.progress{flex:1;height:8px;background:#ffffff12;border-radius:999px;overflow:hidden}
+.progress .bar{width:0%;height:100%;background:linear-gradient(90deg,var(--accent),#06b6d4);transition:width 0.25s linear}
+
+/* Small responsiveness */
+@media (max-width:720px){
+  .overlay{left:6%;top:12%;max-width:86%}
+  .overlay h1{font-size:36px}
+  .overlay p{font-size:14px}
+}

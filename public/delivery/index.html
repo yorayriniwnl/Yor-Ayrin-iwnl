@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Delivery Practice — Record & Review</title>
+  <link rel="stylesheet" href="/delivery/styles.css" />
+</head>
+<body>
+  <main class="wrap">
+    <h1>Delivery Practice</h1>
+    <p class="rules">Rules: Speak slowly — no filler words — pause between points.</p>
+
+    <section class="panel">
+      <label for="script">Practice script (one line per point)</label>
+      <textarea id="script">1. Problem in one sentence
+2. What I built to solve it
+3. Key metrics / outcome
+4. How I would scale or improve</textarea>
+    </section>
+
+    <section class="controls panel">
+      <button id="recordBtn">Start Recording</button>
+      <button id="playBtn" disabled>Play</button>
+      <a id="downloadLink" class="button disabled" download="delivery-practice.webm">Download</a>
+      <button id="liveTranscribeBtn">Live Transcribe (experimental)</button>
+    </section>
+
+    <section class="status panel">
+      <div>State: <strong id="state">Idle</strong></div>
+      <div>Timer: <strong id="timer">00:00</strong></div>
+      <div id="countin" class="countin"></div>
+    </section>
+
+    <section class="panel">
+      <h3>Transcript / Notes</h3>
+      <div id="transcript" class="transcript">No transcript yet.</div>
+      <div id="fillerReport" class="fillerReport"></div>
+    </section>
+
+    <section class="panel tips">
+      <h4>Practice tips</h4>
+      <ul>
+        <li>Speak slowly and deliberately.</li>
+        <li>Pause 1–2 seconds between each point.</li>
+        <li>Avoid filler words: uh, um, like, you know.</li>
+        <li>Record short (30–90s) takes and listen back.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="/delivery/recorder.js"></script>
+</body>
+</html>
