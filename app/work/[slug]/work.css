@@ -1,0 +1,41 @@
+.work-detail { min-height: 100vh; background: #101014; color: #f3f1eb; --detail-accent: #ff6a48; }
+.work-detail--cobalt { --detail-accent: #8091ff; }
+.work-detail--teal { --detail-accent: #42d0b3; }
+.work-detail--plum { --detail-accent: #f27ec1; }
+.work-detail__nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; min-height: 76px; padding: 0 4vw; border-bottom: 1px solid rgba(255,255,255,.12); background: rgba(16,16,20,.9); backdrop-filter: blur(16px); }
+.work-detail__brand, .work-detail__back { color: inherit; text-decoration: none; }
+.work-detail__brand { display: flex; align-items: center; gap: .8rem; font: 500 .62rem var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.work-detail__brand > span:first-child { display: grid; place-items: center; width: 2.35rem; height: 2.35rem; border-radius: 50%; background: var(--detail-accent); color: #101014; font-weight: 800; letter-spacing: 0; }
+.work-detail__back { color: rgba(255,255,255,.65); font: 500 .62rem var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.work-detail__back:hover, .work-detail__actions a:hover, .work-detail__next a:hover { color: var(--detail-accent); }
+.work-detail__shell { width: min(1160px, calc(100% - 8vw)); margin: 0 auto; padding: 7rem 0 5rem; }
+.work-detail__eyebrow { display: flex; justify-content: space-between; color: var(--detail-accent); font: 500 .62rem var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+.work-detail h1 { max-width: 10ch; margin: 1.2rem 0 0; font: 600 clamp(4.5rem, 11vw, 10rem)/.84 var(--display); letter-spacing: -.07em; }
+.work-detail__thesis { max-width: 39rem; margin: 2rem 0 0; color: rgba(255,255,255,.72); font: 400 clamp(1.35rem, 2.4vw, 2.25rem)/1.15 var(--serif); }
+.work-detail__actions { display: flex; gap: 1.6rem; margin-top: 2rem; font: 500 .62rem var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.work-detail__actions a, .work-detail__actions span { color: var(--detail-accent); text-decoration: none; }
+.work-detail__actions a + a { color: rgba(255,255,255,.6); }
+.work-detail__hero { position: relative; aspect-ratio: 16/9; margin-top: 5rem; overflow: hidden; border: 1px solid rgba(255,255,255,.14); background: #08090d; }
+.work-detail__hero img { object-fit: cover; }
+.work-detail__grid { display: grid; grid-template-columns: .62fr 1.38fr; gap: 8vw; margin-top: 6rem; }
+.work-detail__grid aside { color: rgba(255,255,255,.5); font: 500 .62rem var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.work-detail__grid aside p { max-width: 15rem; margin: 1rem 0 2rem; color: #f3f1eb; font: 500 1.1rem/1.2 var(--sans); letter-spacing: 0; text-transform: none; }
+.work-detail__tags { display: flex; flex-wrap: wrap; gap: .45rem; }
+.work-detail__tags small { padding: .45rem .55rem; border: 1px solid rgba(255,255,255,.16); color: rgba(255,255,255,.7); font: 500 .56rem var(--mono); letter-spacing: .04em; }
+.work-detail__copy { display: grid; gap: 4rem; }
+.work-detail__copy section { border-top: 1px solid rgba(255,255,255,.15); padding-top: 1rem; }
+.work-detail__copy section > span { color: var(--detail-accent); font: 500 .6rem var(--mono); letter-spacing: .1em; }
+.work-detail__copy h2 { max-width: 14ch; margin: 1.3rem 0 .8rem; font: 500 clamp(2.2rem, 4vw, 4rem)/.95 var(--display); letter-spacing: -.05em; }
+.work-detail__copy p { max-width: 38rem; color: rgba(255,255,255,.68); font: 400 1.05rem/1.65 var(--sans); }
+.work-detail__next { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-top: 8rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.5); font: 500 .62rem var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.work-detail__next a { color: #f3f1eb; font: 500 clamp(2rem, 5vw, 5rem)/.9 var(--display); letter-spacing: -.05em; text-decoration: none; text-transform: none; }
+@media (max-width: 700px) {
+  .work-detail__nav { min-height: 68px; padding: 0 1rem; }
+  .work-detail__brand > span:last-child, .work-detail__back { font-size: .52rem; }
+  .work-detail__shell { width: min(100% - 2rem, 600px); padding: 4rem 0 3rem; }
+  .work-detail__eyebrow { gap: 1rem; line-height: 1.5; }
+  .work-detail h1 { font-size: clamp(3.8rem, 19vw, 6rem); }
+  .work-detail__hero { margin-top: 3rem; aspect-ratio: 4/3; }
+  .work-detail__grid { grid-template-columns: 1fr; gap: 4rem; margin-top: 4rem; }
+  .work-detail__next { align-items: start; flex-direction: column; margin-top: 5rem; }
+}
