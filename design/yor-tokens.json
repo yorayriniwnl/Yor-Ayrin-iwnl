@@ -1,0 +1,27 @@
+{
+  "product": "Yor // Ayrin portfolio",
+  "version": "1.0.0",
+  "colors": {
+    "void": "#000000",
+    "graphite": "#050505",
+    "crimson": "#e84b4b",
+    "deepCrimson": "#671515",
+    "warmAccent": "#ff8a7f",
+    "warmWhite": "#f5eaea",
+    "muted": "#c4c4c4"
+  },
+  "gradients": {
+    "signal": "linear-gradient(135deg, #671515 0%, #e84b4b 52%, #050505 100%)"
+  },
+  "typography": {
+    "display": "'Avenir Next', 'Segoe UI', sans-serif",
+    "serif": "Georgia, 'Times New Roman', serif",
+    "technical": "'Cascadia Mono', 'SFMono-Regular', Consolas, monospace"
+  },
+  "geometry": {
+    "radiusPanel": "28px",
+    "radiusControl": "999px",
+    "gridUnit": "8px"
+  },
+  "evidenceStates": ["VERIFIED", "REPORTED", "DEMO", "EXPERIMENTAL", "PLANNED"]
+}
