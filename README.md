@@ -1,5 +1,7 @@
 # Yor / Ayrin — Portfolio
 
+> **Legacy implementation.** The current recruiter-facing portfolio source is [Portfolio-Ayush-Roy](https://github.com/yorayriniwnl/Portfolio-Ayush-Roy), deployed at [yorayriniwnl.in](https://yorayriniwnl.in). This repository is retained for historical implementation context.
+
 This project is the focused portfolio surface for Ayush Roy: selected work, proof of craft, experience, and a direct contact path.
 
 The broader experiments, playable games, field notes, and media archive live in the separate [Yorayriniwnl.in hub](https://yorayriniwnl.in).
