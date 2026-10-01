@@ -4,7 +4,7 @@
 
 This project is the focused portfolio surface for Ayush Roy: selected work, proof of craft, experience, and a direct contact path.
 
-The broader experiments, playable games, field notes, and media archive live in the separate [Yorayriniwnl.in hub](https://yorayriniwnl.in).
+Broader experiments and non-recruiter work now live behind the current portfolio’s [Lab](https://yorayriniwnl.in/lab) surface. This legacy repository is not the source of the current public site.
 
 ## Run locally
 
