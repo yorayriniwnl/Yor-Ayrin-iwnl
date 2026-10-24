@@ -16,6 +16,23 @@ This repository contains the former focused portfolio implementation for Ayush R
 
 Broader experiments and non-recruiter work now live behind the current portfolio’s [Lab](https://yorayriniwnl.in/lab) surface. This legacy repository is not the source of the current public site.
 
+<!-- YOR REDLINE / EXPERIENCE V2 -->
+
+<a id="system-map"></a>
+## System map
+
+<div align="center"><picture><source media="(max-width: 600px)" srcset="docs/yor-redline-system-mobile.svg"/><img src="docs/yor-redline-system.svg" width="100%" alt="Earlier portfolio implementation: Review old source to Understand legacy to Locate current code to Follow new portfolio"/></picture></div>
+
+| Project signal | Documented scope |
+| :--- | :--- |
+| **Current maturity** | LEGACY / HISTORICAL |
+| **Technical focus** | Previous portfolio source kept as implementation history, with links to the current canonical portfolio. |
+| **Evidence boundary** | This repository is not the current recruiter-facing source of truth. |
+
+**Navigate:** [Run locally](#run-locally) · [Verify](#verify) · [Stack](#stack)
+
+<!-- END YOR REDLINE / EXPERIENCE V2 -->
+
 ## Run locally
 
 ```bash
