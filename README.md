@@ -1,3 +1,13 @@
+<!-- YOR REDLINE / README COVER V1 -->
+<div align="center">
+
+![Yor-Ayrin-iwnl | YOR REDLINE](docs/yor-redline-cover.svg)
+
+<sub><strong>YOR / PROJECT DOSSIER</strong> · <a href="https://github.com/yorayriniwnl">GitHub</a> · <a href="https://yorayriniwnl.in">Portfolio</a></sub>
+
+</div>
+<!-- END YOR REDLINE -->
+
 # Yor / Ayrin — Portfolio
 
 > **Legacy implementation.** The current recruiter-facing portfolio source is [Portfolio-Ayush-Roy](https://github.com/yorayriniwnl/Portfolio-Ayush-Roy), deployed at [yorayriniwnl.in](https://yorayriniwnl.in). This repository is retained for historical implementation context.
